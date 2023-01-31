@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="12in"
+   height="12in"
+   viewBox="0 0 12 12"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="Word 'DONATE' for crossbar on post.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.66583926"
+     inkscape:cx="589.43093"
+     inkscape:cy="566.36904"
+     inkscape:document-units="in"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="true"
+     units="in"
+     inkscape:snap-global="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:snap-nodes="false"
+     inkscape:snap-others="false"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:object-paths="true"
+     inkscape:snap-intersection-paths="true"
+     inkscape:snap-grids="false"
+     inkscape:snap-to-guides="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-nodes="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid849"
+       units="in"
+       spacingx="0.25"
+       spacingy="0.25"
+       empspacing="4" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Doctor Wizard</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Copyright 2021+ by Doctor Wizard</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Doctor Wizard</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:source>Doctor Wizard</dc:source>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Doctor Wizard</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="path4423"
+       style="font-size:2.5413px;line-height:1.25;font-family:'Boogie Woogie';-inkscape-font-specification:'Boogie Woogie';fill:none;stroke:#e89700;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 11.694571,1.3650401 H 11.059929 V 1.671652 l 0.368092,0.015141 -0.0127,0.4428838 h -0.390298 l -0.01586,0.3482508 h 0.628294 l -0.101544,0.6283651 h -1.183605 l -0.07298,-2.65351743 h 1.335922 z m -1.60247,-0.00757 H 9.6954498 L 9.6097698,3.113864 H 8.9878252 L 8.9021487,1.3574695 H 8.4578996 L 8.5181908,0.45277527 H 10.054024 Z M 8.4801143,2.9510941 7.8867244,3.212282 7.7629694,2.939738 H 7.039478 L 6.9062035,3.212282 6.3731044,2.8678168 7.4710344,0.26350867 Z M 7.6360411,2.5309224 7.4297825,2.0728971 7.2013117,2.5309224 Z M 6.3255071,0.45656057 6.1985789,3.2425647 5.1641132,2.3719382 5.1387275,3.1138633 H 4.5040861 L 4.4342749,0.41113657 5.5448975,1.6905785 5.5131654,0.45656057 Z M 4.2089784,2.0426145 Q 4.1328213,2.5309224 3.8504057,2.8526755 3.5711636,3.1744286 3.244323,3.1706433 2.8984435,3.1668533 2.6541065,2.9208115 2.3463054,2.6141996 2.279668,1.9971905 2.270158,1.8949867 2.270158,1.7927826 q 0,-0.5715851 0.2887619,-0.99932753 0.2982814,-0.4428838 0.7234912,-0.4277425 0.3998243,0.015141 0.6758933,0.4163865 0.2760692,0.39745983 0.2760692,0.95011823 0,0.1551985 -0.025385,0.3103972 z M 3.5743369,1.9441955 Q 3.5902028,1.683008 3.5045263,1.5164533 3.4188496,1.3461134 3.2506694,1.342328 3.0824895,1.338538 2.9841201,1.5278094 2.8952711,1.694364 2.9016161,1.9404105 q 0.00634,0.2346905 0.092023,0.4126011 0.095196,0.1968374 0.2379904,0.1968374 0.1396213,0 0.2411639,-0.1968374 Q 3.5616423,2.175101 3.5743369,1.9441955 Z M 2.1527401,1.7435732 Q 2.1368741,2.311373 1.7370499,2.7164035 1.3403989,3.1214341 0.78508773,3.1214341 h -0.4442491 l -0.085676,-2.67622953 h 0.5775237 q 0.67271997,0 1.01225317,0.3482505 Q 2.1717799,1.1303496 2.1527401,1.7435732 Z M 1.5149253,1.9101279 Q 1.524445,1.6678666 1.3943435,1.5202386 1.2737616,1.3839668 1.080196,1.376396 L 1.038944,2.4438596 Q 1.2198168,2.4400796 1.3626111,2.2924462 1.5054054,2.144818 1.5149253,1.9101279 Z" />
+    <path
+       id="path4423-3"
+       style="font-size:2.5413px;line-height:1.25;font-family:'Boogie Woogie';-inkscape-font-specification:'Boogie Woogie';fill:none;stroke:#e89700;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 11.694571,4.3679556 h -0.634642 v 0.3066119 l 0.368092,0.015141 -0.0127,0.4428838 h -0.390298 l -0.01586,0.3482508 h 0.628295 l -0.101545,0.6283651 h -1.183604 l -0.07298,-2.6535175 h 1.335922 z m -1.60247,-0.00757 H 9.6954496 l -0.08568,1.7563939 H 8.9878252 L 8.9021487,4.360385 H 8.4578996 L 8.5181908,3.4556907 H 10.054024 Z M 8.4801143,5.9540096 7.8867244,6.2151975 7.7629694,5.9426535 H 7.039478 L 6.9062035,6.2151975 6.3731044,5.8707323 7.4710344,3.2664241 Z M 7.6360411,5.5338379 7.4297825,5.0758126 7.2013117,5.5338379 Z M 6.3255071,3.459476 6.1985789,6.2454802 5.1641132,5.3748537 5.1387275,6.1167788 H 4.5040861 L 4.4342749,3.414052 5.5448975,4.693494 5.5131654,3.459476 Z M 4.2089784,5.04553 Q 4.1328213,5.5338379 3.8504057,5.855591 3.5711636,6.1773441 3.244323,6.1735588 2.8984435,6.1697688 2.6541065,5.923727 2.3463054,5.6171151 2.279668,5.000106 2.270158,4.8979022 2.270158,4.7956981 q 0,-0.5715851 0.2887619,-0.9993276 0.2982814,-0.4428838 0.7234912,-0.4277425 0.3998243,0.015141 0.6758933,0.4163865 0.2760692,0.3974599 0.2760692,0.9501183 0,0.1551985 -0.025385,0.3103972 z M 3.5743369,4.947111 Q 3.5902028,4.6859235 3.5045263,4.5193688 3.4188496,4.3490289 3.2506694,4.3452435 3.0824895,4.3414535 2.9841201,4.5307249 2.8952711,4.6972795 2.9016161,4.943326 q 0.00634,0.2346905 0.092023,0.4126011 0.095196,0.1968374 0.2379904,0.1968374 0.1396213,0 0.2411639,-0.1968374 Q 3.5616423,5.1780165 3.5743369,4.947111 Z M 2.1527401,4.7464887 Q 2.1368741,5.3142885 1.7370499,5.719319 1.3403989,6.1243496 0.78508772,6.1243496 H 0.34083863 L 0.25516263,3.44812 h 0.57752371 q 0.67271986,0 1.01225316,0.3482505 0.3268404,0.3368946 0.3078006,0.9501182 z M 1.5149253,4.9130434 Q 1.524445,4.6707821 1.3943435,4.5231541 1.2737616,4.3868823 1.080196,4.3793115 L 1.038944,5.4467751 Q 1.2198168,5.4429951 1.3626111,5.2953617 1.5054054,5.1477335 1.5149253,4.9130434 Z" />
+  </g>
+</svg>

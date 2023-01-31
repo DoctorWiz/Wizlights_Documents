@@ -1,0 +1,19 @@
+Brief Introduction:    
+
+This is a high power RGB LED capable of outputting 10W per channel, total 20W. High power RGB LEDs are in one aluminum backed package. The product is packed in sealed anti-static bag. Do not look into the light.     
+
+Festures:      
+
+Lens Color: Water Clear
+          
+Emitted Color :RGB      
+
+DC Forward Voltage (VF):Red 5.4-6.6V;Green 8.7-9.3V; Blue9 9.0-9.6V.      
+
+DC Forward Current (IF): 300-330mA      
+
+Viewing Angle:140 Degree      
+
+Wave Length :Red 620-630nm,Green 515-525nm,Blue 455-465nm      
+
+Intensity Luminous (Iv):Red 100-120LM,Green 140-160LM, Blue 45-60LM      

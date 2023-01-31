@@ -1,0 +1,55 @@
+ Start Address Chart for all Renard Plus and Simple Renard Controllers
+
+START_ADDR settings and the respective starting channel for that controller.
+		 
+START_ADDR 0 ------ Channel Start 1 		
+START_ADDR 1 ------ Channel Start 9 
+START_ADDR 2 ------ Channel Start 17 
+START_ADDR 3 ------ Channel Start 25 
+START_ADDR 4 ------ Channel Start 33 
+START_ADDR 5 ------ Channel Start 41 
+START_ADDR 6 ------ Channel Start 49 
+START_ADDR 7 ------ Channel Start 57 
+START_ADDR 8 ------ Channel Start 65 
+START_ADDR 9 ------ Channel Start 73 
+START_ADDR 10 ----- Channel Start 81 
+START_ADDR 11 ----- Channel Start 89 
+START_ADDR 12 ----- Channel Start 97 
+START_ADDR 13 ----- Channel Start 105 
+START_ADDR 14 ----- Channel Start 113 
+START_ADDR 15 ----- Channel Start 121 
+START_ADDR 16 ----- Channel Start 129 
+START_ADDR 17 ----- Channel Start 137 
+START_ADDR 18 ----- Channel Start 145 
+START_ADDR 19 ----- Channel Start 153 
+START_ADDR 20 ----- Channel Start 161 
+START_ADDR 21 ----- Channel Start 169 
+START_ADDR 22 ----- Channel Start 177 
+START_ADDR 23 ----- Channel Start 185 
+START_ADDR 24 ----- Channel Start 193 
+START_ADDR 25 ----- Channel Start 201 
+START_ADDR 26 ----- Channel Start 209 
+START_ADDR 27 ----- Channel Start 217 
+START_ADDR 28 ----- Channel Start 225 
+START_ADDR 29 ----- Channel Start 233 
+START_ADDR 30 ----- Channel Start 241 
+START_ADDR 31 ----- Channel Start 249 
+START_ADDR 32 ----- Channel Start 257 
+START_ADDR 33 ----- Channel Start 265 
+START_ADDR 34 ----- Channel Start 273 
+START_ADDR 35 ----- Channel Start 281 
+START_ADDR 36 ----- Channel Start 289 
+START_ADDR 37 ----- Channel Start 297 
+START_ADDR 38 ----- Channel Start 305 
+START_ADDR 39 ----- Channel Start 313 
+START_ADDR 40 ----- Channel Start 321 
+START_ADDR 41 ----- Channel Start 329 
+START_ADDR 42 ----- Channel Start 337 
+START_ADDR 43 ----- Channel Start 345 
+START_ADDR 44 ----- Channel Start 353 
+START_ADDR 45 ----- Channel Start 361 
+START_ADDR 46 ----- Channel Start 369 
+START_ADDR 47 ----- Channel Start 377 
+START_ADDR 48 ----- Channel Start 385 
+START_ADDR 49 ----- Channel Start 393 
+START_ADDR 50 ----- Channel Start 401 

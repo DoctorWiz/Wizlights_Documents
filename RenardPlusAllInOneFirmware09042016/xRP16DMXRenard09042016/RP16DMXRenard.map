@@ -1,0 +1,93 @@
+MPLINK 4.49, Linker
+Linker Map File - Created Sun Sep 04 08:45:40 2016
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000006
+                   .cinit    romdata   0x000006    program   0x000002
+                   .org_1       code   0x000008    program   0x000350
+.config_300001_RP16DMXRENARD.O    romdata   0x300001    program   0x000001
+.config_300002_RP16DMXRENARD.O    romdata   0x300002    program   0x000001
+.config_300003_RP16DMXRENARD.O    romdata   0x300003    program   0x000001
+.config_300005_RP16DMXRENARD.O    romdata   0x300005    program   0x000001
+.config_300006_RP16DMXRENARD.O    romdata   0x300006    program   0x000001
+.config_300008_RP16DMXRENARD.O    romdata   0x300008    program   0x000001
+.config_300009_RP16DMXRENARD.O    romdata   0x300009    program   0x000001
+.config_30000A_RP16DMXRENARD.O    romdata   0x30000a    program   0x000001
+.config_30000B_RP16DMXRENARD.O    romdata   0x30000b    program   0x000001
+.config_30000C_RP16DMXRENARD.O    romdata   0x30000c    program   0x000001
+.config_30000D_RP16DMXRENARD.O    romdata   0x30000d    program   0x000001
+                   .org_2       code   0xf00000    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000357      
+                            0x300001    0x300003      
+                            0x300005    0x300006      
+                            0x300008    0x30000d      
+                            0xf00000    0xf00001      
+            869 out of 50200 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                      Int   0x000008    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+       after_ESC_decoding   0x0002d4    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          decode_cmd_byte   0x000290    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+       decode_packet_body   0x0002ba    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+         end_timer_events   0x00032a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          event_processor   0x0002fa    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+               initialize   0x00016e    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+                 isr_exit   0x00016c    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+           isr_extra_work   0x00010a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          isr_extra_work1   0x00012c    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          isr_extra_work2   0x000140    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          isr_extra_work3   0x00015a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+        isr_load_counters   0x00009c    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+     isr_not_zc_lead_edge   0x000026    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+              isr_regular   0x00002e    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          isr_status_LEDs   0x000102    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+                 mainloop   0x000234    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+         previous_not_ESC   0x0002c8    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+                  rx_echo   0x00025a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+                 rx_error   0x000262    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+              rx_not_sync   0x000274    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+       rx_upfront_discard   0x0002ee    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+  zc_filter_restart_timer   0x000356    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                      Int   0x000008    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+     isr_not_zc_lead_edge   0x000026    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+              isr_regular   0x00002e    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+        isr_load_counters   0x00009c    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          isr_status_LEDs   0x000102    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+           isr_extra_work   0x00010a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          isr_extra_work1   0x00012c    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          isr_extra_work2   0x000140    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          isr_extra_work3   0x00015a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+                 isr_exit   0x00016c    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+               initialize   0x00016e    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+                 mainloop   0x000234    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+                  rx_echo   0x00025a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+                 rx_error   0x000262    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+              rx_not_sync   0x000274    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          decode_cmd_byte   0x000290    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+       decode_packet_body   0x0002ba    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+         previous_not_ESC   0x0002c8    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+       after_ESC_decoding   0x0002d4    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+       rx_upfront_discard   0x0002ee    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+          event_processor   0x0002fa    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+         end_timer_events   0x00032a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+  zc_filter_restart_timer   0x000356    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RP16DMXRenard09022016\RP16DMXRenard.asm
+
+

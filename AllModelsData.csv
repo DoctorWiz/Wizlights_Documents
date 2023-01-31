@@ -1,0 +1,227 @@
+Model Name,Description,Display As,String Type,String Count,Node Count,Light Count,Est Current (Amps),Channels Per Node, Channel Count,Start Channel,Start Channel No,End Channel No,Default Buffer W x H,Preview,Controller Connection,Controller Type,Controller Description,Output,IP,Baud,Universe/Id,Controller Channel,Inactive
+" EVERYTHING Group","Big Pixel Tree, Big Tree Multi, Bushes1Rainbow1Red, Bushes1Rainbow2Orn, Bushes1Rainbow3Grn, Bushes1Rainbow4Blu, Bushes1Rainbow5Vio, Bushes2Left1Multi, Bushes2Left2Wht, Bushes3Low, Bushes4Center1Red, Bushes4Center2Grn, Bushes4Center3Blu, Bushes4Center4Wht, Bushes5Drwy1Pink, Bushes5Drwy2Wht, Bushes6Right1Red, Bushes6Right2Grn, Bushes6Right3Blu, Bushes6Right4Wht, Bushes6Right5Vio, Bushes6Right6Multi, C9Chase1R, C9Chase2G, C9Chase3B, C9Chase4W, CandyCane01-R1, CandyCane02-G2, CandyCane03-R3, CandyCane04-G4, CandyCane05-R1, CandyCane06-G2, CandyCane07-R3, CandyCane08-G4, CandyCane09-R1, CandyCane10-G2, CandyCane11-R3, CandyCane12-G4, CandyCane13-R1, CandyCane14-G2, CandyCane15-R3, CandyCane16-G4, CandyCane17-R1, CandyCane18-G2, CandyCane19-R3, CandyCane20-G4, CandyCane21-R1, CandyCane22-G2, Carollers, Countdown, Deer1, Deer2, Disco Ball L, Disco Ball R, EavePix1LHoriz, EavePix2LDiag, EavePix3RDiag, EavePix4RHoriz, Fence1LeftSide, Fence2LeftFrontCorn, Fence3FrontLeftCorn, Fence4Front, Fence5Diagonal, Fence6RightDrway, Festivus Pole Flood, HappyHolidays, LampPost, LaserDots, LaserDots-2, Mailbox_Main, Mailbox_MiniWicker, MailboxLights, MasterPower1, MasterPower2, Menorah, Nativity, NativityStar, Peace Sign, Penguins, Presents, RainbowArch1Red, RainbowArch2Orn, RainbowArch3Yel, RainbowArch4Grn, RainbowArch5Blu, RainbowArch6Vio, Ridgeline Left, Ridgeline Right, Santa in the Window, Security Lights, Snowfall, SnowflakesL, SnowflakesR, Snowglobe, SnowLake, Snowman(New), Spiral Tree 1 Front, Spiral Tree 2 Right, Spiral Tree 3 Back, Spiral Tree 4 Left, Streetlight Laser, Swirlies Oak, Tinsel Tree Left, Tinsel Tree Right, Tiny Tree Blue, Tomato Tree A1B, Tomato Tree A1G, Tomato Tree A1R, Tomato Tree A1W, Tomato Tree A2B, Tomato Tree A2G, Tomato Tree A2R, Tomato Tree A2W, Tomato Tree A3B, Tomato Tree A3G, Tomato Tree A3R, Tomato Tree A3W, Tomato Tree A4B, Tomato Tree A4G, Tomato Tree A4R, Tomato Tree A4W, Tomato Tree A5B, Tomato Tree A5G, Tomato Tree A5R, Tomato Tree A5W, Tomato Tree A6B, Tomato Tree A6G, Tomato Tree A6R, Tomato Tree A6W, Tomato Tree A7B, Tomato Tree A7G, Tomato Tree A7R, Tomato Tree A7W, Tomato Tree A8B, Tomato Tree A8G, Tomato Tree A8R, Tomato Tree A8W, Tomato Tree B1P, Tomato Tree B1W, Tomato Tree B2P, Tomato Tree B2W, Tomato Tree B3P, Tomato Tree B3W, Tomato Tree B4P, Tomato Tree B4W, Tomato Tree B5P, Tomato Tree B5W, Tomato Tree B6P, Tomato Tree B6W, Tomato Tree B7P, Tomato Tree B7W, Tomato Tree B8P, Tomato Tree B8W, UFO LeftL, UFO LeftR, UFO RightL, UFO RightR, UFO TopCenterL, UFO TopCenterR, WreathGrn1, WreathGrn3, WreathGrn4, WreathGrn6, WreathRed2, WreathRed5, YuleLog","ModelGroup",,,,,,,3473,,1,3473,400 x 105,Default,,,,,,,,
+"Big Pixel Tree","","Tree","RGB Nodes",1,300,300,18.00,3,900,#10.3.7.188:10:1,2574,3473,1 x 300,Forest,,E131,"APixTreeTop",12,10.3.7.188,,10,1,FALSE
+"Big Tree Multi","","Tree","Single Color Custom",1,1,300,,1,1,25,25,25,1 x 300,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,9,FALSE
+"Bushes 1 Rainbow Group","Bushes1Rainbow1Red, Bushes1Rainbow2Orn, Bushes1Rainbow3Grn, Bushes1Rainbow4Blu, Bushes1Rainbow5Vio","ModelGroup",,,,,,,5,,73,77,7 x 9,Bushes,,,,,,,,
+"Bushes 2 Left Group","Bushes2Left1Multi, Bushes2Left2Wht","ModelGroup",,,,,,,2,,33,34,186 x 50,Bushes,,,,,,,,
+"Bushes 4 Center Group","Bushes4Center1Red, Bushes4Center2Grn, Bushes4Center3Blu, Bushes4Center4Wht","ModelGroup",,,,,,,4,,49,52,334 x 16,Bushes,,,,,,,,
+"Bushes 5 Driveway Group","Bushes5Drwy1Pink, Bushes5Drwy2Wht","ModelGroup",,,,,,,2,,11,12,50 x 95,Bushes,,,,,,,,
+"Bushes 6 ALL Right Group","Bushes6Right1Red, Bushes6Right2Grn, Bushes6Right3Blu, Bushes6Right4Wht, Bushes6Right5Vio, Bushes6Right6Multi","ModelGroup",,,,,,,6,,69,74,13 x 90,Bushes,,,,,,,,
+"Bushes 6 Right RGBW Group","Bushes6Right3Blu, Bushes6Right2Grn, Bushes6Right1Red, Bushes6Right4Wht","ModelGroup",,,,,,,4,,69,72,13 x 90,Bushes,,,,,,,,
+"Bushes White Group","Bushes2Left2Wht, Bushes4Center4Wht, Bushes5Drwy2Wht, Bushes6Right4Wht","ModelGroup",,,,,,,61,,12,72,400 x 54,Bushes,,,,,,,,
+"Bushes1Rainbow1Red","","Tree","Single Color Red",1,1,100,,1,1,>Bushes1Rainbow2Orn:1,77,77,1 x 100,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,61,FALSE
+"Bushes1Rainbow2Orn","","Tree","Single Color Custom",1,1,100,,1,1,>Bushes1Rainbow3Grn:1,76,76,1 x 100,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,60,FALSE
+"Bushes1Rainbow3Grn","","Tree","Single Color Green",1,1,100,,1,1,>Bushes1Rainbow4Blu:1,75,75,1 x 100,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,59,FALSE
+"Bushes1Rainbow4Blu","","Tree","Single Color Blue",1,1,100,,1,1,>Bushes1Rainbow5Vio:1,74,74,1 x 100,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,58,FALSE
+"Bushes1Rainbow5Vio","","Tree","Single Color Custom",1,1,100,,1,1,>Bushes6Right4Wht:1,73,73,1 x 100,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,57,FALSE
+"Bushes2Left1Multi","","Tree","Single Color Custom",1,1,300,,1,1,33,33,33,1 x 300,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,17,FALSE
+"Bushes2Left2Wht","","Tree","Single Color White",1,1,300,,1,1,>Bushes2Left1Multi:1,34,34,1 x 300,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,18,FALSE
+"Bushes3Low","","Tree","Single Color Custom",1,1,200,,1,1,41,41,41,1 x 200,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,25,FALSE
+"Bushes4Center1Red","","Matrix","Single Color Red",1,1,448,,1,1,49,49,49,112 x 4,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,33,FALSE
+"Bushes4Center2Grn","","Matrix","Single Color Red",1,1,448,,1,1,>Bushes4Center1Red:1,50,50,112 x 4,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,34,FALSE
+"Bushes4Center3Blu","","Matrix","Single Color Red",1,1,448,,1,1,>Bushes4Center2Grn:1,51,51,112 x 4,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,35,FALSE
+"Bushes4Center4Wht","","Matrix","Single Color Red",1,1,448,,1,1,>Bushes4Center3Blu:1,52,52,112 x 4,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,36,FALSE
+"Bushes5Drwy1Pink","","Tree","Single Color Custom",1,1,300,,1,1,11,11,11,1 x 300,Bushes,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,11,FALSE
+"Bushes5Drwy2Wht","","Tree","Single Color White",1,1,300,,1,1,>Bushes5Drwy1Pink:1,12,12,1 x 300,Bushes,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,12,FALSE
+"Bushes6Right1Red","","Tree","Single Color Red",1,1,300,,1,1,69,69,69,1 x 300,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,53,FALSE
+"Bushes6Right2Grn","","Tree","Single Color Green",1,1,300,,1,1,>Bushes6Right1Red:1,70,70,1 x 300,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,54,FALSE
+"Bushes6Right3Blu","","Tree","Single Color Blue",1,1,300,,1,1,>Bushes6Right2Grn:1,71,71,1 x 300,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,55,FALSE
+"Bushes6Right4Wht","","Tree","Single Color White",1,1,300,,1,1,>Bushes6Right3Blu:1,72,72,1 x 300,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,56,FALSE
+"Bushes6Right5Vio","","Tree","Single Color Custom",1,1,300,,1,1,>Bushes6Right4Wht:1,73,73,1 x 300,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,57,FALSE
+"Bushes6Right6Multi","","Tree","Single Color Custom",1,1,300,,1,1,>Bushes6Right5Vio:1,74,74,1 x 300,Bushes,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,58,FALSE
+"C9Chase Group","C9Chase1R, C9Chase2G, C9Chase3B, C9Chase4W","ModelGroup",,,,,,,4,,13,16,400 x 73,Eaves,,,,,,,,
+"C9Chase1R","","Poly Line","Single Color Red",1,1,200,,1,1,13,13,13,1 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,13,FALSE
+"C9Chase2G","","Poly Line","Single Color Green",1,1,200,,1,1,>C9Chase1R:1,14,14,1 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,14,FALSE
+"C9Chase3B","","Poly Line","Single Color Blue",1,1,200,,1,1,>C9Chase2G:1,15,15,1 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,15,FALSE
+"C9Chase4W","","Poly Line","Single Color White",1,1,200,,1,1,>C9Chase3B:1,16,16,1 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,16,FALSE
+"CandyCane01-R1","","Candy Canes","Single Color Red",1,1,20,,1,1,29,29,29,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,13,FALSE
+"CandyCane02-G2","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane01-R1:1,30,30,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,14,FALSE
+"CandyCane03-R3","","Candy Canes","Single Color Red",1,1,20,,1,1,>CandyCane02-G2:1,31,31,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,15,FALSE
+"CandyCane04-G4","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane03-R3:1,32,32,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,16,FALSE
+"CandyCane05-R1","","Candy Canes","Single Color Red",1,1,20,,1,1,>CandyCane01-R1:0,29,29,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,13,FALSE
+"CandyCane06-G2","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane02-G2:0,30,30,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,14,FALSE
+"CandyCane07-R3","","Candy Canes","Single Color Red",1,1,20,,1,1,>CandyCane03-R3:0,31,31,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,15,FALSE
+"CandyCane08-G4","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane04-G4:0,32,32,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,16,FALSE
+"CandyCane09-R1","","Candy Canes","Single Color Red",1,1,20,,1,1,>CandyCane01-R1:0,29,29,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,13,FALSE
+"CandyCane10-G2","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane02-G2:0,30,30,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,14,FALSE
+"CandyCane11-R3","","Candy Canes","Single Color Red",1,1,20,,1,1,>CandyCane03-R3:0,31,31,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,15,FALSE
+"CandyCane12-G4","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane04-G4:0,32,32,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,16,FALSE
+"CandyCane13-R1","","Candy Canes","Single Color Red",1,1,20,,1,1,>CandyCane01-R1:0,29,29,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,13,FALSE
+"CandyCane14-G2","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane02-G2:0,30,30,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,14,FALSE
+"CandyCane15-R3","","Candy Canes","Single Color Red",1,1,20,,1,1,>CandyCane03-R3:0,31,31,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,15,FALSE
+"CandyCane16-G4","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane04-G4:0,32,32,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,16,FALSE
+"CandyCane17-R1","","Candy Canes","Single Color Red",1,1,20,,1,1,>CandyCane01-R1:0,29,29,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,13,FALSE
+"CandyCane18-G2","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane02-G2:0,30,30,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,14,FALSE
+"CandyCane19-R3","","Candy Canes","Single Color Red",1,1,20,,1,1,>CandyCane03-R3:0,31,31,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,15,FALSE
+"CandyCane20-G4","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane04-G4:0,32,32,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,16,FALSE
+"CandyCane21-R1","","Candy Canes","Single Color Red",1,1,20,,1,1,>CandyCane01-R1:0,29,29,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,13,FALSE
+"CandyCane22-G2","","Candy Canes","Single Color Green",1,1,20,,1,1,>CandyCane02-G2:0,30,30,1 x 1,Cane & Pixel Fence,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,14,FALSE
+"CandyCanes 1R Group","CandyCane01-R1, CandyCane05-R1, CandyCane09-R1, CandyCane13-R1, CandyCane17-R1, CandyCane21-R1","ModelGroup",,,,,,,1,,29,29,400 x 37,Cane & Pixel Fence,,,,,,,,
+"CandyCanes 2G Group","CandyCane02-G2, CandyCane06-G2, CandyCane10-G2, CandyCane14-G2, CandyCane18-G2, CandyCane22-G2","ModelGroup",,,,,,,1,,30,30,400 x 37,Cane & Pixel Fence,,,,,,,,
+"CandyCanes 3R Group","CandyCane03-R3, CandyCane07-R3, CandyCane11-R3, CandyCane15-R3, CandyCane19-R3","ModelGroup",,,,,,,1,,31,31,400 x 43,Cane & Pixel Fence,,,,,,,,
+"CandyCanes 4G Group","CandyCane04-G4, CandyCane08-G4, CandyCane12-G4, CandyCane16-G4, CandyCane20-G4","ModelGroup",,,,,,,1,,32,32,400 x 37,Cane & Pixel Fence,,,,,,,,
+"CandyCanes All Group","CandyCane01-R1, CandyCane02-G2, CandyCane03-R3, CandyCane04-G4, CandyCane05-R1, CandyCane06-G2, CandyCane07-R3, CandyCane08-G4, CandyCane09-R1, CandyCane10-G2, CandyCane11-R3, CandyCane12-G4, CandyCane13-R1, CandyCane14-G2, CandyCane15-R3, CandyCane16-G4, CandyCane17-R1, CandyCane18-G2, CandyCane19-R3, CandyCane20-G4, CandyCane21-R1, CandyCane22-G2","ModelGroup",,,,,,,4,,29,32,400 x 40,Cane & Pixel Fence,,,,,,,,
+"Cane Fence Group","Fence1LeftSide, Fence2LeftFrontCorn, Fence3FrontLeftCorn, Fence4Front, Fence5Diagonal, Fence6RightDrway","ModelGroup",,,,,,,1008,,1566,2573,400 x 15,Cane & Pixel Fence,,,,,,,,
+"Carollers","","Image","Single Color White",1,1,2,,1,1,>Penguins:1,19,19,1 x 1,Singers,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,3,FALSE
+"Countdown","","Image","Single Color White",1,1,2,,1,1,61,61,61,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,45,FALSE
+"Deer1","","Image","Single Color White",1,1,2,,1,1,>SnowLake:0,62,62,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,46,FALSE
+"Deer2","","Image","Single Color White",1,1,2,,1,1,>SnowLake:0,62,62,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,46,FALSE
+"Disco Ball L","","Image","Single Color White",1,1,2,,1,1,5,5,5,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,5,FALSE
+"Disco Ball R","","Image","Single Color White",1,1,2,,1,1,5,5,5,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,5,FALSE
+"EavePix1LHoriz","","Single Line","RGB Nodes",1,108,108,6.48,3,324,#10.3.7.188:4:1,174,497,108 x 1,Eaves,,E131,"APixEaveLeftHoriz",6,10.3.7.188,,4,1,FALSE
+"EavePix2LDiag","","Single Line","RGB Nodes",1,93,93,5.58,3,279,#10.3.7.188:5:1,498,776,93 x 1,Eaves,,E131,"APixEaveLeftDiag",7,10.3.7.188,,5,1,FALSE
+"EavePix3RDiag","","Single Line","RGB Nodes",1,93,93,5.58,3,279,#10.3.7.188:6:1,777,1055,93 x 1,Eaves,,E131,"APixEaveRightDiag",8,10.3.7.188,,6,1,FALSE
+"EavePix4RHoriz","","Single Line","RGB Nodes",1,175,175,10.50,3,525,#10.3.7.188:7:1,1056,1580,175 x 1,Eaves,,E131,"APixEaveRightHoriz",9,10.3.7.188,,7,1,FALSE
+"EavePixels Group","EavePix1LHoriz, EavePix2LDiag, EavePix3RDiag, EavePix4RHoriz","ModelGroup",,,,,,,1407,,174,1580,400 x 71,Eaves,,,,,,,,
+"Fence1LeftSide","","Arches","RGB Nodes",1,64,64,3.84,3,192,#10.3.7.188:8:1,1566,1757,16 x 4,Cane & Pixel Fence,,E131,"APixFenceLeft",10,10.3.7.188,,8,1,FALSE
+"Fence2LeftFrontCorn","","Arches","RGB Nodes",1,16,16,0.96,3,48,>Fence1LeftSide:1,1758,1805,16 x 1,Cane & Pixel Fence,,E131,"APixFenceLeft",10,10.3.7.188,,8,193,FALSE
+"Fence3FrontLeftCorn","","Arches","RGB Nodes",1,16,16,0.96,3,48,>Fence2LeftFrontCorn:1,1806,1853,16 x 1,Cane & Pixel Fence,,E131,"APixFenceLeft",10,10.3.7.188,,8,241,FALSE
+"Fence4Front","","Arches","RGB Nodes",1,160,160,9.60,3,480,>Fence3FrontLeftCorn:1,1854,2333,16 x 10,Cane & Pixel Fence,,E131,"APixFenceLeft",10,10.3.7.188,,8,289,FALSE
+"Fence5Diagonal","","Arches","RGB Nodes",1,48,48,2.88,3,144,>Fence4Front:1,2334,2477,16 x 3,Cane & Pixel Fence,,E131,"APixFenceRight",11,10.3.7.188,,9,259,FALSE
+"Fence6RightDrway","","Arches","RGB Nodes",1,32,32,1.92,3,96,>Fence5Diagonal:1,2478,2573,16 x 2,Cane & Pixel Fence,,E131,"APixFenceRight",11,10.3.7.188,,9,403,FALSE
+"Festivus Pole Flood","","Tree","3 Channel RGB",1,1,300,18.00,3,3,153,153,155,6 x 50,Odddballs,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,33,FALSE
+"Forest (all individual) Group","Big Pixel Tree, Big Tree Multi, Tomato Tree A1W, Tomato Tree A2B, Tomato Tree A2G, Tomato Tree A2R, Tomato Tree A1B, Tomato Tree A1G, Tomato Tree A1R, Tomato Tree A2W, Tomato Tree A3B, Tomato Tree A3G, Tomato Tree A3R, Tomato Tree A3W, Tomato Tree A4B, Tomato Tree A4G, Tomato Tree A4R, Tomato Tree A4W, Tomato Tree A5B, Tomato Tree A5G, Tomato Tree A5R, Tomato Tree A5W, Tomato Tree A6B, Tomato Tree A6G, Tomato Tree A6R, Tomato Tree A6W, Tomato Tree A7B, Tomato Tree A7G, Tomato Tree A7R, Tomato Tree A7W, Tomato Tree A8B, Tomato Tree A8G, Tomato Tree A8R, Tomato Tree A8W, Tomato Tree B1P, Tomato Tree B1W, Tomato Tree B4P, Tomato Tree B4W, Tomato Tree B5P, Tomato Tree B5W, Tomato Tree B6W, Tomato Tree B6P, Tomato Tree B7W, Tomato Tree B7P, Tomato Tree B8P, Tomato Tree B8W, Tomato Tree B2P, Tomato Tree B2W, Tomato Tree B3P, Tomato Tree B3W","ModelGroup",,,,,,,3449,,25,3473,400 x 123,Forest,,,,,,,,
+"HappyHolidays","","Image","Single Color White",1,1,2,,1,1,61,61,61,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,45,FALSE
+"LampPost","","Image","Single Color White",1,1,2,,1,1,64,64,64,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,48,FALSE
+"LaserDots","","Image","Single Color White",1,1,2,,1,1,65,65,65,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,49,FALSE
+"LaserDots-2","","Image","Single Color White",1,1,2,,1,1,>LaserDots:1,66,66,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,50,FALSE
+"MailboxLights","","Tree","Single Color Red",1,1,100,,1,1,>Mailbox_Main:0,63,63,1 x 100,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,47,FALSE
+"Mailbox_Main","","Image","Single Color White",1,1,2,,1,1,63,63,63,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,47,FALSE
+"Mailbox_MiniWicker","","Image","Single Color White",1,1,2,,1,1,>Mailbox_Main:0,63,63,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,47,FALSE
+"Master Power Group","MasterPower1, MasterPower2, Security Lights, Streetlight Laser","ModelGroup",,,,,,,117,,3,119,308 x 200,Odddballs,,,,,,,,
+"MasterPower1","","Single Line","Single Color Custom",1,1,1,,1,1,4,4,4,1 x 1,Odddballs,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,4,FALSE
+"MasterPower2","","Single Line","Single Color Custom",1,1,1,,1,1,12,12,12,1 x 1,Odddballs,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,12,FALSE
+"Menorah","","Image","Single Color White",1,1,2,,1,1,20,20,20,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,4,FALSE
+"Nativity","","Image","Single Color White",1,1,2,,1,1,156,156,156,1 x 1,Odddballs,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,36,FALSE
+"NativityStar","","Star","Single Color White",1,1,50,,1,1,80,80,80,51 x 51,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,64,FALSE
+"Peace Sign","","Image","Single Color White",1,1,2,,1,1,22,22,22,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,6,FALSE
+"Penguins","","Image","Single Color White",1,1,2,,1,1,18,18,18,1 x 1,Singers,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,2,FALSE
+"Presents","","Image","Single Color White",1,1,2,,1,1,27,27,27,1 x 1,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,11,FALSE
+"Rainbow Arch Group","RainbowArch1Red, RainbowArch2Orn, RainbowArch3Yel, RainbowArch4Grn, RainbowArch5Blu, RainbowArch6Vio","ModelGroup",,,,,,,52,,2,53,20 x 104,Singers,,,,,,,,
+"RainbowArch1Red","","Poly Line","Single Color Red",1,1,50,,1,1,53,53,53,1 x 1,Singers,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,37,FALSE
+"RainbowArch2Orn","","Poly Line","Single Color Custom",1,1,50,,1,1,>RainbowArch2Orn:1,2,2,1 x 1,Singers,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,2,FALSE
+"RainbowArch3Yel","","Poly Line","Single Color Custom",1,1,50,,1,1,>RainbowArch2Orn:1,3,3,1 x 1,Singers,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,3,FALSE
+"RainbowArch4Grn","","Poly Line","Single Color Red",1,1,50,,1,1,>RainbowArch3Yel:1,4,4,1 x 1,Singers,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,4,FALSE
+"RainbowArch5Blu","","Poly Line","Single Color Blue",1,1,50,,1,1,>RainbowArch4Grn:1,5,5,1 x 1,Singers,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,5,FALSE
+"RainbowArch6Vio","","Poly Line","Single Color Custom",1,1,50,,1,1,>RainbowArch5Blu:1,6,6,1 x 1,Singers,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,6,FALSE
+"Religious Group","YuleLog, Menorah, Nativity, NativityStar, Festivus Pole Flood","ModelGroup",,,,,,,137,,20,156,400 x 74,Odddballs,,,,,,,,
+"Ridgeline Group","Ridgeline Left, Ridgeline Right","ModelGroup",,,,,,,6,,165,170,400 x 1,Eaves,,,,,,,,
+"Ridgeline Left","","Single Line","3 Channel RGB",1,1,100,6.00,3,3,165,165,167,1 x 1,Eaves,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,45,FALSE
+"Ridgeline Right","","Single Line","3 Channel RGB",1,1,75,4.50,3,3,168,168,170,1 x 1,Eaves,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,48,FALSE
+"Santa in the Window","","Image","Single Color White",1,1,2,,1,1,>MasterPower1:0,4,4,1 x 1,Odddballs,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,4,FALSE
+"Security Lights","","Single Line","Single Color Custom",1,1,1,,1,1,3,3,3,1 x 1,Odddballs,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,3,FALSE
+"Snow Group","Snowflakes Group, SnowflakesL, SnowflakesR, Snowglobe, Snowman(New)","ModelGroup",,,,,,,43,,17,59,400 x 29,Swirly-Twirly,,,,,,,,
+"SnowLake","","Image","Single Color White",1,1,2,,1,1,62,62,62,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,46,FALSE
+"Snowfall","","Image","Single Color White",1,1,2,,1,1,1,1,1,1 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,1,FALSE
+"Snowflakes Group","SnowflakesL, SnowflakesR","ModelGroup",,,,,,,1,,59,59,144 x 1,Singers,,,,,,,,
+"SnowflakesL","","Image","Single Color White",1,1,2,,1,1,59,59,59,1 x 1,Eaves,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,43,FALSE
+"SnowflakesR","","Image","Single Color White",1,1,2,,1,1,>SnowflakesL:0,59,59,1 x 1,Eaves,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,43,FALSE
+"Snowglobe","","Image","Single Color White",1,1,2,,1,1,17,17,17,1 x 1,Singers,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,1,FALSE
+"Snowman(New)","","Image","Single Color White",1,1,2,,1,1,19,19,19,1 x 1,Singers,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,3,FALSE
+"Spiral Tree 1 Front","","Tree","Single Color Custom",1,1,100,,1,1,37,37,37,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,21,FALSE
+"Spiral Tree 2 Right","","Tree","Single Color White",1,1,100,,1,1,>Spiral Tree 1 Front:1,38,38,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,22,FALSE
+"Spiral Tree 3 Back","","Tree","Single Color Custom",1,1,100,,1,1,>Spiral Tree 2 Right:1,39,39,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,23,FALSE
+"Spiral Tree 4 Left","","Tree","Single Color White",1,1,100,,1,1,>Spiral Tree 3 Back:1,40,40,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,24,FALSE
+"Spiral Trees Group","Spiral Tree 3 Back, Spiral Tree 1 Front, Spiral Tree 4 Left, Spiral Tree 2 Right","ModelGroup",,,,,,,4,,37,40,132 x 89,Forest,,,,,,,,
+"Streetlight Laser","","Single Line","Single Color Custom",1,1,100,,1,1,119,119,119,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,103,FALSE
+"Swirlies Oak","","Image","Single Color White",1,1,2,,1,1,78,78,78,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,62,FALSE
+"Tinsel Tree Left","","Tree","Single Color Red",1,1,100,,1,1,42,42,42,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,26,FALSE
+"Tinsel Tree Right","","Tree","Single Color Red",1,1,100,,1,1,>Tinsel Tree Left:1,43,43,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,27,FALSE
+"Tinsel Trees Group","Tinsel Tree Left, Tinsel Tree Right","ModelGroup",,,,,,,2,,42,43,400 x 27,Forest,,,,,,,,
+"Tiny Tree Blue","","Tree","Single Color Blue",1,1,100,,1,1,23,23,23,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,7,FALSE
+"Tomato Tree A1 Group","Tomato Tree A1R, Tomato Tree A1G, Tomato Tree A1B, Tomato Tree A1W","ModelGroup",,,,,,,4,,121,124,35 x 75,Forest,,,,,,,,
+"Tomato Tree A1B","","Tree","Single Color Blue",1,1,100,,1,1,>Tomato Tree A1R:2,123,123,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,3,FALSE
+"Tomato Tree A1G","","Tree","Single Color Green",1,1,100,,1,1,>Tomato Tree A1R:1,122,122,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,2,FALSE
+"Tomato Tree A1R","","Tree","Single Color Red",1,1,100,,1,1,#10.3.7.188:1:1,121,121,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,1,FALSE
+"Tomato Tree A1W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree A1R:3,124,124,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,4,FALSE
+"Tomato Tree A2 Group","Tomato Tree A2B, Tomato Tree A2G, Tomato Tree A2R, Tomato Tree A2W","ModelGroup",,,,,,,4,,125,128,35 x 75,Forest,,,,,,,,
+"Tomato Tree A2B","","Tree","Single Color Blue",1,1,100,,1,1,>Tomato Tree A2R:2,127,127,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,7,FALSE
+"Tomato Tree A2G","","Tree","Single Color Green",1,1,100,,1,1,>Tomato Tree A2R:1,126,126,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,6,FALSE
+"Tomato Tree A2R","","Tree","Single Color Red",1,1,100,,1,1,>Tomato Tree A1R:4,125,125,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,5,FALSE
+"Tomato Tree A2W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree A2R:3,128,128,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,8,FALSE
+"Tomato Tree A3 Group","Tomato Tree A3B, Tomato Tree A3G, Tomato Tree A3R, Tomato Tree A3W","ModelGroup",,,,,,,4,,129,132,35 x 75,Forest,,,,,,,,
+"Tomato Tree A3B","","Tree","Single Color Blue",1,1,100,,1,1,>Tomato Tree A3R:2,131,131,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,11,FALSE
+"Tomato Tree A3G","","Tree","Single Color Green",1,1,100,,1,1,>Tomato Tree A3R:1,130,130,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,10,FALSE
+"Tomato Tree A3R","","Tree","Single Color Red",1,1,100,,1,1,>Tomato Tree A2R:4,129,129,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,9,FALSE
+"Tomato Tree A3W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree A3R:3,132,132,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,12,FALSE
+"Tomato Tree A4 Group","Tomato Tree A4B, Tomato Tree A4G, Tomato Tree A4R, Tomato Tree A4W","ModelGroup",,,,,,,4,,133,136,35 x 75,Forest,,,,,,,,
+"Tomato Tree A4B","","Tree","Single Color Blue",1,1,100,,1,1,>Tomato Tree A4R:2,135,135,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,15,FALSE
+"Tomato Tree A4G","","Tree","Single Color Green",1,1,100,,1,1,>Tomato Tree A4R:1,134,134,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,14,FALSE
+"Tomato Tree A4R","","Tree","Single Color Red",1,1,100,,1,1,>Tomato Tree A3R:4,133,133,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,13,FALSE
+"Tomato Tree A4W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree A4R:3,136,136,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,16,FALSE
+"Tomato Tree A5 Group","Tomato Tree A5B, Tomato Tree A5G, Tomato Tree A5R, Tomato Tree A5W","ModelGroup",,,,,,,4,,137,140,35 x 75,Forest,,,,,,,,
+"Tomato Tree A5B","","Tree","Single Color Blue",1,1,100,,1,1,>Tomato Tree A5R:2,139,139,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,19,FALSE
+"Tomato Tree A5G","","Tree","Single Color Green",1,1,100,,1,1,>Tomato Tree A5R:1,138,138,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,18,FALSE
+"Tomato Tree A5R","","Tree","Single Color Red",1,1,100,,1,1,>Tomato Tree A4R:4,137,137,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,17,FALSE
+"Tomato Tree A5W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree A5R:3,140,140,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,20,FALSE
+"Tomato Tree A6 Group","Tomato Tree A6B, Tomato Tree A6G, Tomato Tree A6R, Tomato Tree A6W","ModelGroup",,,,,,,4,,141,144,35 x 75,Forest,,,,,,,,
+"Tomato Tree A6B","","Tree","Single Color Blue",1,1,100,,1,1,>Tomato Tree A6R:2,143,143,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,23,FALSE
+"Tomato Tree A6G","","Tree","Single Color Green",1,1,100,,1,1,>Tomato Tree A6R:1,142,142,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,22,FALSE
+"Tomato Tree A6R","","Tree","Single Color Red",1,1,100,,1,1,>Tomato Tree A5R:4,141,141,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,21,FALSE
+"Tomato Tree A6W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree A6R:3,144,144,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,24,FALSE
+"Tomato Tree A7 Group","Tomato Tree A7B, Tomato Tree A7G, Tomato Tree A7R, Tomato Tree A7W","ModelGroup",,,,,,,4,,145,148,35 x 75,Forest,,,,,,,,
+"Tomato Tree A7B","","Tree","Single Color Blue",1,1,100,,1,1,>Tomato Tree A7R:2,147,147,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,27,FALSE
+"Tomato Tree A7G","","Tree","Single Color Green",1,1,100,,1,1,>Tomato Tree A7R:1,146,146,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,26,FALSE
+"Tomato Tree A7R","","Tree","Single Color Red",1,1,100,,1,1,>Tomato Tree A6R:4,145,145,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,25,FALSE
+"Tomato Tree A7W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree A7R:3,148,148,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,28,FALSE
+"Tomato Tree A8 Group","Tomato Tree A8B, Tomato Tree A8G, Tomato Tree A8R, Tomato Tree A8W","ModelGroup",,,,,,,4,,149,152,35 x 75,Forest,,,,,,,,
+"Tomato Tree A8B","","Tree","Single Color Blue",1,1,100,,1,1,>Tomato Tree A8R:2,151,151,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,31,FALSE
+"Tomato Tree A8G","","Tree","Single Color Green",1,1,100,,1,1,>Tomato Tree A8R:1,150,150,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,30,FALSE
+"Tomato Tree A8R","","Tree","Single Color Red",1,1,100,,1,1,>Tomato Tree A7R:4,149,149,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,29,FALSE
+"Tomato Tree A8W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree A8R:3,152,152,1 x 100,Forest,,E131,"APixDMX1_Ren+Chin",3,10.3.7.188,,1,32,FALSE
+"Tomato Tree B1 Group","Tomato Tree B1P, Tomato Tree B1W","ModelGroup",,,,,,,2,,33,34,35 x 75,Forest,,,,,,,,
+"Tomato Tree B1P","","Tree","Single Color Custom",1,1,100,,1,1,33,33,33,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,17,FALSE
+"Tomato Tree B1W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B1P:1,34,34,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,18,FALSE
+"Tomato Tree B2 Group","Tomato Tree B2P, Tomato Tree B2W","ModelGroup",,,,,,,2,,35,36,35 x 75,Forest,,,,,,,,
+"Tomato Tree B2P","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B1P:2,35,35,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,19,FALSE
+"Tomato Tree B2W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B2P:1,36,36,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,20,FALSE
+"Tomato Tree B3 Group","Tomato Tree B3P, Tomato Tree B3W","ModelGroup",,,,,,,2,,37,38,35 x 75,Forest,,,,,,,,
+"Tomato Tree B3P","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B2P:2,37,37,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,21,FALSE
+"Tomato Tree B3W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B3P:1,38,38,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,22,FALSE
+"Tomato Tree B4 Group","Tomato Tree B4P, Tomato Tree B4W","ModelGroup",,,,,,,2,,39,40,35 x 75,Forest,,,,,,,,
+"Tomato Tree B4P","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B3P:2,39,39,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,23,FALSE
+"Tomato Tree B4W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B4P:1,40,40,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,24,FALSE
+"Tomato Tree B5 Group","Tomato Tree B5P, Tomato Tree B5W","ModelGroup",,,,,,,2,,41,42,35 x 75,Forest,,,,,,,,
+"Tomato Tree B5P","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B4P:2,41,41,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,25,FALSE
+"Tomato Tree B5W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B5P:1,42,42,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,26,FALSE
+"Tomato Tree B6 Group","Tomato Tree B6P, Tomato Tree B6W","ModelGroup",,,,,,,2,,43,44,35 x 75,Forest,,,,,,,,
+"Tomato Tree B6P","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B5P:2,43,43,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,27,FALSE
+"Tomato Tree B6W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B6P:1,44,44,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,28,FALSE
+"Tomato Tree B7 Group","Tomato Tree B7P, Tomato Tree B7W","ModelGroup",,,,,,,2,,45,46,35 x 75,Forest,,,,,,,,
+"Tomato Tree B7P","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B6P:2,45,45,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,29,FALSE
+"Tomato Tree B7W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B7P:1,46,46,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,30,FALSE
+"Tomato Tree B8 Group","Tomato Tree B8P, Tomato Tree B8W","ModelGroup",,,,,,,2,,47,48,35 x 75,Forest,,,,,,,,
+"Tomato Tree B8P","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B7P:2,47,47,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,31,FALSE
+"Tomato Tree B8W","","Tree","Single Color Custom",1,1,100,,1,1,>Tomato Tree B8P:1,48,48,1 x 100,Forest,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,32,FALSE
+"Tomato Trees A 1Red Group","Tomato Tree A1R, Tomato Tree A2R, Tomato Tree A3R, Tomato Tree A4R, Tomato Tree A5R, Tomato Tree A6R, Tomato Tree A7R, Tomato Tree A8R","ModelGroup",,,,,,,29,,121,149,400 x 74,Forest,,,,,,,,
+"Tomato Trees A 2Grn Group","Tomato Tree A1G, Tomato Tree A2G, Tomato Tree A3G, Tomato Tree A4G, Tomato Tree A5G, Tomato Tree A6G, Tomato Tree A7G, Tomato Tree A8G","ModelGroup",,,,,,,29,,122,150,400 x 74,Forest,,,,,,,,
+"Tomato Trees A 3Blu Group","Tomato Tree A1B, Tomato Tree A2B, Tomato Tree A3B, Tomato Tree A4B, Tomato Tree A5B, Tomato Tree A6B, Tomato Tree A7B, Tomato Tree A8B","ModelGroup",,,,,,,29,,123,151,400 x 74,Forest,,,,,,,,
+"Tomato Trees A 4Wht Group","Tomato Tree A1W, Tomato Tree A2W, Tomato Tree A3W, Tomato Tree A4W, Tomato Tree A5W, Tomato Tree A6W, Tomato Tree A7W, Tomato Tree A8W","ModelGroup",,,,,,,29,,124,152,400 x 73,Forest,,,,,,,,
+"Tomato Trees A Groups Group","Tomato Tree A1 Group, Tomato Tree A2 Group, Tomato Tree A3 Group, Tomato Tree A4 Group, Tomato Tree A5 Group, Tomato Tree A6 Group, Tomato Tree A7 Group, Tomato Tree A8 Group","ModelGroup",,,,,,,32,,121,152,400 x 73,Forest,,,,,,,,
+"Tomato Trees A+B Wht Indiv Group","Tomato Tree B1W, Tomato Tree A1W, Tomato Tree B2W, Tomato Tree A2W, Tomato Tree B3W, Tomato Tree A3W, Tomato Tree B4W, Tomato Tree A4W, Tomato Tree A5W, Tomato Tree B5W, Tomato Tree A6W, Tomato Tree B6W, Tomato Tree A7W, Tomato Tree B7W, Tomato Tree A8W, Tomato Tree B8W","ModelGroup",,,,,,,119,,34,152,400 x 59,Forest,,,,,,,,
+"Tomato Trees All Groups Group","Tomato Trees A Groups Group, Tomato Trees B Groups Group","ModelGroup",,,,,,,120,,33,152,400 x 60,Forest,,,,,,,,
+"Tomato Trees B Groups Group","Tomato Tree B1 Group, Tomato Tree B2 Group, Tomato Tree B3 Group, Tomato Tree B4 Group, Tomato Tree B5 Group, Tomato Tree B6 Group, Tomato Tree B7 Group, Tomato Tree B8 Group","ModelGroup",,,,,,,16,,33,48,400 x 60,Forest,,,,,,,,
+"Tomato Trees B Pur Group","Tomato Tree B1P, Tomato Tree B2P, Tomato Tree B3P, Tomato Tree B4P, Tomato Tree B5P, Tomato Tree B6P, Tomato Tree B7P, Tomato Tree B8P","ModelGroup",,,,,,,15,,33,47,400 x 60,Forest,,,,,,,,
+"Tomato Trees B Wht Group","Tomato Tree B1W, Tomato Tree B2W, Tomato Tree B3W, Tomato Tree B4W, Tomato Tree B5W, Tomato Tree B6W, Tomato Tree B7W, Tomato Tree B8W","ModelGroup",,,,,,,15,,34,48,400 x 59,Forest,,,,,,,,
+"UFO LeftL","","Image","Single Color White",1,1,2,,1,1,35,35,35,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,19,FALSE
+"UFO LeftR","","Image","Single Color White",1,1,2,,1,1,>UFO LeftL:0,35,35,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,19,FALSE
+"UFO RightL","","Image","Single Color White",1,1,2,,1,1,10,10,10,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,10,FALSE
+"UFO RightR","","Image","Single Color White",1,1,2,,1,1,>UFO RightL:0,10,10,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,10,FALSE
+"UFO TopCenterL","","Image","Single Color White",1,1,2,,1,1,36,36,36,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,20,FALSE
+"UFO TopCenterR","","Image","Single Color White",1,1,2,,1,1,>UFO TopCenterL:0,36,36,1 x 1,Swirly-Twirly,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,20,FALSE
+"Wreath Group","WreathGrn Group","ModelGroup",,,,,,,1,,8,8,42 x 43,Singers,,,,,,,,
+"WreathGrn Group","WreathGrn1, WreathGrn3, WreathGrn4, WreathGrn6","ModelGroup",,,,,,,1,,8,8,42 x 43,Eaves,,,,,,,,
+"WreathGrn1","","Circle","Single Color Green",1,1,30,,1,1,8,8,8,30 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,8,FALSE
+"WreathGrn3","","Circle","Single Color Green",1,1,24,,1,1,>WreathGrn1:0,8,8,24 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,8,FALSE
+"WreathGrn4","","Circle","Single Color Green",1,1,21,,1,1,>WreathGrn1:0,8,8,21 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,8,FALSE
+"WreathGrn6","","Circle","Single Color Green",1,1,15,,1,1,>WreathGrn1:0,8,8,15 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,8,FALSE
+"WreathRed Group","WreathRed2, WreathRed5","ModelGroup",,,,,,,1,,9,9,36 x 35,Eaves,,,,,,,,
+"WreathRed2","","Circle","Single Color Red",1,1,27,,1,1,>WreathGrn1:1,9,9,27 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,9,FALSE
+"WreathRed5","","Circle","Single Color Red",1,1,18,,1,1,>WreathRed2:0,9,9,18 x 1,Eaves,,LOR Optimised,"LOR Regular Network 1",1,/dev/ttyUSB0,115200 baud,1,9,FALSE
+"YuleLog","","Image","Single Color White",1,1,2,,1,1,21,21,21,1 x 1,Odddballs,,LOR Optimised,"LOR Enhanced 2-6",2,/dev/ttyUSB1,512000 baud,7,5,FALSE
+
+"Model Count",220
+"First Used Channel",1
+"Last Used Channel",3473
+"Actual Used Channel",3409
+"Bulbs",12741

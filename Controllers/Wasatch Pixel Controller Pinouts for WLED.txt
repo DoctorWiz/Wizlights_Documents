@@ -1,0 +1,21 @@
+The board should be powered with 5V only. 
+Pin assignments for the SIX board are: 
+	Led 1: pin 2 
+	Led 2: pin 4 
+	Led 3: pin 12 
+	Led 4: pin 14 
+	Led 5: pin 15 
+	Led 6: pin 17 
+You can preset these pins in WLED in the LED Preferences menu. 
+You can adjust the corresponding string lengths here as well. 
+To adjust individual strings in WLED, you will also need to create Segments that correspond to the individual string lengths. 
+Let me know if you have an issues or questions. support@wasatchpixels.com
+
+
+
+92.2	7C:87:CE:44:CC:F1	10.3.	12.			ESP32-ETH01 #2	Pixel Controller	WiFi	Wizard			Inactive	WLED	0.13.1 Toki	Wizlights	ESP32	ESP32-ETH01	With Wasach Pixel Ctlr
+8C:CE:4E:94:8B:37
+
+
+
+SN74HCT245 - Level Shifter for Pixels 3.3V to 5V

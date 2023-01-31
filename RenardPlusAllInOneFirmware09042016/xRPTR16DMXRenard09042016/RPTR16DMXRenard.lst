@@ -1,0 +1,3298 @@
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;; filename: Renard Plus All in one firmware.asm
+                      00002 ;; Orignal filename:    ren16_g2-2009731.asm
+                      00003 ;; Copyright (c) 2006,2007,2009 Phil Short
+                      00004 ;;
+                      00005 ;;  This program is provided free for you to use in any way that you wish,
+                      00006 ;;  subject to the laws and regulations where you are using it.  Due diligence
+                      00007 ;;  is strongly suggested before using this code.
+                      00008 ;;
+                      00009 ;;  The Author makes no warranty of any kind, express or implied, with regard
+                      00010 ;;  to this program or the documentation contained in this document.  The
+                      00011 ;;  Author shall not be liable in any event for incidental or consequential
+                      00012 ;;  damages in connection with, or arising out of, the furnishing, performance
+                      00013 ;;  or use of these programs.
+                      00014 ;;
+                      00015 ;;  --------------------------------------------------------------------------
+                      00016 ;;
+                      00017 ;;  Note: there are some parameters that may be modified by the user.  These
+                      00018 ;;    are located just below the list of processors that the firmware is
+                      00019 ;;    intended to work with.
+                      00020 ;;
+                      00021 ;;  4 Jan 2009 PJS Taken as basis for 16-channel version coded up for the
+                      00022 ;;     PIC16F722 microcntroller.
+                      00023 ;;  11 Jan 2009 PJS Fixed bug so that it now recovers from frame error, added
+                      00024 ;;     code for using 16-bit baudrate generator of PIC18 family, added code to
+                      00025 ;;     to make the ZC LED to follow the ZC hardware input when that bit is not
+                      00026 ;;     toggling (i.e. LED is on when input is open, LED is off when input is
+                      00027 ;;     shorted to ground, flashes otherwise with a 5 second (approx) period.
+                      00028 ;;  12 Jan 2009 PR Modified scheme for adjusting settings for different CPUs
+                      00029 ;;  12 Jan 2009 PJS Fixed settings for PIC18F2221
+                      00030 ;;  13 Jan 2009 PJS Removed portions of revision history that related to the
+                      00031 ;;     old Renard firmware (PIC16F688-specific).  Added lots of macros to make
+                      00032 ;;     it a little easier to re-map the outputs.  These macros will probably
+                      00033 ;;     be removed from this file and placed in a separate include file so that
+                      00034 ;;     the user doesn't have to re-enter them when a firmware update is issued.
+                      00035 ;;  15 Jan 2009 PJS Moved LED from bit 7 of porta to bit 6 of port b, and
+                      00036 ;;     tri-stated the former bit.
+                      00037 ;;  17 Jan 2009 PJS Fixed problem causing channel 5 to ignore input settings
+                      00038 ;;      (and to appear to cyclically dim), and fixed configuration error for
+                      00039 ;;      16F722.
+                      00040 ;;  28 April 2009 PJS Modified for pinout used on home-etch/SMD  board.  The
+                      00041 ;;      VCAP  pin was moved, the LED logic was modified to use only three pins
+                      00042 ;;      for four LEDs ('charlie-plexed'), and the triac output pins were moved
+                      00043 ;;      around.  Lots  of little modifications to try and make things faster
+                      00044 ;;      to compensate for extra charlie-plexing logic in the ISR.
+                      00045 ;;  16 May 2009 PJS Split off the local customization file
+                      00046 ;;  20 May 2009 PJS Made some fixes for PIC18F family (suggested by pr).
+                      00047 ;;  27 May 2010 PJS Fixes for PIC18F family -
+                      00048 ;;     - moved code for clearing PIE1, PIE2, and IPEN (previous location of
+                      00049 ;;       that code prevented timer2 interrupts from occurring).
+                      00050 ;;     - changed a few instances of '0x80' to BANK1 (previous code would access
+                      00051 ;;       the wrong addresses).  NOTE that changes to ren16_g2_local.inc is also
+                      00052 ;;       required, for the same reason).
+                      00053 ;;  28 may 2010 PR Minor changes to the processor config sections. Added 2620 as
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ;;       per Mac's (Phoenix) recommendations.
+                      00055 ;;  10 Aug 2010 Mac (Phoenix) added PSP Mode for PortE cofig errors.
+                      00056 ;;  01 Oct 2010 Mac (Phoenix) changed Clockrate for PIC18F45K22 Device for 64Mhz 
+                      00057 ;;      and  Heartbeat location moved, prior to that change back in August 2010
+                      00058 ;;      PSP Mode added for PortE cofig errors.;;
+                      00059 ;;  06 March 2011 Mac (Phoenix) changed Clockrate to 32Mhz due to poor dimming issues, needed to
+                      00060 ;;       remove three status LEDs in order to accommodate 32 channels, there is now only
+                      00061 ;;       one status LED that blinks at three different levels of intensities at about every 
+                      00062 ;;       three seconds.
+                      00063 ;;  22 April 2011 PJS added Start Address code for Ren-W wirelees capabilities
+                      00064 ;;  25 April 2011 Mac (Phoenix) added Defines to avoid two sets of code 
+                      00065 ;;         for Start Address and non Start Address firmware
+                      00066 ;;  05 August 2012 A. Williams (LabRat) added DMX code
+                      00067 ;;  10 Oct 2013 A. Williams (LabRat) corrected DMX lag issue
+                      00068 ;;  19 Dec 2013 Mac (Phoenix) combined .inc file with .asm files
+                      00069 ;;  16 April 2015 Charles Kerr added DMX Lights out function when data signal is lost 
+                      00070 ;;     between Controller and sequenced data stream.
+                      00071 ;;  22 April 2015 Mac (Phoenix) fixed intermittant loss of dimming control.
+                      00072 ;;  10 August 2016 Mac (Phoenix) Merged Renard, Renard Start Addressing, DMX and
+                      00073 ;;     added PIC18Fxxk22 PIC onto a single .asm file.
+                      00074 ;;
+                      00075 ;;  ******* dedicated port assignments ********
+                      00076 ;;
+                      00077 ;;  PIN 1  (RE0) - zero-crossing (input only)
+                      00078 ;;  PIN 17 (RC6/TX) - uart_out (output)
+                      00079 ;;  PIN 18 (RC7/RX) - uart_in (input)
+                      00080 
+                      00081 ;;  Outputs are good to drive 15 mA opto-isolators, except this will probably
+                      00082 ;;  overload the VSS/VDD pins on the PIC.  So the current through each output
+                      00083 ;;  should be limited to 6 mA (except the LED pins).
+                      00084 ;;
+                      00085 ;;  This code fits in less than 2K of program space, and takes advantage of
+                      00086 ;;  that fact at various places to save a few bytes of code, and so it may
+                      00087 ;;  not necessarily work as intended if the code size is increased.
+                      00088 ;; 
+                      00089 ;;  This code does not make use of automatic baud-rate detection, nor does
+                      00090 ;;  it use timer1, the low-power, wake-up, analog comparator or A/D
+                      00091 ;;  capabilities of the chip.
+                      00092 ;;
+                      00093 ;;  The interrupt used by this program is timer2, which is intended to create
+                      00094 ;;  a periodic (32 us) clock.  Since the timer is reset inside of the ISR, the
+                      00095 ;;  foreground routine should disable interrupts for as short a time as
+                      00096 ;;  possible (or not at all, if this can be accomplished).
+                      00097 
+                      00098  LIST R=DEC
+                      00099  
+                      00100 ;;
+                      00101 ;; {pr}
+                      00102 ;; added Define statements for each processor that has been tested
+                      00103 ;; The current list is:
+                      00104 ;; 16f722   <- best cost
+                      00105 ;; 18f2525  <- Most memory for future expansion
+                      00106 ;; 18f2420  
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107 ;;
+                      00108 ;; Tested 2012
+                      00109 ;; 18f2221  <- Cheapest 18f family. assuming has 16bit uart
+                      00110 ;;             Currently has config bit errors as it was a copy of the 2525
+                      00111 ;;             settings will check settings once chips arrive
+                      00112 
+                      00113 ;;  --------------------------------------------------------------------------
+                      00114 ;;
+                      00115 ;;  You might want to change this line if you need different versions of the
+                      00116 ;;    include file for any reason.
+                      00117         
+                      00118 ;;  This file contains the definitions that the user might reasonably want to
+                      00119 ;;  change.  This includes the I/O pin mappings, the baud rate, and some
+                      00120 ;;  clock-related items. These files were created by Phil Short, Peter Rogers
+                      00121 ;;  and modified several times to accommodate the Renard Plus Controllers 
+                      00122 ;;  designed by Mac Macmillan (Phoenix)
+                      00123 ;;
+                      00124 ;;  2) Processor selection (located as a menu item in the MPLAB IDE).
+                      00125 ;;
+                      00126 ;;  Hardware mappings
+                      00127 ;;  PIN 1  (RE0) - zero-crossing (input only)
+                      00128 ;;  PIN 2  (RA0) - triac driver 1 (output)
+                      00129 ;;  PIN 3  (RA1) - triac driver 2 (output)
+                      00130 ;;  PIN 4  (RA2) - triac driver 3 (output)
+                      00131 ;;  PIN 5  (RA3) - triac driver 4 (output)
+                      00132 ;;  PIN 6  (RA4) - triac driver 5 (output)
+                      00133 ;;  PIN 7  (RA5) - VCAP
+                      00134 ;;  PIN 10 (RA6) - spare - reserved for possible oscillator use
+                      00135 ;;  PIN 9  (RA7) - spare - reserved for possible oscillator use
+                      00136 ;;  PIN 11 (RC0) - triac driver 6 (output)
+                      00137 ;;  PIN 12 (RC1) - triac driver 7 (output)
+                      00138 ;;  PIN 13 (RC2) - triac driver 8 (output)
+                      00139 ;;  PIN 14 (RC3) - LED driver (anode for RxD, cathode for FrameErr)
+                      00140 ;;  PIN 15 (RC4) - LED driver (anode for HB, cathode for ZC)
+                      00141 ;;  PIN 16 (RC5) - LED driver (anode for ZC, RxD, cathode for HB and FrameErr)
+                      00142 ;;  PIN 17 (RC6/TX) - uart_out (output)
+                      00143 ;;  PIN 18 (RC7/RX) - uart_in (input)
+                      00144 ;;  PIN 21 (RB0) - triac driver 16 (output)
+                      00145 ;;  PIN 22 (RB1) - triac driver 15 (output)
+                      00146 ;;  PIN 23 (RB2) - triac driver 14 (output)
+                      00147 ;;  PIN 24 (RB3) - triac driver 13 (output)
+                      00148 ;;  PIN 25 (RB4) - triac driver 12 (output)
+                      00149 ;;  PIN 26 (RB5) - triac driver 11 (output)
+                      00150 ;;  PIN 27 (RB6) - triac driver 10 (output)
+                      00151 ;;  PIN 28 (RB7) - triac driver 9 (output)
+                      00152 
+                      00153 
+                      00154 ;;  NOTE:
+                      00155 ;;
+                      00156 ;;  This firmware is configured for PWM use with up to 460800 baud communications.
+                      00157 ;;  Here are the DEFINE statements for changing this.
+                      00158 ;;
+                      00159 ;;  **********User tunable items*********
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00160 
+                      00161 ;;************** DMX MODE ***************
+                      00162 ;;#DEFINE DMX  ;; ******uncomment for DMX******
+                      00163 #ifdef DMX
+                      00164   #DEFINE BAUDRATE 250000
+                      00165 
+                      00166 ;; Uncomment to hard code the DMX address. Otherwise it will be read
+                      00167 ;; from the EEROM locations
+                      00168 ;; #DEFINE HARD_CODE_DMX_ADDR  ;;only needed for devices without EEPROM
+                      00169 
+                      00170   #DEFINE DMX_START_ADDRESS D'001'  ;;change for DMX starting channel in Vixen 1-512
+                      00171 ; -- EE Address Mappings --
+                      00172   #DEFINE EE_DMX_HIGH           (0x00)  
+                      00173   #DEFINE EE_DMX_LOW            (0x01)
+                      00174         
+                      00175 #else
+                      00176 
+                      00177 ;; Define Baud Rates. uncomment one of the following Baud Rates
+                      00178  #DEFINE BAUDRATE 57600
+                      00179 ;; #DEFINE BAUDRATE 115200
+                      00180 ;; #DEFINE BAUDRATE 230400
+                      00181 
+                      00182 
+                      00183 
+                      00184 ;;************* Renard/Renard Start Address Mode ******************
+                      00185 ;; Start address for channel start configuration on controller
+                      00186 ;; also required for Ren-W wireless operation,, max baud rate is 57600
+                      00187 
+                      00188 ;;  #DEFINE START_ADDRESS  ;;******comment this line out for Standard Renard Protocol
+                      00189 
+                      00190 ;;  #DEFINE START_ADDR 0 ;; 0 starts channels 1-8, see Start Address Chart for
+                      00191 ;; Renard Plus or Simple Renards (not the same as SS Renard boards)
+                      00192 
+                      00193 #endif
+                      00194 
+                      00195 ;; CTR_LOCKOUT turns all outputs off early if it is > 0.
+                      00196 
+                      00197  #DEFINE CTR_LOCKOUT 0
+                      00198 
+                      00199 ;;**************** Internal OSC settings *********************
+                      00200 ;;********************* Do Not Change *************************
+                      00201 
+                      00202  #DEFINE CLOCKRATE 32000000
+                      00203 ;; #DEFINE CLOCKRATE 64000000  
+                      00204  
+                      00205 ;; All PIC18F parts currently require '1<<PLLEN' here.
+                      00206 
+                      00207  #DEFINE OSC_TUNE_LOCAL 1<<PLLEN ;; {pr} fixed typo
+                      00208 
+                      00209 ;; #define ZC_TWEAK 15
+                      00210 
+                      00211 #define DMX_BLINK_RATE 0x2C
+                      00212 
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00213 
+                      00214 ;; I/O bit definitions
+                      00215 
+                      00216  #define ZC_BIT   3
+                      00217  #define ZC_REG   PORTE
+                      00218  #define ZC       ZC_REG,(ZC_BIT)
+                      00219  #define ZC_MASK  (1<<(ZC_BIT))
+                      00220 
+                      00221 ;; The rationale for these bit assignments is given in a short section at the
+                      00222 ;; end of the main .asm file.
+                      00223 ;;
+                      00224 ;; valid bits 0,1,3,5
+                      00225 ;; extra led's to phil board are 4,7 (7 = switched led)
+                      00226 ;;
+                      00227         
+                      00228  #define HEARTBEAT_LED_BIT  0
+                      00229  #define HEARTBEAT_LED_REG  LED_map
+                      00230  #define HEARTBEAT_LED  HEARTBEAT_LED_REG, HEARTBEAT_LED_BIT
+                      00231 
+                      00232  #define ZC_LED_BIT 5
+                      00233  #define ZC_LED_REG LED_map
+                      00234  #define ZC_LED ZC_LED_REG,ZC_LED_BIT
+                      00235         
+                      00236  #define FRAME_ERR_LED_BIT  1
+                      00237  #define FRAME_ERR_LED_REG  LED_map
+                      00238  #define FRAME_ERR_LED  FRAME_ERR_LED_REG, FRAME_ERR_LED_BIT
+                      00239         
+                      00240  #define RXD_LED_BIT 3
+                      00241  #define RXD_LED_REG LED_map
+                      00242  #define RXD_LED RXD_LED_REG, RXD_LED_BIT
+                      00243 
+                      00244 ;; TEST_STROBE is used during the debug phase to create a signal that can be
+                      00245 ;;   examined with an oscilloscope.
+                      00246 ;; The following pin is currently tristated...so TEST_STROBE is disabled.
+                      00247 
+                      00248 
+                      00249 ;;  --------------------------------------------------------------------------
+                      00250 ;;  Macros for assigning dimmer input channels to IO pins.
+                      00251 ;;
+                      00252 ;;  The serial communicationss and zero-crossing pins are pre-assigned, and are
+                      00253 ;;    not intended to be easily changed.
+                      00254 ;;
+                      00255 ;;  This is also where output polarity and PWM vs non-PWM status is assigned.
+                      00256 ;;  If the SINK_PORTx_CHy bit is set to '1' the signal will be active low, if
+                      00257 ;;    it is set '0' the output signal will be active high.  Similarly, if the
+                      00258 ;;    PORTx_CHy bit is set to '1' the output will be a PWM signal, if set
+                      00259 ;;    to '0' the output will be just a pulse (although this latter option only
+                      00260 ;;    makes sense when driving a TRIAC or SCR).
+                      00261 
+                      00262 ;;  Note: the pins used for LED output must have the SINK bit in the 'OFF'
+                      00263 ;;    state and the PWM pin in the 'ON' state.
+                      00264 
+                      00265 #IFNDEF YES
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00266   #DEFINE YES 1
+                      00267 #ENDIF
+                      00268 #IFNDEF NO
+                      00269   #DEFINE NO 0
+                      00270 #ENDIF
+                      00271         
+                      00272 ;;  PortA, bit 0 has channel 1 mapped to it
+                      00273   #DEFINE PIN2_CH 1
+                      00274   #DEFINE PIN2_SINK YES
+                      00275   #DEFINE PIN2_PWM YES
+                      00276         
+                      00277 ;;  PortA, bit 1 has channel 2 mapped to it
+                      00278   #DEFINE PIN3_CH 2
+                      00279   #DEFINE PIN3_SINK YES
+                      00280   #DEFINE PIN3_PWM YES
+                      00281         
+                      00282 ;;  PortA, bit 2 has channel 3 mapped to it
+                      00283   #DEFINE PIN4_CH 3
+                      00284   #DEFINE PIN4_SINK YES
+                      00285   #DEFINE PIN4_PWM YES
+                      00286         
+                      00287 ;;  PortA, bit 3 has channel 4 mapped to it
+                      00288   #DEFINE PIN5_CH 4
+                      00289   #DEFINE PIN5_SINK YES
+                      00290   #DEFINE PIN5_PWM YES
+                      00291 
+                      00292 ;;  PortA, bit 4 has channel 5 mapped to it
+                      00293   #DEFINE PIN6_CH 5
+                      00294   #DEFINE PIN6_SINK YES
+                      00295   #DEFINE PIN6_PWM YES
+                      00296 
+                      00297 ;;  PortA, bit 5 is used for VCAP
+                      00298   #DEFINE PIN7_SINK NO
+                      00299   #DEFINE PIN7_PWM YES
+                      00300 
+                      00301 ;;  PortA, bit 6 has nothing mapped to it - reserved for possible oscillator
+                      00302   #DEFINE PIN10_SINK NO
+                      00303   #DEFINE PIN10_PWM YES
+                      00304 
+                      00305 ;;  PortA, bit 7 has nothing mapped to it - reserved for possible oscillator
+                      00306   #DEFINE PIN9_SINK NO
+                      00307   #DEFINE PIN9_PWM YES
+                      00308 
+                      00309 ;; ---------------------------- PORT B mapping -------------------------------
+                      00310 
+                      00311 ;;  PortB, bit 0 has channel 9 mapped to it
+                      00312   #DEFINE PIN21_CH 16
+                      00313   #DEFINE PIN21_SINK YES
+                      00314   #DEFINE PIN21_PWM YES
+                      00315 
+                      00316 ;;  PortB, bit 1 has channel 10 mapped to it
+                      00317   #DEFINE PIN22_CH 15
+                      00318   #DEFINE PIN22_SINK YES
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00319   #DEFINE PIN22_PWM YES
+                      00320 
+                      00321 ;;  PortB, bit 2 has channel 11 mapped to it
+                      00322   #DEFINE PIN23_CH 14
+                      00323   #DEFINE PIN23_SINK YES
+                      00324   #DEFINE PIN23_PWM YES
+                      00325 
+                      00326 ;;  PortB, bit 3 has channel 12 mapped to it
+                      00327   #DEFINE PIN24_CH 13
+                      00328   #DEFINE PIN24_SINK YES
+                      00329   #DEFINE PIN24_PWM YES
+                      00330 
+                      00331 ;;  PortB, bit 4 has channel 13 mapped to it
+                      00332   #DEFINE PIN25_CH 12
+                      00333   #DEFINE PIN25_SINK YES
+                      00334   #DEFINE PIN25_PWM YES
+                      00335 
+                      00336 ;;  PortB, bit 5 has channel 14 mapped to it
+                      00337   #DEFINE PIN26_CH 11
+                      00338   #DEFINE PIN26_SINK YES
+                      00339   #DEFINE PIN26_PWM YES
+                      00340 
+                      00341 ;;  PortB, bit 6 has channel 15 mapped to it
+                      00342   #DEFINE PIN27_CH 10
+                      00343   #DEFINE PIN27_SINK YES
+                      00344   #DEFINE PIN27_PWM YES
+                      00345 
+                      00346 ;;  PortB, bit 7 has channel 16 mapped to it
+                      00347   #DEFINE PIN28_CH 9
+                      00348   #DEFINE PIN28_SINK YES
+                      00349   #DEFINE PIN28_PWM YES
+                      00350 
+                      00351 ;; ---------------------------- PORT C mapping -------------------------------
+                      00352 
+                      00353 ;;  PortC, bit 0 has channel 6 mapped to it
+                      00354   #DEFINE PIN11_CH 6
+                      00355   #DEFINE PIN11_SINK YES
+                      00356   #DEFINE PIN11_PWM YES
+                      00357 
+                      00358 ;;  PortC, bit 1 has channel 7 mapped to it
+                      00359   #DEFINE PIN12_CH 7
+                      00360   #DEFINE PIN12_SINK YES
+                      00361   #DEFINE PIN12_PWM YES
+                      00362 
+                      00363 ;;  PortC, bit 2 has channel 8 mapped to it
+                      00364   #DEFINE PIN13_CH 8
+                      00365   #DEFINE PIN13_SINK YES
+                      00366   #DEFINE PIN13_PWM YES
+                      00367 
+                      00368 ;;  PortC, bit 3 has LED driver mapped to it
+                      00369   #DEFINE PIN14_SINK NO
+                      00370   #DEFINE PIN14_PWM YES
+                      00371   #DEFINE LED0_TRIS TRISC^BANK1,3
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00372   #DEFINE LED0_anode_sel portc_image,3
+                      00373                         
+                      00374 ;;  PortC, bit 4 has LED driver mapped to it
+                      00375   #DEFINE PIN15_SINK NO
+                      00376   #DEFINE PIN15_PWM YES
+                      00377   #DEFINE LED1_TRIS TRISC^BANK1,4
+                      00378   #DEFINE LED1_anode_sel portc_image,4
+                      00379 
+                      00380 ;;  PortC, bit 5 has LED driver mapped to it
+                      00381   #DEFINE PIN16_SINK NO
+                      00382   #DEFINE PIN16_PWM YES
+                      00383   #DEFINE LED2_TRIS TRISC^BANK1,5
+                      00384   #DEFINE LED2_anode_sel portc_image,5
+                      00385 
+                      00386 ;;  PortC, bits 6 and 7 are used for serial (UART) I/O
+                      00387   #DEFINE PIN17_SINK NO
+                      00388   #DEFINE PIN18_SINK NO
+                      00389 
+                      00390         
+                      00391 
+                      00392 ;; ----------------------------------------------------------------------------
+                      00393 ;; The following definitions probably won't need to be changed by the user.
+                      00394 
+                      00395   #IFDEF PIN2_CH
+                      00396     #DEFINE PIN2_DIMMER (1<<0)
+                      00397   #ELSE
+                      00398     #DEFINE PIN2_DIMMER 0
+                      00399   #ENDIF
+                      00400   #IFDEF PIN3_CH
+                      00401     #DEFINE PIN3_DIMMER (1<<1)
+                      00402   #ELSE
+                      00403     #DEFINE PIN3_DIMMER 0
+                      00404   #ENDIF
+                      00405   #IFDEF PIN4_CH
+                      00406     #DEFINE PIN4_DIMMER (1<<2)
+                      00407   #ELSE
+                      00408     #DEFINE PIN4_DIMMER 0
+                      00409   #ENDIF
+                      00410   #IFDEF PIN5_CH
+                      00411     #DEFINE PIN5_DIMMER (1<<3)
+                      00412   #ELSE
+                      00413     #DEFINE PIN5_DIMMER 0
+                      00414   #ENDIF
+                      00415   #IFDEF PIN6_CH
+                      00416     #DEFINE PIN6_DIMMER (1<<4)
+                      00417   #ELSE
+                      00418     #DEFINE PIN6_DIMMER 0
+                      00419   #ENDIF
+                      00420   #IFDEF PIN7_CH
+                      00421     #DEFINE PIN7_DIMMER (1<<5)
+                      00422   #ELSE
+                      00423     #DEFINE PIN7_DIMMER 0
+                      00424   #ENDIF
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00425   #IFDEF PIN10_CH
+                      00426     #DEFINE PIN10_DIMMER (1<<6)
+                      00427   #ELSE
+                      00428     #DEFINE PIN10_DIMMER 0
+                      00429   #ENDIF
+                      00430   #IFDEF PIN9_CH
+                      00431     #DEFINE PIN9_DIMMER (1<<7)
+                      00432   #ELSE
+                      00433     #DEFINE PIN9_DIMMER 0
+                      00434   #ENDIF
+                      00435         
+                      00436   #IFDEF PIN21_CH
+                      00437     #DEFINE PIN21_DIMMER (1<<0)
+                      00438   #ELSE
+                      00439     #DEFINE PIN21_DIMMER 0
+                      00440   #ENDIF
+                      00441   #IFDEF PIN22_CH
+                      00442     #DEFINE PIN22_DIMMER (1<<1)
+                      00443   #ELSE
+                      00444     #DEFINE PIN22_DIMMER 0
+                      00445   #ENDIF
+                      00446   #IFDEF PIN23_CH
+                      00447     #DEFINE PIN23_DIMMER (1<<2)
+                      00448   #ELSE
+                      00449     #DEFINE PIN23_DIMMER 0
+                      00450   #ENDIF
+                      00451   #IFDEF PIN24_CH
+                      00452     #DEFINE PIN24_DIMMER (1<<3)
+                      00453   #ELSE
+                      00454     #DEFINE PIN24_DIMMER 0
+                      00455   #ENDIF
+                      00456   #IFDEF PIN25_CH
+                      00457     #DEFINE PIN25_DIMMER (1<<4)
+                      00458   #ELSE
+                      00459     #DEFINE PIN25_DIMMER 0
+                      00460   #ENDIF
+                      00461   #IFDEF PIN26_CH
+                      00462     #DEFINE PIN26_DIMMER (1<<5)
+                      00463   #ELSE
+                      00464     #DEFINE PIN26_DIMMER 0
+                      00465   #ENDIF
+                      00466   #IFDEF PIN27_CH
+                      00467     #DEFINE PIN27_DIMMER (1<<6)
+                      00468   #ELSE
+                      00469     #DEFINE PIN27_DIMMER 0
+                      00470   #ENDIF
+                      00471   #IFDEF PIN28_CH
+                      00472     #DEFINE PIN28_DIMMER (1<<7)
+                      00473   #ELSE
+                      00474     #DEFINE PIN28_DIMMER 0
+                      00475   #ENDIF        
+                      00476 
+                      00477   #IFDEF PIN11_CH
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00478     #DEFINE PIN11_DIMMER (1<<0)
+                      00479   #ELSE
+                      00480     #DEFINE PIN11_DIMMER 0
+                      00481   #ENDIF
+                      00482   #IFDEF PIN12_CH
+                      00483     #DEFINE PIN12_DIMMER (1<<1)
+                      00484   #ELSE
+                      00485     #DEFINE PIN12_DIMMER 0
+                      00486   #ENDIF
+                      00487   #IFDEF PIN13_CH
+                      00488     #DEFINE PIN13_DIMMER (1<<2)
+                      00489   #ELSE
+                      00490     #DEFINE PIN13_DIMMER 0
+                      00491   #ENDIF
+                      00492   #IFDEF PIN14_CH
+                      00493     #DEFINE PIN14_DIMMER (1<<3)
+                      00494   #ELSE
+                      00495     #DEFINE PIN14_DIMMER 0
+                      00496   #ENDIF
+                      00497   #IFDEF PIN15_CH
+                      00498     #DEFINE PIN15_DIMMER (1<<4)
+                      00499   #ELSE
+                      00500     #DEFINE PIN15_DIMMER 0
+                      00501   #ENDIF
+                      00502   #IFDEF PIN16_CH
+                      00503     #DEFINE PIN16_DIMMER (1<<5)
+                      00504   #ELSE
+                      00505     #DEFINE PIN16_DIMMER 0
+                      00506   #ENDIF
+                      00507   #IFDEF PIN17_CH
+                      00508     #DEFINE PIN17_DIMMER (1<<6)
+                      00509   #ELSE
+                      00510     #DEFINE PIN17_DIMMER 0
+                      00511   #ENDIF
+                      00512   #IFDEF PIN18_CH
+                      00513     #DEFINE PIN18_DIMMER (1<<7)
+                      00514   #ELSE
+                      00515     #DEFINE PIN18_DIMMER 0
+                      00516   #ENDIF
+                      00517 
+                      00518 ;; ----- Port A
+                      00519 
+                      00520   #DEFINE DIMMER_BITMAP_PORTA (PIN2_DIMMER | PIN3_DIMMER | PIN4_DIMMER | PIN5_DIMMER | PIN6_DIMMER | PIN
+                            7_DIMMER | PIN10_DIMMER | PIN9_DIMMER)
+                      00521 
+                      00522   #DEFINE SINK_MAP_PORTA (((((((PIN9_SINK * 2 + PIN10_SINK) * 2 + PIN7_SINK) * 2 + PIN6_SINK) * 2 + PIN5
+                            _SINK) * 2 + PIN4_SINK) * 2 + PIN3_SINK) * 2 + PIN2_SINK)
+                      00523 
+                      00524   #DEFINE PWM_MAP_PORTA ((((((((PIN9_PWM*2+PIN10_PWM)*2+PIN7_PWM)*2+PIN6_PWM)*2+PIN5_PWM)*2+PIN4_PWM)*2+
+                            PIN3_PWM)*2+PIN2_PWM))
+                      00525 
+                      00526 ;; ----- Port B
+                      00527         
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00528   #DEFINE DIMMER_BITMAP_PORTB (PIN21_DIMMER | PIN22_DIMMER | PIN23_DIMMER | PIN24_DIMMER | PIN25_DIMMER 
+                            | PIN26_DIMMER | PIN27_DIMMER | PIN28_DIMMER)
+                      00529 
+                      00530   #DEFINE SINK_MAP_PORTB (((((((PIN28_SINK * 2 + PIN27_SINK) * 2 + PIN26_SINK) * 2 + PIN25_SINK) * 2 + P
+                            IN24_SINK) * 2 + PIN23_SINK) * 2 + PIN22_SINK) * 2 + PIN21_SINK)
+                      00531 
+                      00532   #DEFINE PWM_MAP_PORTB ((((((((PIN28_PWM*2+PIN27_PWM)*2+PIN26_PWM)*2+PIN25_PWM)*2+PIN24_PWM)*2+PIN23_PW
+                            M)*2+PIN22_PWM)*2+PIN21_PWM))
+                      00533 
+                      00534 ;; ----- Port C
+                      00535         
+                      00536   #DEFINE DIMMER_BITMAP_PORTC (PIN11_DIMMER | PIN12_DIMMER | PIN13_DIMMER | PIN14_DIMMER | PIN15_DIMMER 
+                            | PIN16_DIMMER | PIN17_DIMMER | PIN18_DIMMER)
+                      00537 
+                      00538   #DEFINE SINK_MAP_PORTC (((((((PIN18_SINK * 2 + PIN17_SINK) * 2 + PIN16_SINK) * 2 + PIN15_SINK) * 2 + P
+                            IN14_SINK) * 2 + PIN13_SINK) * 2 + PIN12_SINK) * 2 + PIN11_SINK)
+                      00539 
+                      00540   #DEFINE PWM_MAP_PORTC (((((((PIN16_PWM)*2+PIN15_PWM)*2+PIN14_PWM)*2+PIN13_PWM)*2+PIN12_PWM)*2+PIN11_PW
+                            M))
+                      00541         
+                      00542 ;; Processor Configuration Directives - specific to each processor.  The actual
+                      00543 ;;   processor is selected in the MPLAB IDE Configuration menu item.  The
+                      00544 ;;   symbol 'OSC_CONTROL_LOCAL' is defined in ren16_local.inc.
+                      00545         
+                      00546 
+                      00547  #IFDEF __18F25K22
+                      00548 
+                      00549  INCLUDE "p18f25K22.inc"
+                      00550  #DEFINE PIC18_FAMILY
+                      00551 
+                      00552  #define OSC_CONTROL_LOCAL 0x60
+                      00553 ;; #define OSC_CONTROL_LOCAL 0x70
+                      00554 
+                      00555         CONFIG PRICLKEN=ON, FCMEN=OFF,IESO=OFF,PLLCFG=ON, FOSC=INTIO67
+                      00556 ;; wdt off, brownout is on and set for second highest voltage (hardware only)
+                      00557         CONFIG PWRTEN=ON, BOREN=NOSLP, BORV=285
+                      00558 
+                      00559         CONFIG WDTEN=OFF,WDTPS=1
+                      00560 ;; mclre disabled, timer1 cfg fow low power, portb pins are digital, ccp2 mux
+                      00561         CONFIG MCLRE=INTMCLR,PBADEN=OFF,CCP2MX=PORTC1  ;;,CCP3MX = PORTB5,T3CMX = PORTB5
+                      00562 
+                      00563 ;; debug, extended_instruction, low-voltage programming and reset_stack_err clr
+                      00564         CONFIG DEBUG=OFF,XINST=OFF,LVP=OFF,STVREN=ON,HFOFST = OFF
+                      00565 
+                      00566 ;; code protect some blocks (program memory and eeprom)
+                      00567         CONFIG CP0=OFF,CP1=OFF
+                      00568         CONFIG CPB=OFF,CPD=OFF
+                      00569 
+                      00570 ;; write protect some blocks (program memory and eeprom)
+                      00571         CONFIG WRT0=OFF,WRT1=OFF
+                      00572         CONFIG WRTB=OFF,WRTC=OFF,WRTD=OFF
+                      00573 
+                      00574 ;; following two words protect the various program code blocks from table reads
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00575         CONFIG EBTR0=OFF,EBTR1=OFF
+                      00576         CONFIG EBTRB=OFF
+                      00577 
+                      00578  #ENDIF
+                      00579 
+                      00580 
+                      00581  #IFDEF __18F2525
+                      00582 
+                      00583  INCLUDE "p18f2525.inc"
+                      00584  #DEFINE PIC18_FAMILY
+                      00585 
+                      00586 ;; #define OSC_CONTROL_LOCAL 0x60
+                      00587  #define OSC_CONTROL_LOCAL 0x70
+                      00588 
+                      00589  #define OSC_CONFIG_LOCAL OSC=INTIO67
+                      00590 
+                      00591 
+                      00592         CONFIG OSC_CONFIG_LOCAL, FCMEN=OFF,IESO=OFF
+                      00593 ;; wdt off, brownout is on and set for second highest voltage (hardware only)
+                      00594         CONFIG PWRT=ON, BOREN=NOSLP, BORV=1
+                      00595 
+                      00596         CONFIG WDT=OFF,WDTPS=1
+                      00597 ;; mclre disabled, timer1 cfg fow low power, portb pins are digital, ccp2 mux
+                      00598         CONFIG MCLRE=OFF,PBADEN=OFF,CCP2MX=PORTC
+                      00599 
+                      00600 ;; debug, extended_instruction, low-voltage programming and reset_stack_err clr
+                      00601         CONFIG DEBUG=OFF,XINST=OFF,LVP=OFF,STVREN=ON
+                      00602 
+                      00603 ;; code protect some blocks (program memory and eeprom)
+                      00604         CONFIG CP0=OFF,CP1=OFF
+                      00605         CONFIG CPB=OFF,CPD=OFF
+                      00606 
+                      00607 ;; write protect some blocks (program memory and eeprom)
+                      00608         CONFIG WRT0=OFF,WRT1=OFF
+                      00609         CONFIG WRTB=OFF,WRTC=OFF,WRTD=OFF
+                      00610 
+                      00611 ;; following two words protect the various program code blocks from table reads
+                      00612         CONFIG EBTR0=OFF,EBTR1=OFF
+                      00613         CONFIG EBTRB=OFF
+                      00614 
+                      00615  #ENDIF
+                      00616 
+                      00617  #IFDEF __18F2620
+                      00618 
+                      00619  INCLUDE "p18f2620.inc"
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ;  MPASM PIC18F2620 processor include
+                      00005 ; 
+                      00006 ;  (c) Copyright 1999-2013 Microchip Technology, All rights reserved
+                      00007 ;==========================================================================
+                      00008 
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01311         LIST
+                      00620  #DEFINE PIC18_FAMILY
+                      00621 
+                      00622 ;; #define OSC_CONTROL_LOCAL 0x60
+                      00623  #define OSC_CONTROL_LOCAL 0x70
+                      00624 
+                      00625  #define OSC_CONFIG_LOCAL OSC=INTIO67
+                      00626 
+                      00627 
+                      00628         CONFIG OSC_CONFIG_LOCAL, FCMEN=OFF,IESO=OFF
+                      00629 ;; wdt off, brownout is on and set for second highest voltage (hardware only)
+                      00630         CONFIG PWRT=ON, BOREN=NOSLP, BORV=1
+                      00631 
+                      00632         CONFIG WDT=OFF,WDTPS=1
+                      00633 ;; mclre disabled, timer1 cfg fow low power, portb pins are digital, ccp2 mux
+                      00634         CONFIG MCLRE=OFF,PBADEN=OFF,CCP2MX=PORTC
+                      00635 
+                      00636 ;; debug, extended_instruction, low-voltage programming and reset_stack_err clr
+                      00637         CONFIG DEBUG=OFF,XINST=OFF,LVP=OFF,STVREN=ON
+                      00638 
+                      00639 ;; code protect some blocks (program memory and eeprom)
+                      00640         CONFIG CP0=OFF,CP1=OFF
+                      00641         CONFIG CPB=OFF,CPD=OFF
+                      00642 
+                      00643 ;; write protect some blocks (program memory and eeprom)
+                      00644         CONFIG WRT0=OFF,WRT1=OFF
+                      00645         CONFIG WRTB=OFF,WRTC=OFF,WRTD=OFF
+                      00646 
+                      00647 ;; following two words protect the various program code blocks from table reads
+                      00648         CONFIG EBTR0=OFF,EBTR1=OFF
+                      00649         CONFIG EBTRB=OFF
+                      00650 
+                      00651  #ENDIF
+                      00652 
+                      00653 
+                      00654         
+                      00655    #DEFINE BANK1 0
+                      00656    #DEFINE BANK2_TWIDDLE 0
+                      00657    #DEFINE BANK3_TWIDDLE 0
+                      00658    #DEFINE BANK4_TWIDDLE 0
+                      00659 
+                      00660 ;; registers 0x6 (6) through 0x39 (57)
+                      00661   CBLOCK 0x4
+                      00662 
+  00000004            00663   zc_noedge_counter
+                      00664 
+  00000005            00665   rx_char
+                      00666 
+  00000006            00667   zc_delayline
+                      00668 
+  00000007            00669   ctr_ckt1, ctr_ckt2, ctr_ckt3, ctr_ckt4
+  0000000B            00670   ctr_ckt5, ctr_ckt6, ctr_ckt7, ctr_ckt8
+  0000000F            00671   ctr_ckt9, ctr_ckt10, ctr_ckt11, ctr_ckt12
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000013            00672   ctr_ckt13, ctr_ckt14, ctr_ckt15, ctr_ckt16
+                      00673 
+                      00674 
+                      00675 ;; event_flag is used for communicating between the ISR and the foreground code
+                      00676 ;;   in the inactive state all of the bits are high.  A bit is cleared in the
+                      00677 ;;   ISR to indicate an event and set in the foreground when that event is
+                      00678 ;;   processed.
+                      00679 ;;   bit 0 is cleared every 256'th interrupt, used for status LED timeouts and
+                      00680 ;;      detecting missing zero-crossing transitions.
+                      00681 ;;   bit 1 is cleared on the leading edge of the zero-cross signal.
+                      00682 
+  00000017            00683   event_flag
+                      00684 
+                      00685 ;; state_flag is used to hold state info used in the ISR.
+                      00686 ;;   bit 0 is the value of the ZC signal on the last timer interrupt
+                      00687 ;;   bit 1 is set when ZC goes high (i.e. transition), and is cleared when ZC
+                      00688 ;;     goes low.  It goes low (or remains low) if there are no low-high
+                      00689 ;;     transitions on the ZC signal.
+                      00690 
+  00000018            00691   state_flag
+                      00692 
+  00000019            00693   porta_image, portb_image, portc_image
+  0000001C            00694   ctr_timeslot
+                      00695 
+  0000001D            00696   zc_tmr_save
+                      00697 
+                      00698 ;; Variables related to the 'charlie-plexed' status LEDs:
+                      00699         
+  0000001E            00700   LED_map
+  0000001F            00701   LED_bit_ctr
+                      00702         
+  00000020            00703   LED_anode_rotator
+  00000021            00704   LED_cathode_rotator
+  00000022            00705   LED_data_rotator
+                      00706 
+  00000023            00707   _w, _status, LED_TRIS_mask
+  00000026            00708   isr_counter
+  00000027            00709   heartbeat_countdown
+  00000028            00710   frame_err_countdown
+  00000029            00711   rxd_countdown
+  0000002A            00712   zc_countdown
+  0000002B            00713   Timeout
+  0000002C            00714   Timecounter
+                      00715 
+                      00716 
+  0000002D            00717   dmxhighbyte:0         ;; DMX
+  0000002D            00718   our_addr
+  0000002E            00719   dmxlowbyte:0          ;; DMX  
+  0000002E            00720   rx_discard_count              ; PJS 4/22/11
+  0000002F            00721   skiphigh:0            ;; DMX
+  0000002F            00722   rx_copycount                  ; PJS 4/22/11
+  00000030            00723   skiplow:0                     ;; DMX
+  00000030            00724   rx_flag_extra  ;; bit 0 set if prior character was an ESC.
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00725 
+  00000031            00726   dmxPayloadCount
+  00000032            00727   smDmxL
+  00000033            00728   smDmxH        ;; 0x3D - only two more variables left
+                      00729 
+  00000034            00730   dmxStatusCtr
+                      00731 
+                      00732   ENDC
+                      00733 
+                      00734 ;; registers 0x40 (64) through 0x5F (95)
+                      00735 
+                      00736   CBLOCK 0x40
+                      00737 
+  00000040            00738   slot_id_ckt1, slot_id_ckt2, slot_id_ckt3, slot_id_ckt4
+  00000044            00739   slot_id_ckt5, slot_id_ckt6, slot_id_ckt7, slot_id_ckt8        
+  00000048            00740   slot_id_ckt9, slot_id_ckt10, slot_id_ckt11, slot_id_ckt12
+  0000004C            00741   slot_id_ckt13, slot_id_ckt14, slot_id_ckt15, slot_id_ckt16    
+                      00742 
+                      00743 
+                      00744   ENDC
+                      00745 
+                      00746 
+                      00747 ;; Register(s) that are accessed in both the first and second banks.
+                      00748 ;; registers 0x70 (112) through 0x78  (120)
+                      00749 
+                      00750 
+                      00751 
+                      00752 
+                      00753 
+                      00754 ;; assigned numbers:
+                      00755 
+                      00756  #define DEFAULT_LINERATE 50
+                      00757  #define MAX_LINERATE 70
+                      00758 
+                      00759 ;; derived numbers:
+                      00760 
+                      00761 ;; initializer for baudrate generator (based on formula from datasheet)
+                      00762 ;;  ********************Do Not Change********************
+                      00763 
+                      00764 
+                      00765 ;;   #DEFINE BAUD_INIT (CLOCKRATE/BAUDRATE/8 - 1)  ;;64mhz
+                      00766    #DEFINE BAUD_INIT (CLOCKRATE/BAUDRATE/4 - 1)  ;;32mhz
+                      00767 
+                      00768 ;; **************Initializer for cell timer ZC Setup********************
+                      00769 
+                      00770  #define CELL_RATE ((2*DEFAULT_LINERATE) * 256)
+                      00771 
+                      00772  #define CELL_TMR_INIT (CLOCKRATE/8/CELL_RATE)  ;;32 mhz
+                      00773 ;; #define CELL_TMR_INIT (CLOCKRATE/16/CELL_RATE)  ;;64 mhz
+                      00774 ;; Number used for range-checking prospective values for the periodic timer
+                      00775 ;;    interval.
+                      00776  #define MIN_ZC_TIMER ((CLOCKRATE/4)/MAX_LINERATE/256/2)  ;;32mhz
+                      00777 ;; #define MIN_ZC_TIMER ((CLOCKRATE/8)/MAX_LINERATE/256/2)  ;;64mhz
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00778                 
+                      00779 
+                      00780 
+                      00781 #ifdef DMX
+                      00782 ; ----------------- dmxread -------     
+                      00783 
+                      00784 chgDmxState macro newState               
+                      00785                 movlw   LOW(newState)
+                      00786                 movwf   smDmxL
+                      00787                 movlw   HIGH(newState)
+                      00788                 movwf   smDmxH
+                      00789    endm
+                      00790 
+                      00791 gotoDmxState macro
+                      00792                 movff   smDmxH, PCLATH
+                      00793                 movf    smDmxL,W
+                      00794                 movwf   PCL
+                      00795         endm
+                      00796 
+                      00797 #endif
+                      00798 ;; ---------------------------------------------------------------------------
+                      00799 
+                      00800 
+                      00801  org 0
+000000 0000           00802         nop
+000002 EF?? F???      00803         goto initialize
+                      00804 
+                      00805 
+                      00806     ORG 8
+                      00807 
+                      00808         
+                      00809 ;; interrupt routine
+                      00810 ;; Just the timer interrupt for now...
+                      00811 ;; ISR timing.
+                      00812 ;;   isr_regular path:  
+                      00813 ;;     18 - start of ISR through isr_regular
+                      00814 ;;     55 - do_regular through isr_status_LEDs
+                      00815 ;;     26 - longest path from isr_status_LEDs to/including the return
+                      00816 ;;     99 - total
+                      00817 ;;
+                      00818 ;;   isr_load_counters path:
+                      00819 ;;     22 - start of ISR through isr_load_counters (including ZC lead edge)
+                      00820 ;;     36 - isr_load_counters through isr_status_LEDs
+                      00821 ;;     41 - longest path from isr_status_LEDs to/including the return
+                      00822 ;;     99 - total
+                      00823 ;;
+                      00824 ;; Requirement for the maximum length of this ISR
+                      00825 ;;  These timer interrupts occur once overy 30 uS (120 instructions at 16 MHz).
+                      00826 ;;  At 57600 baud there is a character available every 190 uS or so, or once
+                      00827 ;;    every 6-1/3 timer interrupts.  It takes about 40 instructions to process
+                      00828 ;;    one of these characters, or about 7 instructions per timer interrupt.
+                      00829 ;;  So this ISR must be kept under 113 (120 - 7) instructions.
+                      00830 ;;
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 17
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00831 ;;  This analysis doesn't account for event handling (which probably doesn't
+                      00832 ;;    matter, since uart handling have precedence over event-handling).
+                      00833 ;;
+000008                00834 Int
+                      00835 
+                      00836 
+000008 929E           00837         bcf     PIR1,TMR2IF     ; reset the interrupt
+                      00838                         
+00000A 2A26           00839         incf    isr_counter,f   ; update count of interrupts ... used only for
+00000C B4D8           00840         btfsc   STATUS,Z        ; LED blinking and charlie-plex state variable
+00000E 9017           00841         bcf     event_flag,0    ; create event once every 256'th interrupt
+                      00842 
+000010 A684           00843         btfss   ZC
+000012 6A18           00844         clrf    state_flag
+                      00845 
+000014 B684           00846         btfsc   ZC              ; ZC set this time? (if not, not leading edge)
+000016 B018           00847         btfsc   state_flag,0    ; ZC set last time? (if yes, not leading edge)
+000018 EF?? F???      00848         goto    isr_not_zc_lead_edge
+                      00849 
+                      00850 ;; ZC leading edge
+                      00851 
+00001C 9217           00852         bcf     event_flag,1    ; ZC leading edge flag for foreground code
+00001E 8218           00853         bsf     state_flag,1    ; ZC leading edge for ISR code.
+000020 8018           00854         bsf     state_flag,0
+                      00855         
+000022 50D6           00856         movf    TMR0L,w
+000024 6E1D           00857         movwf   zc_tmr_save
+                      00858 
+000026                00859 isr_not_zc_lead_edge:
+                      00860 
+000026 3E1C           00861         incfsz  ctr_timeslot,f
+000028 B218           00862         btfsc   state_flag,1
+00002A EF?? F???      00863         goto    isr_load_counters
+                      00864 ;;
+                      00865 ;; Handle the normal case (selectively turn on dimmer outputs).  This code is
+                      00866 ;;   bypassed if ctr_timeslot = 0 OR if state_flag.1 is set.
+                      00867 ;;
+00002E                00868 isr_regular:
+                      00869 
+00002E 0EE0           00870         movlw   255 & ~(DIMMER_BITMAP_PORTA)
+                      00871     #IFDEF PIN2_CH
+000030 3E07           00872         incfsz  ctr_ckt1,f
+000032 0901           00873         iorlw   1       ; turn off this SSR
+                      00874     #ENDIF
+                      00875     #IFDEF PIN3_CH
+000034 3E08           00876         incfsz  ctr_ckt2,f
+000036 0902           00877         iorlw   2       ; turn off this SSR
+                      00878     #ENDIF
+                      00879     #IFDEF PIN4_CH
+000038 3E09           00880         incfsz  ctr_ckt3,f
+00003A 0904           00881         iorlw   4       ; turn off this SSR
+                      00882     #ENDIF
+                      00883     #IFDEF PIN5_CH
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 18
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00003C 3E0A           00884         incfsz  ctr_ckt4,f
+00003E 0908           00885         iorlw   8       ; turn off this SSR
+                      00886     #ENDIF
+                      00887     #IFDEF PIN6_CH
+000040 3E0B           00888         incfsz  ctr_ckt5,f
+000042 0910           00889         iorlw   16      ; turn off this SSR
+                      00890     #ENDIF
+                      00891     #IFDEF PIN7_CH
+                      00892         incfsz  ctr_ckt0,f
+                      00893         iorlw   32      ; turn off this SSR
+                      00894     #ENDIF
+                      00895     #IFDEF PIN10_CH
+                      00896         incfsz  ctr_ckt0,f
+                      00897         iorlw   64      ; turn off this SSR
+                      00898     #ENDIF
+                      00899     #IFDEF PIN9_CH
+                      00900         incfsz  ctr_ckt0,f
+                      00901         iorlw   128     ; turn off this SSR
+                      00902     #ENDIF
+000044 1619           00903         andwf   porta_image,f
+                      00904         
+000046 0E00           00905         movlw   255 & ~(DIMMER_BITMAP_PORTB)
+                      00906     #IFDEF PIN21_CH
+000048 3E16           00907         incfsz  ctr_ckt16,f
+00004A 0901           00908         iorlw   1       ; turn off this SSR
+                      00909     #ENDIF
+                      00910     #IFDEF PIN22_CH
+00004C 3E15           00911         incfsz  ctr_ckt15,f
+00004E 0902           00912         iorlw   2       ; turn off this SSR
+                      00913     #ENDIF
+                      00914     #IFDEF PIN23_CH
+000050 3E14           00915         incfsz  ctr_ckt14,f
+000052 0904           00916         iorlw   4       ; turn off this SSR
+                      00917     #ENDIF
+                      00918     #IFDEF PIN24_CH
+000054 3E13           00919         incfsz  ctr_ckt13,f
+000056 0908           00920         iorlw   8       ; turn off this SSR
+                      00921     #ENDIF
+                      00922     #IFDEF PIN25_CH
+000058 3E12           00923         incfsz  ctr_ckt12,f
+00005A 0910           00924         iorlw   16      ; turn off this SSR
+                      00925     #ENDIF
+                      00926     #IFDEF PIN26_CH
+00005C 3E11           00927         incfsz  ctr_ckt11,f
+00005E 0920           00928         iorlw   32      ; turn off this SSR
+                      00929     #ENDIF
+                      00930     #IFDEF PIN27_CH
+000060 3E10           00931         incfsz  ctr_ckt10,f
+000062 0940           00932         iorlw   64      ; turn off this SSR
+                      00933     #ENDIF
+                      00934     #IFDEF PIN28_CH
+000064 3E0F           00935         incfsz  ctr_ckt9,f
+000066 0980           00936         iorlw   128     ; turn off this SSR
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 19
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00937     #ENDIF
+000068 161A           00938         andwf   portb_image,f
+                      00939         
+00006A 0EF8           00940         movlw   255 & ~(DIMMER_BITMAP_PORTC)
+                      00941     #IFDEF PIN11_CH
+00006C 3E0C           00942         incfsz  ctr_ckt6,f
+00006E 0901           00943         iorlw   1       ; turn off this SSR
+                      00944     #ENDIF
+                      00945     #IFDEF PIN12_CH
+000070 3E0D           00946         incfsz  ctr_ckt7,f
+000072 0902           00947         iorlw   2       ; turn off this SSR
+                      00948     #ENDIF
+                      00949     #IFDEF PIN13_CH
+000074 3E0E           00950         incfsz  ctr_ckt8,f
+000076 0904           00951         iorlw   4       ; turn off this SSR
+                      00952     #ENDIF
+                      00953     #IFDEF PIN14_CH
+                      00954         incfsz  ctr_ckt0,f
+                      00955         iorlw   8       ; turn off this SSR
+                      00956     #ENDIF
+                      00957     #IFDEF PIN15_CH
+                      00958         incfsz  ctr_ckt0,f
+                      00959         iorlw   16      ; turn off this SSR
+                      00960     #ENDIF
+                      00961     #IFDEF PIN16_CH
+                      00962         incfsz  ctr_ckt0,f
+                      00963         iorlw   32      ; turn off this SSR
+                      00964     #ENDIF
+                      00965     #IFDEF PIN17_CH
+                      00966         incfsz  ctr_ckt0,f
+                      00967         iorlw   64      ; turn off this SSR
+                      00968     #ENDIF
+                      00969     #IFDEF PIN18_CH
+                      00970         incfsz  ctr_ckt0,f
+                      00971         iorlw   128     ; turn off this SSR
+                      00972     #ENDIF
+000078 161B           00973         andwf   portc_image,f
+                      00974 
+00007A 5019           00975         movf    porta_image,w
+00007C 0A00           00976         xorlw   (DIMMER_BITMAP_PORTA & ~SINK_MAP_PORTA)
+00007E 6E80           00977         movwf   PORTA
+000080 0E00           00978         movlw   LOW (~PWM_MAP_PORTA)
+000082 1219           00979         iorwf   porta_image,f   
+                      00980                 
+000084 501A           00981         movf    portb_image,w
+000086 0A00           00982         xorlw   (DIMMER_BITMAP_PORTB & ~SINK_MAP_PORTB)
+000088 6E81           00983         movwf   PORTB
+00008A 0E00           00984         movlw   LOW (~PWM_MAP_PORTB)
+00008C 121A           00985         iorwf   portb_image,f
+                      00986 
+00008E 501B           00987         movf    portc_image,w
+000090 0A00           00988         xorlw   (DIMMER_BITMAP_PORTC & ~SINK_MAP_PORTC)
+000092 6E82           00989         movwf   PORTC
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 20
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000094 0EC0           00990         movlw   ~PWM_MAP_PORTC
+000096 121B           00991         iorwf   portc_image,f
+000098 EF?? F???      00992         goto    isr_status_LEDs
+                      00993 
+                      00994 ;;
+                      00995 ;; Initialize the ctr_ckt registers for upcoming half-cycle.  Copy the slot_id
+                      00996 ;;   registers to the ctr registers, set output port values according to
+                      00997 ;;   whether the dimmer values are 255 or not.
+                      00998 ;;
+00009C                00999 isr_load_counters:
+00009C 0E00           01000         movlw   CTR_LOCKOUT
+00009E 6E1C           01001         movwf   ctr_timeslot
+                      01002 
+0000A0 B018           01003         btfsc   state_flag,0
+0000A2 6AD6           01004         clrf    TMR0L
+                      01005 
+                      01006     #IFDEF PIN2_CH
+0000A4 5040           01007         movf    slot_id_ckt1,w
+0000A6 6E07           01008         movwf   ctr_ckt1
+                      01009     #ENDIF
+                      01010 
+                      01011     #IFDEF PIN3_CH
+0000A8 5041           01012         movf    slot_id_ckt2,w
+0000AA 6E08           01013         movwf   ctr_ckt2
+                      01014     #ENDIF
+                      01015                 
+                      01016     #IFDEF PIN4_CH
+0000AC 5042           01017         movf    slot_id_ckt3,w
+0000AE 6E09           01018         movwf   ctr_ckt3
+                      01019     #ENDIF
+                      01020                 
+                      01021     #IFDEF PIN5_CH
+0000B0 5043           01022         movf    slot_id_ckt4,w
+0000B2 6E0A           01023         movwf   ctr_ckt4
+                      01024     #ENDIF
+                      01025                 
+                      01026     #IFDEF PIN6_CH
+0000B4 5044           01027         movf    slot_id_ckt5,w
+0000B6 6E0B           01028         movwf   ctr_ckt5
+                      01029     #ENDIF
+                      01030                 
+                      01031     #IFDEF PIN7_CH
+                      01032         movf    slot_id_ckt0,w
+                      01033         movwf   ctr_ckt0
+                      01034     #ENDIF
+                      01035 
+                      01036     #IFDEF PIN10_CH
+                      01037         movf    slot_id_ckt0,w
+                      01038         movwf   ctr_ckt0
+                      01039     #ENDIF
+                      01040         
+                      01041     #IFDEF PIN9_CH
+                      01042         movf    slot_id_ckt0,w
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 21
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01043         movwf   ctr_ckt0
+                      01044     #ENDIF
+                      01045 
+                      01046     #IFDEF PIN21_CH
+0000B8 504F           01047         movf    slot_id_ckt16,w
+0000BA 6E16           01048         movwf   ctr_ckt16
+                      01049     #ENDIF
+                      01050 
+                      01051     #IFDEF PIN22_CH
+0000BC 504E           01052         movf    slot_id_ckt15,w
+0000BE 6E15           01053         movwf   ctr_ckt15
+                      01054     #ENDIF
+                      01055                 
+                      01056     #IFDEF PIN23_CH
+0000C0 504D           01057         movf    slot_id_ckt14,w
+0000C2 6E14           01058         movwf   ctr_ckt14
+                      01059     #ENDIF
+                      01060                 
+                      01061     #IFDEF PIN24_CH
+0000C4 504C           01062         movf    slot_id_ckt13,w
+0000C6 6E13           01063         movwf   ctr_ckt13
+                      01064     #ENDIF
+                      01065                 
+                      01066     #IFDEF PIN25_CH
+0000C8 504B           01067         movf    slot_id_ckt12,w
+0000CA 6E12           01068         movwf   ctr_ckt12
+                      01069     #ENDIF
+                      01070                 
+                      01071     #IFDEF PIN26_CH
+0000CC 504A           01072         movf    slot_id_ckt11,w
+0000CE 6E11           01073         movwf   ctr_ckt11
+                      01074     #ENDIF
+                      01075 
+                      01076     #IFDEF PIN27_CH
+0000D0 5049           01077         movf    slot_id_ckt10,w
+0000D2 6E10           01078         movwf   ctr_ckt10
+                      01079     #ENDIF
+                      01080         
+                      01081     #IFDEF PIN28_CH
+0000D4 5048           01082         movf    slot_id_ckt9,w
+0000D6 6E0F           01083         movwf   ctr_ckt9
+                      01084     #ENDIF
+                      01085 
+                      01086     #IFDEF PIN11_CH
+0000D8 5045           01087         movf    slot_id_ckt6,w
+0000DA 6E0C           01088         movwf   ctr_ckt6
+                      01089     #ENDIF
+                      01090 
+                      01091     #IFDEF PIN12_CH
+0000DC 5046           01092         movf    slot_id_ckt7,w
+0000DE 6E0D           01093         movwf   ctr_ckt7
+                      01094     #ENDIF
+                      01095                 
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 22
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01096     #IFDEF PIN13_CH
+0000E0 5047           01097         movf    slot_id_ckt8,w
+0000E2 6E0E           01098         movwf   ctr_ckt8
+                      01099     #ENDIF
+                      01100                 
+                      01101     #IFDEF PIN14_CH
+                      01102         movf    slot_id_ckt0,w
+                      01103         movwf   ctr_ckt0
+                      01104     #ENDIF
+                      01105                 
+                      01106     #IFDEF PIN15_CH
+                      01107         movf    slot_id_ckt0,w
+                      01108         movwf   ctr_ckt0
+                      01109     #ENDIF
+                      01110                 
+                      01111     #IFDEF PIN16_CH
+                      01112         movf    slot_id_ckt0,w
+                      01113         movwf   ctr_ckt0
+                      01114     #ENDIF
+                      01115 
+                      01116     #IFDEF PIN17_CH
+                      01117         movf    slot_id_ckt0,w
+                      01118         movwf   ctr_ckt0
+                      01119     #ENDIF
+                      01120         
+                      01121     #IFDEF PIN18_CH
+                      01122         movf    slot_id_ckt0,w
+                      01123         movwf   ctr_ckt0
+                      01124     #ENDIF
+                      01125 
+0000E4 0E1F           01126         movlw   DIMMER_BITMAP_PORTA
+0000E6 1219           01127         iorwf   porta_image,f
+0000E8 5019           01128         movf    porta_image,w
+0000EA 0A00           01129         xorlw   (DIMMER_BITMAP_PORTA & ~SINK_MAP_PORTA)
+0000EC 6E80           01130         movwf   PORTA
+                      01131                 
+0000EE 0EFF           01132         movlw   DIMMER_BITMAP_PORTB
+0000F0 121A           01133         iorwf   portb_image,f
+0000F2 501A           01134         movf    portb_image,w
+0000F4 0A00           01135         xorlw   (DIMMER_BITMAP_PORTB & ~SINK_MAP_PORTB)
+0000F6 6E81           01136         movwf   PORTB
+                      01137 
+0000F8 0E07           01138         movlw   DIMMER_BITMAP_PORTC
+0000FA 121B           01139         iorwf   portc_image,f
+0000FC 501B           01140         movf    portc_image,w
+0000FE 0A00           01141         xorlw   (DIMMER_BITMAP_PORTC & ~SINK_MAP_PORTC)
+000100 6E82           01142         movwf   PORTC
+                      01143 
+000102                01144 isr_status_LEDs:        
+                      01145 
+                      01146 ;;
+                      01147 ;; Basically divide by 16...
+                      01148 ;;
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 23
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000102 A626           01149         btfss   isr_counter,3   ; skip LED work if count >=3 (modulo 16)
+000104 B426           01150         btfsc   isr_counter,2
+000106 EF?? F???      01151         goto    isr_exit
+                      01152 
+                      01153 ;; Go through this path once every 16 times around...translates to an LED
+                      01154 ;; refresh rate of 200 or 240 Hz.
+                      01155 
+00010A                01156 isr_extra_work: 
+                      01157 
+00010A B226           01158         btfsc   isr_counter,1
+00010C EF?? F???      01159         goto    isr_extra_work2
+                      01160         
+000110 B026           01161         btfsc   isr_counter,0
+000112 EF?? F???      01162         goto    isr_extra_work1
+                      01163 
+                      01164 ;;
+                      01165 ;; Turn all of the LEDs OFF before working on the PORTS to prevent ghosting
+                      01166 ;;
+                      01167 
+000116 8694           01168         bsf     LED0_TRIS
+000118 8894           01169         bsf     LED1_TRIS
+00011A 8A94           01170         bsf     LED2_TRIS
+                      01171 
+                      01172         
+                      01173 ;;
+                      01174 ;; Set one bit in the portx_image register that will apply positive voltage to
+                      01175 ;; one of the LED anodes, and make sure that the other bits are low (for the
+                      01176 ;; cathodes).
+                      01177 ;;
+                      01178 
+00011C 961B           01179         bcf     LED0_anode_sel
+00011E BE20           01180         btfsc   LED_anode_rotator,7
+000120 861B           01181         bsf     LED0_anode_sel
+                      01182 
+000122 981B           01183         bcf     LED1_anode_sel
+000124 BC20           01184         btfsc   LED_anode_rotator,6
+000126 881B           01185         bsf     LED1_anode_sel
+                      01186 
+                      01187 
+000128 EF?? F???      01188         goto    isr_exit        ; 20 clocks from , including this instruction
+                      01189         
+00012C                01190 isr_extra_work1:
+                      01191 ;;
+                      01192 ;; now turn on selected LED bits in the portx_image registers
+                      01193 ;;
+00012C 9A1B           01194         bcf     LED2_anode_sel
+00012E BA20           01195         btfsc   LED_anode_rotator,5
+000130 8A1B           01196         bsf     LED2_anode_sel
+                      01197 
+000132 5020           01198         movf    LED_anode_rotator,w
+000134 1021           01199         iorwf   LED_cathode_rotator,w
+                      01200 
+000136 AE22           01201         btfss   LED_data_rotator,7 ; clear the TRIS mask if the LED is OFF
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 24
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000138 0E00           01202         movlw   0x00
+                      01203 
+00013A 6E25           01204         movwf   LED_TRIS_mask
+                      01205                 
+00013C EF?? F???      01206         goto    isr_exit        ; 18 clocks, including this instruction
+                      01207         
+000140                01208 isr_extra_work2:
+000140 B026           01209         btfsc   isr_counter,0
+000142 EF?? F???      01210         goto    isr_extra_work3
+                      01211 
+                      01212 ;;
+                      01213 ;; Now write to the TRIS registers (setting two bits, one for an anode and
+                      01214 ;;   one for a cathode).
+                      01215 ;;
+                      01216 
+                      01217         
+000146 BE25           01218         btfsc   LED_TRIS_mask,7
+000148 9694           01219         bcf     LED0_TRIS
+                      01220 
+00014A BC25           01221         btfsc   LED_TRIS_mask,6
+00014C 9894           01222         bcf     LED1_TRIS
+                      01223 
+00014E BA25           01224         btfsc   LED_TRIS_mask,5
+000150 9A94           01225         bcf     LED2_TRIS
+                      01226 
+                      01227 
+                      01228         
+                      01229 ;; start updating registers for next time around
+                      01230         
+000152 3420           01231         rlcf    LED_anode_rotator,w
+000154 3620           01232         rlcf    LED_anode_rotator,f
+                      01233 
+000156 EF?? F???      01234         goto    isr_exit        ; 17 instructions, including this one.
+                      01235 
+00015A                01236 isr_extra_work3:        
+                      01237 ;;
+                      01238 ;; Now update registers for next time.
+                      01239 ;;
+00015A 3421           01240         rlcf    LED_cathode_rotator,w
+00015C 3621           01241         rlcf    LED_cathode_rotator,f
+                      01242 
+00015E 3622           01243         rlcf    LED_data_rotator,f
+                      01244         
+000160 2E1F           01245         decfsz  LED_bit_ctr,f
+000162 EF?? F???      01246         goto    isr_exit
+                      01247 
+000166 861F           01248         bsf     LED_bit_ctr,3
+                      01249         
+000168 501E           01250         movf    LED_map,w
+00016A 6E22           01251         movwf   LED_data_rotator; 13 instructions, including this one.
+                      01252 
+00016C                01253 isr_exit:
+                      01254 
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 25
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01255 
+00016C 0011           01256         retfie  FAST
+                      01257 
+                      01258         
+                      01259 ;;
+                      01260 ;; End of Interrupt Routine, start of Foreground code.
+                      01261 ;;
+                      01262 
+00016E                01263 initialize:
+                      01264 ;;
+                      01265 ;; initialize some registers
+                      01266 ;;
+00016E 6A40           01267         clrf    slot_id_ckt1    ; set all 'lamps' to lowest intensity
+000170 6A41           01268         clrf    slot_id_ckt2
+000172 6A42           01269         clrf    slot_id_ckt3
+000174 6A43           01270         clrf    slot_id_ckt4
+000176 6A44           01271         clrf    slot_id_ckt5
+000178 6A45           01272         clrf    slot_id_ckt6
+00017A 6A46           01273         clrf    slot_id_ckt7
+00017C 6A47           01274         clrf    slot_id_ckt8
+00017E 6A48           01275         clrf    slot_id_ckt9
+000180 6A49           01276         clrf    slot_id_ckt10
+000182 6A4A           01277         clrf    slot_id_ckt11
+000184 6A4B           01278         clrf    slot_id_ckt12
+000186 6A4C           01279         clrf    slot_id_ckt13
+000188 6A4D           01280         clrf    slot_id_ckt14
+00018A 6A4E           01281         clrf    slot_id_ckt15
+00018C 6A4F           01282         clrf    slot_id_ckt16
+                      01283 
+                      01284 
+                      01285         
+00018E 6AE9           01286         clrf    FSR0L           ; start out discarding data
+000190 6A04           01287         clrf    zc_noedge_counter
+                      01288 
+000192 6AEA           01289         clrf    FSR0H
+                      01290 
+000194 6A1C           01291         clrf    ctr_timeslot
+000196 6A26           01292         clrf    isr_counter
+000198 6A19           01293         clrf    porta_image
+00019A 6A1A           01294         clrf    portb_image
+00019C 6A1B           01295         clrf    portc_image
+                      01296 
+00019E 0EFF           01297         movlw   0xFF
+0001A0 6E17           01298         movwf   event_flag      ; no events pending
+                      01299 
+                      01300 #IFDEF DMX
+                      01301 ;-------------------------Timeout addition
+                      01302     movlw   0x83
+                      01303     movwf   Timecounter
+                      01304     movlw   0xFF
+                      01305     movwf   Timeout
+                      01306 ;-----------------------------
+                      01307 
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 26
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01308 #ENDIF
+                      01309 
+                      01310                 
+                      01311 ;; initialize the ports - all outputs 'OFF".
+                      01312         
+0001A2 010F           01313         BANKSEL PORTA
+0001A4 0E1F           01314         movlw   DIMMER_BITMAP_PORTA & SINK_MAP_PORTA
+0001A6 6E80           01315         movwf   PORTA
+0001A8 0EFF           01316         movlw   DIMMER_BITMAP_PORTB & SINK_MAP_PORTB
+0001AA 6E81           01317         movwf   PORTB
+0001AC 0E07           01318         movlw   DIMMER_BITMAP_PORTC & SINK_MAP_PORTC
+0001AE 6E82           01319         movwf   PORTC
+                      01320 
+                      01321 
+                      01322 ;; Set up the main oscillator, slightly different between the PIC18F and PIC16F
+                      01323 ;;   families.
+                      01324 ;;  {PR}        
+                      01325 
+                      01326 
+                      01327  
+0001B0 0E70           01328         movlw   OSC_CONTROL_LOCAL
+0001B2 6ED3           01329         movwf   OSCCON
+0001B4 0E40           01330         movlw   OSC_TUNE_LOCAL
+0001B6 6E9B           01331         movwf   OSCTUNE
+                      01332 
+                      01333 
+                      01334 ;; Turn off the analog stuff so that the I/O pins can be used for digital
+                      01335 ;;   purposes.  The exact method of doing this will vary from part to part.
+                      01336 ;; {PR}
+                      01337 
+                      01338 
+                      01339   #IFDEF __18F25K22
+                      01340 ;;      BANKSEL ANSELA   ; all A/D pins are digital
+                      01341         clrf    ANSELA
+                      01342         clrf    ANSELB
+                      01343     clrf        ANSELC
+                      01344 
+                      01345     CLRF LATA ; Alternate method to clear output data latches
+                      01346     CLRF LATB
+                      01347     CLRF LATC
+                      01348    
+                      01349     CLRF ANSELA ; Configure analog pins or digital only
+                      01350         CLRF ANSELB
+                      01351     CLRF ANSELC
+                      01352 
+                      01353 
+                      01354 
+                      01355   #ENDIF
+                      01356 
+                      01357   #IFNDEF __18F25K22
+0001B8 0E0F           01358         movlw   (1<<PCFG3) | (1<<PCFG2) | (1<<PCFG1) | (1<<PCFG0)
+0001BA 6EC1           01359         movwf   ADCON1          ; all A/D pins are digital
+                      01360   #ENDIF
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 27
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01361 
+                      01362 
+                      01363 
+                      01364 
+                      01365 ;; Start out with just the triac control bits programmed for output.  The TxD
+                      01366 ;;   pin will become an output when the UART is configured, independent of the
+                      01367 ;;   TRIS registers.  All other pins start out as inputs.  The status LED pins
+                      01368 ;;   are re-configured from the ISR in accordance with the charlie-plexing
+                      01369 ;;   scheme adopted here.
+                      01370         
+0001BC 010F           01371         BANKSEL TRISA
+0001BE 0EE0           01372         movlw   255 & ~(DIMMER_BITMAP_PORTA)
+0001C0 6E92           01373         movwf   TRISA^BANK1     ; triac control bits are output
+0001C2 0E00           01374         movlw   255 & ~(DIMMER_BITMAP_PORTB)
+0001C4 6E93           01375         movwf   TRISB^BANK1     ; triac control bits are output
+0001C6 0EF8           01376         movlw   255 & ~(DIMMER_BITMAP_PORTC)
+0001C8 6E94           01377         movwf   TRISC^BANK1     ; triac control bits are output
+                      01378 
+                      01379 
+                      01380 
+                      01381 
+0001CA 9ED0           01382         bcf     RCON,IPEN
+0001CC 6A9D           01383         clrf    PIE1
+0001CE 6AA0           01384         clrf    PIE2
+                      01385 
+                      01386 ;; Read our address from the EEPROM at the end of this file
+                      01387 #ifdef DMX
+                      01388   #ifdef HARD_CODE_DMX_ADDR
+                      01389                 movlw high DMX_START_ADDRESS
+                      01390                 movwf dmxhighbyte
+                      01391                 movlw low DMX_START_ADDRESS
+                      01392                 movwf dmxlowbyte
+                      01393   #else
+                      01394                 movlw   LOW(EE_DMX_HIGH)
+                      01395                 movwf   EEADR
+                      01396                 bcf             EECON1, EEPGD   ; point to adata memory
+                      01397                 bcf             EECON1, CFGS    ; Access EEPROM
+                      01398                 bsf             EECON1, RD              ; EE read
+                      01399                 movff   EEDATA, dmxhighbyte     
+                      01400 
+                      01401                 movlw   LOW(EE_DMX_LOW)
+                      01402                 movwf   EEADR
+                      01403                 bcf             EECON1, EEPGD   ; point to adata memory
+                      01404                 bcf             EECON1, CFGS    ; Access EEPROM
+                      01405                 bsf             EECON1, RD              ; EE read
+                      01406                 movff   EEDATA, dmxlowbyte
+                      01407   #endif
+                      01408         chgDmxState smDmxIdle
+                      01409 #else
+                      01410   #IFDEF START_ADDRESS
+                      01411         movlw   0x00
+                      01412         movwf   EEADR
+                      01413 ;;      movwf   EEADRH  ;;may need to be commented out depending on PIC device
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 28
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01414         movwf   EECON1
+                      01415 
+                      01416         bsf             EECON1,RD
+                      01417         movf    EEDATA,w
+                      01418 
+                      01419         movwf   our_addr
+                      01420 
+                      01421         movlw   0x01  ; convert 1-based value from EEPROM into
+                      01422         subwf   our_addr,f  ; 0-based value used in rx routine.
+                      01423   #ENDIF
+                      01424 #endif  
+                      01425 ;; configure the UART - same for PIC16F and PIC18F parts.
+                      01426 
+0001D0 0E89           01427         movlw   BAUD_INIT;
+0001D2 010F           01428         BANKSEL SPBRG
+0001D4 6EAF           01429         movwf   SPBRG ^ BANK1
+                      01430 
+0001D6 6AB0           01431     clrf        SPBRGH
+0001D8 0E08           01432         movlw   1<<BRG16   
+0001DA 6EB8           01433         movwf   BAUDCTL
+                      01434 
+                      01435 
+0001DC 010F           01436         BANKSEL TXSTA
+                      01437         
+0001DE 0E24           01438         movlw   (1<<TXEN) | (1<<BRGH); ; enable 8-bit transmitter in async mode
+                      01439                                 ; (x16 baud divisor)
+0001E0 6EAC           01440         movwf   TXSTA ^ BANK1
+                      01441 
+0001E2 010F           01442         BANKSEL RCSTA   
+0001E4 0E90           01443         movlw   (1<<SPEN) | (1<<CREN); ; enable serial port with continuous 8-bit rx
+0001E6 6EAB           01444         movwf   RCSTA
+                      01445         
+                      01446 ;; Set up timer2 for generating periodic interrupts.
+                      01447 
+0001E8 0E9C           01448         movlw   CELL_TMR_INIT
+0001EA 010F           01449         BANKSEL PR2
+0001EC 6ECB           01450         movwf   PR2 ^ BANK1
+                      01451         
+0001EE 0E04           01452         movlw   (1 << TMR2ON)
+                      01453 
+0001F0 010F           01454         BANKSEL T2CON
+0001F2 6ECA           01455         movwf   T2CON
+                      01456 
+0001F4 010F           01457         BANKSEL PIE1
+0001F6 829D           01458         bsf     PIE1 ^ BANK1,TMR2IE
+                      01459 
+0001F8 010F           01460         BANKSEL PIR1
+0001FA 929E           01461         bcf     PIR1,TMR2IF
+                      01462         
+                      01463 ;; Set up timer0 for timing how long the zero-crossing signal is OFF.
+                      01464 
+                      01465 
+0001FC 0EC7           01466         movlw   1<<TMR0ON | 1<<T08BIT | 1<<T0PS0 | 1<<T0PS1 | 1<<T0PS2
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 29
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0001FE 6ED5           01467         movwf   T0CON
+                      01468 
+                      01469 
+000200 010F           01470         BANKSEL PORTA
+                      01471 
+000202 6AF2           01472         clrf    INTCON
+                      01473 
+000204 6A18           01474         clrf    state_flag
+000206 B684           01475         btfsc   ZC
+000208 8018           01476         bsf     state_flag,0    ; bit 0 indicates zc is on at the very start
+00020A B018           01477         btfsc   state_flag,0
+00020C 8A1E           01478         bsf     ZC_LED
+                      01479         
+00020E 0E08           01480         movlw   8
+000210 6E1F           01481         movwf   LED_bit_ctr
+                      01482         
+000212 0E88           01483         movlw   0x88
+000214 6E20           01484         movwf   LED_anode_rotator
+                      01485 
+000216 0E52           01486         movlw   0x52
+000218 6E21           01487         movwf   LED_cathode_rotator
+                      01488 
+00021A 6A22           01489         clrf    LED_data_rotator; all status LEDs initially off.
+00021C 6A1E           01490         clrf    LED_map         ;
+                      01491         
+00021E 0EC0           01492         movlw   (1 <<GIE) | (1<<PEIE)
+000220 6EF2           01493         movwf   INTCON          ; enable interrupts
+                      01494 
+000222 6A06           01495         clrf    zc_delayline
+                      01496 
+                      01497 ;; Longest serial RX pathlengths through this code (no events processed)
+                      01498 ;; 21 instructions - discard state
+                      01499 ;; 27 instructions - pure discard state
+                      01500 ;; 19 instructions - Sync char (0x7E)
+                      01501 ;; 41 instructions - command byte (just after the Sync char).
+                      01502 ;; 41 instructions - data byte (not ESC)
+                      01503 ;;
+                      01504 ;; normal Rx char (data copied to memory)
+000224                01505 mainloop:
+000224 3C17           01506         incfsz  event_flag,w    ; check event flags from ISR
+000226 EC?? F???      01507         call    event_processor
+                      01508         
+                      01509 #ifdef DMX
+                      01510 
+                      01511 dmxEngine
+                      01512  BANKSEL RCSTA
+                      01513   btfsc RCSTA,OERR  ; BANK 3 - test for overrun error (rare)
+                      01514   goto dmxError
+                      01515 
+                      01516  BANKSEL PIR1
+                      01517   btfss PIR1,RCIF  ; Received a character yet?
+                      01518   goto mainloop  ; Nope - jump back
+                      01519   gotoDmxState
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 30
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01520 
+                      01521 
+                      01522 dmxError
+                      01523                 bcf             RCSTA,CREN      ; Overrun error
+                      01524                 movf    RCREG,w         ; Flush the FIFO
+                      01525 
+                      01526                 movf    RCREG,w         ; Flush the FIFO
+                      01527 
+                      01528                 bsf             RCSTA,CREN
+                      01529 
+                      01530 
+                      01531                 ; Fall through
+                      01532 smDmxIdle
+                      01533         movf    dmxhighbyte,w           ; Skipcounter is used to detmine how many
+                      01534         movwf   skiphigh                ; received data bytes are skipped before the RGB
+                      01535         movf    dmxlowbyte,w            ; data is collected.  Load skipcounter with
+                      01536         movwf   skiplow                 ; the DMX address from above...
+                      01537         movf    skiplow,f               ; ... then decrement it by one
+                      01538         btfsc   STATUS,Z                ; so we know how many channels to ignore before the
+                      01539         decf    skiphigh,f              ; useful data arrives.  We'll see more of the
+                      01540         decf    skiplow,f               ; skipcounter a bit farther down the page.
+                      01541                 chgDmxState smWait4break
+                      01542 
+                      01543 
+                      01544                 ; Fall through.. an optimization cheat
+                      01545 
+                      01546 smWait4break
+                      01547 
+                      01548         BANKSEL RCSTA
+                      01549         btfss   RCSTA,FERR               ; Here we're waiting to see if a break occurs
+                      01550 
+                      01551                 goto    purgeSerial
+                      01552 
+                      01553 
+                      01554 
+                      01555 
+                      01556 
+                      01557                 ; Code to implement 1HZ blinking when DMX is detected
+                      01558 
+                      01559                 decfsz  dmxStatusCtr,f
+                      01560 
+                      01561                 goto    endBlink
+                      01562 
+                      01563 
+                      01564 
+                      01565                 movlw   DMX_BLINK_RATE                  ; Blink every 44 frames = 1Hz
+                      01566 
+                      01567                 movwf   dmxStatusCtr
+                      01568 
+                      01569                 movf    RXD_LED_REG,W
+                      01570 
+                      01571                 xorlw   1<<RXD_LED_BIT
+                      01572 
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 31
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01573                 movwf   RXD_LED_REG
+                      01574 
+                      01575 endBlink
+                      01576 
+                      01577                 chgDmxState smWait4Start
+                      01578 purgeSerial
+                      01579 
+                      01580         BANKSEL RCREG
+                      01581 
+                      01582                 movf    RCREG,w                                 ; Purge the incoming Buffer
+                      01583 
+                      01584                 goto    mainloop
+                      01585 
+                      01586 
+                      01587 smWait4Start
+                      01588         BANKSEL RCSTA
+                      01589         btfsc   RCSTA,FERR              ; a framing error.  If all is well AND the
+                      01590         goto    purgeSerial                     ; new byte is zero (which means the start code
+                      01591         movf    RCREG,w                 ; is also zero, it's okay to begin gethering channel
+                      01592                                         ; data
+                      01593 
+                      01594         ; Define target of payload
+                      01595 
+                      01596 
+                      01597 
+                      01598                 btfss   STATUS,Z                                ; Check for a ZERO byte
+                      01599 
+                      01600                 goto    smDmxIdle                               ; Was not a ZERO - start looking again
+                      01601 ;--------------------------------Timeout addition ---------------------
+                      01602                 movlw   0xFF                    
+                      01603                 movwf   Timeout
+                      01604 ;----------------------------------------------------------------------
+                      01605         BANKSEL FSR0L
+                      01606                 movlw   slot_id_ckt1                    ; next state is normal body
+                      01607                 movwf   FSR0L                                   ; point to start of slot_id area
+                      01608 
+                      01609         ; Define PAYLOAD size
+                      01610                 movlw   0x10                                    ; 32 bytes of payload
+                      01611                 movwf   dmxPayloadCount
+                      01612                 chgDmxState     smScanDmxData
+                      01613 
+                      01614         movf    skiphigh,W              ; Here check to see if the highbyte is
+                      01615         btfss   STATUS,Z                ; zero. If it is,check to see if the
+                      01616         goto    mainloop                    ; lowbyte is 1.  If 1, grab the next 32 bytes
+                      01617         movf    skiplow,w               ; which come through.  If <> 1, go to the routine
+                      01618         btfss   STATUS,Z                ; which receives and discards bytes until the
+                      01619         goto    mainloop                ; DMX address has been reached.
+                      01620         chgDmxState smReadDmxPayload
+                      01621                 goto    mainloop
+                      01622 
+                      01623 smScanDmxData
+                      01624 
+                      01625         BANKSEL RCSTA
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 32
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01626         btfss   RCSTA,FERR              ; Test for a framing error.
+                      01627         goto    continueScan            ;
+                      01628 
+                      01629 
+                      01630 
+                      01631                 chgDmxState smWait4Start
+                      01632 
+                      01633                 goto    purgeSerial
+                      01634 
+                      01635 
+                      01636 
+                      01637 continueScan
+                      01638 
+                      01639         BANKSEL RCREG
+                      01640         movf    RCREG,w                 ; Then, capture & move to 'w'...
+                      01641 
+                      01642         movf    skiplow,f               ; ...decrement the skip counter...
+                      01643         btfsc   STATUS,Z                ; (all sixteen bits of it)
+                      01644         decf    skiphigh,f
+                      01645         decf    skiplow,f
+                      01646                                         ; ...and see if we've reached the start address.
+                      01647         movf    skiplow,W               ; If the skip counter now equals zero, we know
+                      01648         btfss   STATUS,Z                ; that we need to gather the next five bytes
+                      01649         goto    mainloop                    ; and save them as RGBAW data.  If the counter is
+                      01650         movf    skiphigh,W              ; still nonzero, loop back and do it again.
+                      01651         btfss   STATUS,Z
+                      01652         goto    mainloop
+                      01653                 chgDmxState smReadDmxPayload
+                      01654                 goto    mainloop
+                      01655 
+                      01656 smReadDmxPayload
+                      01657 
+                      01658         BANKSEL RCSTA
+                      01659         btfss   RCSTA,FERR              ; Test for a framing error.
+                      01660         goto    continuePayload         ;
+                      01661 
+                      01662 
+                      01663                 chgDmxState smWait4Start
+                      01664 
+                      01665                 goto    purgeSerial
+                      01666 
+                      01667 
+                      01668 
+                      01669 continuePayload
+                      01670 
+                      01671         BANKSEL RCREG
+                      01672         movf    RCREG,W
+                      01673 
+                      01674         BANKSEL INDF0
+                      01675                 movwf   INDF0                                   ; Copy to the target
+                      01676                 incf    FSR0L,f                         ; Increment the target
+                      01677                 decf    dmxPayloadCount,F
+                      01678                 btfss   STATUS,Z
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 33
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01679                 goto    mainloop
+                      01680 
+                      01681 smDmxDone
+                      01682 
+                      01683                 chgDmxState smDmxIdle
+                      01684 
+                      01685                 goto    mainloop
+                      01686 #else
+                      01687 
+00022A AA9E           01688         btfss   PIR1,RCIF       ; skip if UART has a rx character to process
+00022C EF?? F???      01689         goto    mainloop        ; no character available
+                      01690 
+000230 0E06           01691         movlw   6               ; Rx error mask (framing error, overrun error)
+000232 14AB           01692         andwf   RCSTA,w         ; get (masked) rx status
+000234 A4D8           01693         btfss   STATUS,Z
+000236 EF?? F???      01694         goto    rx_error        ; goto error routine
+                      01695 
+00023A 50AE           01696         movf    RCREG,w
+00023C 6E05           01697         movwf   rx_char         ; and save a working copy
+                      01698         
+00023E 0F82           01699         addlw   0x82            ; test for sync character
+000240 A4D8           01700         btfss   STATUS,Z        ; skip if sync character
+000242 EF?? F???      01701         goto    rx_not_sync     ; jump to code for processing non-sync
+                      01702 
+                      01703 ;; 
+                      01704 ;; process sync character
+                      01705 ;;
+000246 6AE9           01706         clrf    FSR0L           ; next byte is command byte, regardless of
+000248 8EE9           01707         bsf             FSR0L,7         ; prior state
+00024A                01708 rx_echo:        
+00024A 5005           01709         movf    rx_char,w       ; echo most recent character to transmitter
+00024C 6EAD           01710         movwf   TXREG
+00024E EF?? F???      01711         goto    mainloop
+                      01712 
+000252                01713 rx_error:
+000252 50AE           01714         movf    RCREG,w
+                      01715         
+000254 0E80           01716         movlw   0x80
+                      01717 
+000256 6E28           01718         movwf   frame_err_countdown
+000258 821E           01719     bsf FRAME_ERR_LED
+                      01720 
+00025A 98AB           01721         bcf     RCSTA,CREN
+00025C 88AB           01722         bsf     RCSTA,CREN
+00025E 6AE9           01723         clrf    FSR0L           ; start discarding
+000260 EF?? F???      01724         goto    mainloop
+                      01725 
+                      01726 ;; 
+                      01727 ;; process non-sync character
+                      01728 ;;
+                      01729 
+                      01730 ;; rx_state == FSR:
+                      01731 ;; 00000000 -> discarding data (startup, just after rx error)
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 34
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01732 ;; 1xxxxxxx -> expecting command/address byte (just after SYNC)
+                      01733 ;; 010nnnnn -> process short-form data character
+                      01734 ;; 011xxxxx -> echoing data (count was > 0 or after end of local data)
+                      01735         
+000264                01736 rx_not_sync:
+000264 0F01           01737         addlw   1               ; test for PAD character - discard if yes
+000266 B4D8           01738         btfsc   STATUS,Z
+000268 EF?? F???      01739         goto    mainloop
+                      01740 
+00026C 52E9           01741         movf    FSR0L,f 
+00026E B4D8           01742         btfsc   STATUS,Z        ; skip if not discard state
+000270 EF?? F???      01743         goto    mainloop
+000274 B8E9           01744         btfsc   FSR0L,4         ; skip if non-echo state,,RP32 6 RP24 5 RP16 4 TR8 3
+000276 EF?? F???      01745         goto    rx_echo         ; pure echo
+                      01746 ;;
+                      01747 ;; handle non-echo, non-SYNC cases
+                      01748 ;;
+00027A AEE9           01749         btfss   FSR0L,7         ; skip if first character after SYNC
+00027C EF?? F???      01750         goto    decode_packet_body
+000280                01751 decode_cmd_byte:                ; first character after the SYNC
+000280 9EE9           01752         bcf     FSR0L,7         ; no longer on 'first char after SYNC'
+000282 8AE9           01753         bsf     FSR0L,5         ; just in case packet is not for us.
+000284 AE05           01754         btfss   rx_char,7
+000286 EF?? F???      01755         goto    rx_echo         ; long form packet, just echo it.
+                      01756 
+                      01757   #IFDEF START_ADDRESS
+                      01758 
+                      01759         movf    our_addr,w
+                      01760         subwf   rx_char,f       ; incoming address - 'our_addr'
+                      01761 
+                      01762         btfsc   rx_char,7       ; bit 7 set after the subtract?  If so, data is
+                      01763         goto    rx_echo         ; all for downstream controllers.
+                      01764 
+                      01765         movlw   0x81
+                      01766         addwf   rx_char,w
+                      01767         movwf   rx_discard_count; PJS 4/22/11
+                      01768         
+                      01769         movlw   0x80
+                      01770         movwf   rx_char
+                      01771         movlw   slot_id_ckt1    ; next state is normal body
+                      01772         movwf   FSR0L           ; point to start of slot_id area
+                      01773         bcf     rx_flag_extra,7 ; most recent char wasn't ESC
+                      01774         
+                      01775 ;;      incf    rx_char,f       ; commented out be PJS 4/22/11
+                      01776         clrf    rx_copycount    ; PJS 4/22/11
+                      01777         
+                      01778         goto    rx_echo         ; get next character (and echo the '0x80').
+                      01779 
+                      01780   #ELSE
+                      01781 
+00028A 0605           01782         decf    rx_char,f       ; 
+00028C BE05           01783         btfsc   rx_char,7       ; value 0x7F after dec?  If so, it's for us
+00028E EF?? F???      01784         goto    rx_echo
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 35
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01785 
+000292 0E40           01786         movlw   slot_id_ckt1    ; next state is normal body
+000294 6EE9           01787         movwf   FSR0L           ; point to start of slot_id area
+000296 9E30           01788         bcf     rx_flag_extra,7 ; most recent char wasn't ESC
+                      01789         
+000298 2A05           01790         incf    rx_char,f
+                      01791 
+00029A EF?? F???      01792         goto    rx_echo         ; get next character (and echo the '0x80').
+                      01793 
+                      01794   #ENDIF
+                      01795 
+                      01796 ;;
+                      01797 ;; done initializing packet, now handle the data
+                      01798 ;;
+                      01799 ;; to get here, char was not SYNC, FSR.7 was clear, FSR.5 was clear, FSR NZ
+                      01800 ;;
+00029E                01801 decode_packet_body:
+                      01802 
+00029E AE30           01803         btfss   rx_flag_extra,7 ; skip if previous char was ESC
+0002A0 EF?? F???      01804         goto    previous_not_ESC
+0002A4 0E4E           01805         movlw   0x4E
+0002A6 2605           01806         addwf   rx_char,f       ; decode the ESC charactor
+0002A8 EF?? F???      01807         goto    after_ESC_decoding
+0002AC                01808 previous_not_ESC:       
+0002AC 8E30           01809         bsf     rx_flag_extra,7 ; just in case current char is ESC
+0002AE 0E7F           01810         movlw   0x7F
+0002B0 1805           01811         xorwf   rx_char,w       ; check for ESC
+0002B2 B4D8           01812         btfsc   STATUS,Z        ; skip if not ESC
+0002B4 EF?? F???      01813         goto    mainloop        ; go and discard the ESC
+0002B8                01814 after_ESC_decoding:
+0002B8 9E30           01815         bcf     rx_flag_extra,7 ; normal data state
+                      01816 
+                      01817   #IFDEF START_ADDRESS
+                      01818 
+                      01819         movf    rx_discard_count,f ; PJS 4/22/11  
+                      01820         btfss   STATUS,Z        ; PJS 4/22/11
+                      01821         goto    rx_upfront_discard ; PJS 4/22/11
+                      01822         
+                      01823         movlw   0x80            ; reset countdown flag to max value.
+                      01824 
+                      01825         movwf   rxd_countdown
+                      01826     bsf RXD_LED
+                      01827 
+                      01828 
+                      01829         movf    rx_char,w       ; copy data to memory..
+                      01830         movwf   INDF0
+                      01831         incf    FSR0L,f
+                      01832 
+                      01833         goto    mainloop        ; no echo !
+                      01834 
+                      01835 ; PJS 4/22/11 :         
+                      01836 ;; logic for discarding/ignoring bytes until the place indicated by the
+                      01837 ;; start address is reached.
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 36
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01838         
+                      01839 rx_upfront_discard:             ; PJS 4/22/11
+                      01840         incf    rx_copycount,f  ; PJS 4/22/11
+                      01841         btfsc   rx_copycount,3  ; PJS 4/22/11
+                      01842         incf    rx_discard_count,f      ; PJS 4/22/11
+                      01843         bcf     rx_copycount,3  ; PJS 4/22/11
+                      01844 
+                      01845         goto    mainloop        ; PJS 4/22/11
+                      01846 
+                      01847   #ELSE
+                      01848 
+0002BA 0E80           01849         movlw   0x80            ; reset countdown flag to max value.
+0002BC 6E29           01850         movwf   rxd_countdown
+0002BE 861E           01851     bsf RXD_LED
+                      01852 
+                      01853 
+0002C0 5005           01854         movf    rx_char,w       ; copy data to memory..
+0002C2 6EEF           01855         movwf   INDF0
+0002C4 2AE9           01856         incf    FSR0L,f
+                      01857 
+0002C6 EF?? F???      01858         goto    mainloop        ; no echo ! 
+                      01859 
+                      01860   #ENDIF        
+                      01861 ;;
+                      01862 #endif ;; RENARD protocol       
+                      01863 ;; do all work associated with zero-crossing (ac line frequency detection)
+                      01864 ;;
+                      01865 ;; event_flag bit assignments
+                      01866 ;; bit 0 - clear if interrupt counter incremented through 0
+                      01867 ;; bit 1 - clear if rising edge on ZC was detected.
+                      01868 
+0002CA                01869 event_processor:
+                      01870 
+0002CA B017           01871         btfsc   event_flag,0    ; bit 0 is clear if 256 interrupts have occured
+0002CC EF?? F???      01872         goto    end_timer_events
+                      01873 
+                      01874 #IFDEF DMX
+                      01875 ;-----------------------Timeout addition ----------------------------
+                      01876 #DEFINE Lights_out
+                      01877 
+                      01878 #ifdef Lights_out
+                      01879 
+                      01880     decf    Timecounter,F
+                      01881     btfsc   STATUS,Z
+                      01882     goto    NormalCode
+                      01883     movlw   0x83
+                      01884     movwf   Timecounter
+                      01885 
+                      01886     decf    Timeout,F
+                      01887     btfsc   STATUS,Z
+                      01888     goto    clearData
+                      01889     goto    NormalCode
+                      01890 clearData:
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 37
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01891     movlw   0xFF
+                      01892     movwf   Timeout
+                      01893 ;       We need to clear out all the data values
+                      01894         BANKSEL slot_id_ckt1
+                      01895         clrf    slot_id_ckt1    ; set all 'lamps' to lowest intensity
+                      01896         clrf    slot_id_ckt2
+                      01897         clrf    slot_id_ckt3
+                      01898         clrf    slot_id_ckt4
+                      01899         clrf    slot_id_ckt5
+                      01900         clrf    slot_id_ckt6
+                      01901         clrf    slot_id_ckt7
+                      01902         clrf    slot_id_ckt8
+                      01903         clrf    slot_id_ckt9
+                      01904         clrf    slot_id_ckt10
+                      01905         clrf    slot_id_ckt11
+                      01906         clrf    slot_id_ckt12
+                      01907         clrf    slot_id_ckt13
+                      01908         clrf    slot_id_ckt14
+                      01909         clrf    slot_id_ckt15
+                      01910         clrf    slot_id_ckt16
+                      01911 
+                      01912 
+                      01913 #endif
+                      01914 
+                      01915 ;---------------------------------------------------------------
+                      01916 NormalCode:
+                      01917 
+                      01918 #ENDIF
+                      01919 
+                      01920 ;; 256 timer interrupts have occurred
+                      01921 
+0002D0 8017           01922         bsf     event_flag,0
+                      01923 
+                      01924 ; count down to determine when to toggle the heartbeat LED
+                      01925  
+                      01926 
+0002D2 0E01           01927     movlw   1<<HEARTBEAT_LED_BIT ; update heartbeat
+0002D4 0627           01928         decf    heartbeat_countdown,f
+0002D6 B4D8           01929         btfsc   STATUS,Z
+0002D8 1A1E           01930         xorwf   HEARTBEAT_LED_REG,f
+                      01931 
+                      01932 
+                      01933         
+                      01934 ; count down to determine when to turn off the RxD LED.
+                      01935 
+                      01936 
+                      01937 
+0002DA 0629           01938         decf    rxd_countdown,f
+0002DC B4D8           01939         btfsc   STATUS,Z
+0002DE 1A1E           01940     xorwf   HEARTBEAT_LED_REG,f
+                      01941         
+                      01942 ; count down to determine when to turn off the Framing Error LED
+                      01943         
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 38
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0002E0 0629           01944         decf    rxd_countdown,f
+0002E2 B4D8           01945         btfsc   STATUS,Z
+0002E4 961E           01946     bcf RXD_LED
+                      01947 
+                      01948 ; count down to determine when to turn off the Framing Error LED
+                      01949         
+0002E6 0628           01950         decf    frame_err_countdown,f
+0002E8 B4D8           01951         btfsc   STATUS,Z
+0002EA 921E           01952         bcf     FRAME_ERR_LED
+                      01953 
+                      01954 
+                      01955 
+                      01956 
+                      01957 ; count down to detect missing ZC edges
+                      01958 
+0002EC 2E04           01959         decfsz  zc_noedge_counter,f
+0002EE EF?? F???      01960         goto    end_timer_events
+                      01961 
+0002F2 9A1E           01962         bcf     ZC_LED          ; approximately 16 missing ZC pulses, so set ZC
+0002F4 B684           01963         btfsc   ZC              ; LED to reflect the current state of the ZC.
+0002F6 8A1E           01964         bsf     ZC_LED
+                      01965 
+0002F8 8804           01966         bsf     zc_noedge_counter,4
+                      01967 
+0002FA                01968 end_timer_events:
+0002FA B217           01969         btfsc   event_flag,1    ; ZC rising edge detected?
+0002FC 0012           01970         return          ;
+                      01971 
+                      01972 ;;
+                      01973 ;; The following code is only executed on the rising edge of ZC.  It is never
+                      01974 ;;   executed if ZC is permanently high or low (i.e. DC application).
+                      01975 ;;
+0002FE 8217           01976         bsf     event_flag,1
+                      01977         
+000300 0E20           01978         movlw   1<<ZC_LED_BIT   ; select zero-crossing bit.
+                      01979 
+000302 062A           01980         decf    zc_countdown,f  ; flip the zc LED once every 256 times.
+                      01981 
+000304 B4D8           01982         btfsc   STATUS,Z
+000306 1A1E           01983         xorwf   ZC_LED_REG,f    ; toggle the zc LED if countdown expired
+                      01984 
+000308 0E10           01985         movlw   16              ; reset the counter looking for missing edges
+00030A 6E04           01986         movwf   zc_noedge_counter
+                      01987         
+                      01988 ; update the periodic interrupt limit (to adjust for differing AC frequencies).
+                      01989 
+00030C 501D           01990         movf    zc_tmr_save,w
+00030E 08DF           01991         sublw   MIN_ZC_TIMER    ; MIN_ZC_TIMER - zc_tmr_save 
+                      01992 
+000310 B0D8           01993         btfsc   STATUS,C        ; CY set means no borrow, so zc_tmr_save is
+000312 0012           01994         return                  ; too small ... so return without updating PR2
+                      01995 
+000314 041D           01996         decf    zc_tmr_save,w   ; update PR2 (and clear TMR2 if past PR2)
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 39
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01997         
+000316 9EF2           01998         bcf     INTCON,GIE
+                      01999 
+000318 010F           02000         BANKSEL PR2
+00031A 6ECB           02001         movwf   PR2 ^ BANK1     ; save new PR2 value
+00031C 010F           02002         BANKSEL TMR2
+00031E 5CCC           02003         subwf   TMR2,w          ; TMR2 - PR2 
+000320 B0D8           02004         btfsc   STATUS,C        ; CY set means no borrow -> TMR2 >= PR2
+000322 6ACC           02005         clrf    TMR2            ; reset TMR2 because it's over the limit
+                      02006         
+000324 8EF2           02007         bsf     INTCON,GIE
+000326                02008 zc_filter_restart_timer:
+000326 0012           02009         return
+                      02010 
+                      02011   #IFDEF START_ADDRESS
+                      02012 
+                      02013         ORG 0xF00000
+                      02014         de 2+START_ADDR
+                      02015 
+                      02016   #ENDIF
+                      02017 
+                      02018   #IFDEF DMX_START_ADDRESS
+                      02019 
+                      02020         ORG 0xF00000
+                      02021         de HIGH(DMX_START_ADDRESS),LOW(DMX_START_ADDRESS)
+                      02022         de 0xDE,0xAD,0xC0,0xDE
+                      02023 
+                      02024   #ENDIF
+                      02025 
+                      02026   
+                      02027   
+                      02028 
+                      02029         END
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 40
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+A                                 00000000
+ABDEN                             00000000
+ABDOVF                            00000007
+ACCESS                            00000000
+ACKDT                             00000005
+ACKEN                             00000004
+ACKSTAT                           00000006
+ACQT0                             00000003
+ACQT1                             00000004
+ACQT2                             00000005
+ADCON0                            00000FC2
+ADCON1                            00000FC1
+ADCON2                            00000FC0
+ADCS0                             00000000
+ADCS1                             00000001
+ADCS2                             00000002
+ADDEN                             00000003
+ADEN                              00000003
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADIP                              00000006
+ADON                              00000000
+ADRES                             00000FC3
+ADRESH                            00000FC4
+ADRESL                            00000FC3
+AN10                              00000001
+AN11                              00000004
+AN12                              00000000
+AN4                               00000005
+AN8                               00000002
+AN9                               00000003
+BANK1                             0
+BANK2_TWIDDLE                     0
+BANK3_TWIDDLE                     0
+BANK4_TWIDDLE                     0
+BANKED                            00000001
+BAUDCON                           00000FB8
+BAUDCTL                           00000FB8
+BAUDRATE                          57600
+BAUD_INIT                         (CLOCKRATE/BAUDRATE/4 - 1)
+BCLIE                             00000003
+BCLIF                             00000003
+BCLIP                             00000003
+BF                                00000000
+BGST                              00000005
+BOR                               00000000
+BRG16                             00000003
+BRGH                              00000002
+BSR                               00000FE0
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 41
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+C2INV                             00000005
+C2OUT                             00000007
+CCP1                              00000002
+CCP1CON                           00000FBD
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1IP                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCP2CON                           00000FBA
+CCP2IE                            00000000
+CCP2IF                            00000000
+CCP2IP                            00000000
+CCP2M0                            00000000
+CCP2M1                            00000001
+CCP2M2                            00000002
+CCP2M3                            00000003
+CCP2X                             00000005
+CCP2Y                             00000004
+CCP2_PORTB                        00000003
+CCP2_PORTC                        00000001
+CCPR1                             00000FBE
+CCPR1H                            00000FBF
+CCPR1L                            00000FBE
+CCPR2                             00000FBB
+CCPR2H                            00000FBC
+CCPR2L                            00000FBB
+CELL_RATE                         ((2*DEFAULT_LINERATE) * 256)
+CELL_TMR_INIT                     (CLOCKRATE/8/CELL_RATE)
+CFGS                              00000006
+CHS0                              00000002
+CHS1                              00000003
+CHS2                              00000004
+CHS3                              00000005
+CIS                               00000003
+CK                                00000006
+CKE                               00000006
+CKP                               00000004
+CLOCKRATE                         32000000
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             00000FB4
+CMIE                              00000006
+CMIF                              00000006
+CMIP                              00000006
+CREN                              00000004
+CSRC                              00000007
+CTR_LOCKOUT                       0
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 42
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CVR0                              00000000
+CVR1                              00000001
+CVR2                              00000002
+CVR3                              00000003
+CVRCON                            00000FB5
+CVREN                             00000007
+CVROE                             00000006
+CVRR                              00000005
+CVRSS                             00000004
+D                                 00000005
+DC                                00000001
+DC1B0                             00000004
+DC1B1                             00000005
+DC2B0                             00000004
+DC2B1                             00000005
+DDRA                              TRISA
+DDRB                              TRISB
+DDRC                              TRISC
+DDRD                              TRISD
+DDRE                              TRISE
+DEFAULT_LINERATE                  50
+DIMMER_BITMAP_PORTA               (PIN2_DIMMER | PIN3_DIMMER | PIN4_DIMMER | PIN5_DIMMER | PIN6_DIMMER | PIN7_DIMMER | PIN10_DIMMER 
+                            | PIN9_DIMMER)
+DIMMER_BITMAP_PORTB               (PIN21_DIMMER | PIN22_DIMMER | PIN23_DIMMER | PIN24_DIMMER | PIN25_DIMMER | PIN26_DIMMER | PIN27_D
+                            IMMER | PIN28_DIMMER)
+DIMMER_BITMAP_PORTC               (PIN11_DIMMER | PIN12_DIMMER | PIN13_DIMMER | PIN14_DIMMER | PIN15_DIMMER | PIN16_DIMMER | PIN17_D
+                            IMMER | PIN18_DIMMER)
+DMX_BLINK_RATE                    0x2C
+DONE                              00000001
+D_A                               00000005
+D_NOT_A                           00000005
+ECCP1AS                           00000FB6
+ECCP1DEL                          00000FB7
+ECCPAS                            00000FB6
+ECCPAS0                           00000004
+ECCPAS1                           00000005
+ECCPAS2                           00000006
+ECCPASE                           00000007
+EEADR                             00000FA9
+EEADRH                            00000FAA
+EECON1                            00000FA6
+EECON2                            00000FA7
+EEDATA                            00000FA8
+EEIE                              00000004
+EEIF                              00000004
+EEIP                              00000004
+EEPGD                             00000007
+FAST                              00000001
+FERR                              00000002
+FRAME_ERR_LED                     FRAME_ERR_LED_REG, FRAME_ERR_LED_BIT
+FRAME_ERR_LED_BIT                 1
+FRAME_ERR_LED_REG                 LED_map
+FREE                              00000004
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 43
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+FSR0                              00000000
+FSR0H                             00000FEA
+FSR0L                             00000FE9
+FSR1                              00000001
+FSR1H                             00000FE2
+FSR1L                             00000FE1
+FSR2                              00000002
+FSR2H                             00000FDA
+FSR2L                             00000FD9
+GCEN                              00000007
+GIE                               00000007
+GIEH                              00000007
+GIEL                              00000006
+GIE_GIEH                          00000007
+GO                                00000001
+GO_DONE                           00000001
+GO_NOT_DONE                       00000001
+HEARTBEAT_LED                     HEARTBEAT_LED_REG, HEARTBEAT_LED_BIT
+HEARTBEAT_LED_BIT                 0
+HEARTBEAT_LED_REG                 LED_map
+HLVDCON                           00000FD2
+HLVDEN                            00000004
+HLVDIE                            00000002
+HLVDIF                            00000002
+HLVDIN                            00000005
+HLVDIP                            00000002
+HLVDL0                            00000000
+HLVDL1                            00000001
+HLVDL2                            00000002
+HLVDL3                            00000003
+IDLEN                             00000007
+INDF0                             00000FEF
+INDF1                             00000FE7
+INDF2                             00000FDF
+INT0                              00000000
+INT0E                             00000004
+INT0F                             00000001
+INT0IE                            00000004
+INT0IF                            00000001
+INT1                              00000001
+INT1E                             00000003
+INT1F                             00000000
+INT1IE                            00000003
+INT1IF                            00000000
+INT1IP                            00000006
+INT1P                             00000006
+INT2                              00000002
+INT2E                             00000004
+INT2F                             00000001
+INT2IE                            00000004
+INT2IF                            00000001
+INT2IP                            00000007
+INT2P                             00000007
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 44
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+INTCON                            00000FF2
+INTCON2                           00000FF1
+INTCON3                           00000FF0
+INTEDG0                           00000006
+INTEDG1                           00000005
+INTEDG2                           00000004
+INTSRC                            00000007
+IOFS                              00000002
+IPEN                              00000007
+IPR1                              00000F9F
+IPR2                              00000FA2
+IRCF0                             00000004
+IRCF1                             00000005
+IRCF2                             00000006
+IRVST                             00000005
+IVRST                             00000005
+Int                               00000008
+KBI0                              00000004
+KBI1                              00000005
+KBI2                              00000006
+KBI3                              00000007
+LATA                              00000F89
+LATA0                             00000000
+LATA1                             00000001
+LATA2                             00000002
+LATA3                             00000003
+LATA4                             00000004
+LATA5                             00000005
+LATA6                             00000006
+LATA7                             00000007
+LATB                              00000F8A
+LATB0                             00000000
+LATB1                             00000001
+LATB2                             00000002
+LATB3                             00000003
+LATB4                             00000004
+LATB5                             00000005
+LATB6                             00000006
+LATB7                             00000007
+LATC                              00000F8B
+LATC0                             00000000
+LATC1                             00000001
+LATC2                             00000002
+LATC3                             00000003
+LATC4                             00000004
+LATC5                             00000005
+LATC6                             00000006
+LATC7                             00000007
+LED0_TRIS                         TRISC^BANK1,3
+LED0_anode_sel                    portc_image,3
+LED1_TRIS                         TRISC^BANK1,4
+LED1_anode_sel                    portc_image,4
+LED2_TRIS                         TRISC^BANK1,5
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 45
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+LED2_anode_sel                    portc_image,5
+LED_TRIS_mask                     00000025
+LED_anode_rotator                 00000020
+LED_bit_ctr                       0000001F
+LED_cathode_rotator               00000021
+LED_data_rotator                  00000022
+LED_map                           0000001E
+LVDCON                            00000FD2
+LVDEN                             00000004
+LVDIE                             00000002
+LVDIF                             00000002
+LVDIN                             00000005
+LVDIP                             00000002
+LVDL0                             00000000
+LVDL1                             00000001
+LVDL2                             00000002
+LVDL3                             00000003
+LVV0                              00000000
+LVV1                              00000001
+LVV2                              00000002
+LVV3                              00000003
+MAX_LINERATE                      70
+MCLR                              00000003
+MIN_ZC_TIMER                      ((CLOCKRATE/4)/MAX_LINERATE/256/2)
+N                                 00000004
+NO                                0
+NOT_A                             00000005
+NOT_ADDRESS                       00000005
+NOT_BOR                           00000000
+NOT_DONE                          00000001
+NOT_MCLR                          00000003
+NOT_PD                            00000002
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_RI                            00000004
+NOT_SS                            00000005
+NOT_T1SYNC                        00000002
+NOT_T3SYNC                        00000002
+NOT_TO                            00000003
+NOT_W                             00000002
+NOT_WRITE                         00000002
+OERR                              00000001
+OSCCON                            00000FD3
+OSCFIE                            00000007
+OSCFIF                            00000007
+OSCFIP                            00000007
+OSCTUNE                           00000F9B
+OSC_CONFIG_LOCAL                  OSC=INTIO67
+OSC_CONTROL_LOCAL                 0x70
+OSC_TUNE_LOCAL                    1<<PLLEN
+OSTS                              00000003
+OV                                00000003
+P                                 00000004
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 46
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PC                                00000FF9
+PCFG0                             00000000
+PCFG1                             00000001
+PCFG2                             00000002
+PCFG3                             00000003
+PCL                               00000FF9
+PCLATH                            00000FFA
+PCLATU                            00000FFB
+PD                                00000002
+PEIE                              00000006
+PEIE_GIEL                         00000006
+PEN                               00000002
+PGC                               00000006
+PGD                               00000007
+PGM                               00000005
+PIC18_FAMILY                      
+PIE1                              00000F9D
+PIE2                              00000FA0
+PIN10_DIMMER                      0
+PIN10_PWM                         YES
+PIN10_SINK                        NO
+PIN11_CH                          6
+PIN11_DIMMER                      (1<<0)
+PIN11_PWM                         YES
+PIN11_SINK                        YES
+PIN12_CH                          7
+PIN12_DIMMER                      (1<<1)
+PIN12_PWM                         YES
+PIN12_SINK                        YES
+PIN13_CH                          8
+PIN13_DIMMER                      (1<<2)
+PIN13_PWM                         YES
+PIN13_SINK                        YES
+PIN14_DIMMER                      0
+PIN14_PWM                         YES
+PIN14_SINK                        NO
+PIN15_DIMMER                      0
+PIN15_PWM                         YES
+PIN15_SINK                        NO
+PIN16_DIMMER                      0
+PIN16_PWM                         YES
+PIN16_SINK                        NO
+PIN17_DIMMER                      0
+PIN17_SINK                        NO
+PIN18_DIMMER                      0
+PIN18_SINK                        NO
+PIN21_CH                          16
+PIN21_DIMMER                      (1<<0)
+PIN21_PWM                         YES
+PIN21_SINK                        YES
+PIN22_CH                          15
+PIN22_DIMMER                      (1<<1)
+PIN22_PWM                         YES
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 47
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PIN22_SINK                        YES
+PIN23_CH                          14
+PIN23_DIMMER                      (1<<2)
+PIN23_PWM                         YES
+PIN23_SINK                        YES
+PIN24_CH                          13
+PIN24_DIMMER                      (1<<3)
+PIN24_PWM                         YES
+PIN24_SINK                        YES
+PIN25_CH                          12
+PIN25_DIMMER                      (1<<4)
+PIN25_PWM                         YES
+PIN25_SINK                        YES
+PIN26_CH                          11
+PIN26_DIMMER                      (1<<5)
+PIN26_PWM                         YES
+PIN26_SINK                        YES
+PIN27_CH                          10
+PIN27_DIMMER                      (1<<6)
+PIN27_PWM                         YES
+PIN27_SINK                        YES
+PIN28_CH                          9
+PIN28_DIMMER                      (1<<7)
+PIN28_PWM                         YES
+PIN28_SINK                        YES
+PIN2_CH                           1
+PIN2_DIMMER                       (1<<0)
+PIN2_PWM                          YES
+PIN2_SINK                         YES
+PIN3_CH                           2
+PIN3_DIMMER                       (1<<1)
+PIN3_PWM                          YES
+PIN3_SINK                         YES
+PIN4_CH                           3
+PIN4_DIMMER                       (1<<2)
+PIN4_PWM                          YES
+PIN4_SINK                         YES
+PIN5_CH                           4
+PIN5_DIMMER                       (1<<3)
+PIN5_PWM                          YES
+PIN5_SINK                         YES
+PIN6_CH                           5
+PIN6_DIMMER                       (1<<4)
+PIN6_PWM                          YES
+PIN6_SINK                         YES
+PIN7_DIMMER                       0
+PIN7_PWM                          YES
+PIN7_SINK                         NO
+PIN9_DIMMER                       0
+PIN9_PWM                          YES
+PIN9_SINK                         NO
+PIR1                              00000F9E
+PIR2                              00000FA1
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 48
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PLLEN                             00000006
+PLUSW0                            00000FEB
+PLUSW1                            00000FE3
+PLUSW2                            00000FDB
+POR                               00000001
+PORTA                             00000F80
+PORTB                             00000F81
+PORTC                             00000F82
+PORTE                             00000F84
+POSTDEC0                          00000FED
+POSTDEC1                          00000FE5
+POSTDEC2                          00000FDD
+POSTINC0                          00000FEE
+POSTINC1                          00000FE6
+POSTINC2                          00000FDE
+PR2                               00000FCB
+PREINC0                           00000FEC
+PREINC1                           00000FE4
+PREINC2                           00000FDC
+PROD                              00000FF3
+PRODH                             00000FF4
+PRODL                             00000FF3
+PRSEN                             00000007
+PSA                               00000003
+PSSAC0                            00000002
+PSSAC1                            00000003
+PWM1CON                           00000FB7
+PWM_MAP_PORTA                     ((((((((PIN9_PWM*2+PIN10_PWM)*2+PIN7_PWM)*2+PIN6_PWM)*2+PIN5_PWM)*2+PIN4_PWM)*2+PIN3_PWM)*2+PIN2_P
+                            WM))
+PWM_MAP_PORTB                     ((((((((PIN28_PWM*2+PIN27_PWM)*2+PIN26_PWM)*2+PIN25_PWM)*2+PIN24_PWM)*2+PIN23_PWM)*2+PIN22_PWM)*2+
+                            PIN21_PWM))
+PWM_MAP_PORTC                     (((((((PIN16_PWM)*2+PIN15_PWM)*2+PIN14_PWM)*2+PIN13_PWM)*2+PIN12_PWM)*2+PIN11_PWM))
+R                                 00000002
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RA5                               00000005
+RA6                               00000006
+RA7                               00000007
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RBIP                              00000000
+RBPU                              00000007
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 49
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RC0                               00000000
+RC1                               00000001
+RC2                               00000002
+RC3                               00000003
+RC4                               00000004
+RC5                               00000005
+RC6                               00000006
+RC7                               00000007
+RCEN                              00000003
+RCIDL                             00000006
+RCIE                              00000005
+RCIF                              00000005
+RCIP                              00000005
+RCMT                              00000006
+RCON                              00000FD0
+RCREG                             00000FAE
+RCSTA                             00000FAB
+RD                                00000000
+RD16                              00000007
+RE3                               00000003
+RI                                00000004
+RSEN                              00000001
+RX                                00000007
+RX9                               00000006
+RX9D                              00000000
+RXCKP                             00000005
+RXDTP                             00000005
+RXD_LED                           RXD_LED_REG, RXD_LED_BIT
+RXD_LED_BIT                       3
+RXD_LED_REG                       LED_map
+R_NOT_W                           00000002
+R_W                               00000002
+S                                 00000003
+SBOREN                            00000006
+SCK                               00000003
+SCKP                              00000004
+SCL                               00000003
+SCS0                              00000000
+SCS1                              00000001
+SDA                               00000004
+SDI                               00000004
+SDO                               00000005
+SEN                               00000000
+SENDB                             00000003
+SINK_MAP_PORTA                    (((((((PIN9_SINK * 2 + PIN10_SINK) * 2 + PIN7_SINK) * 2 + PIN6_SINK) * 2 + PIN5_SINK) * 2 + PIN4_S
+                            INK) * 2 + PIN3_SINK) * 2 + PIN2_SINK)
+SINK_MAP_PORTB                    (((((((PIN28_SINK * 2 + PIN27_SINK) * 2 + PIN26_SINK) * 2 + PIN25_SINK) * 2 + PIN24_SINK) * 2 + PI
+                            N23_SINK) * 2 + PIN22_SINK) * 2 + PIN21_SINK)
+SINK_MAP_PORTC                    (((((((PIN18_SINK * 2 + PIN17_SINK) * 2 + PIN16_SINK) * 2 + PIN15_SINK) * 2 + PIN14_SINK) * 2 + PI
+                            N13_SINK) * 2 + PIN12_SINK) * 2 + PIN11_SINK)
+SMP                               00000007
+SP0                               00000000
+SP1                               00000001
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 50
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+SP2                               00000002
+SP3                               00000003
+SP4                               00000004
+SPBRG                             00000FAF
+SPBRGH                            00000FB0
+SPEN                              00000007
+SREN                              00000005
+SS                                00000005
+SSPADD                            00000FC8
+SSPBUF                            00000FC9
+SSPCON1                           00000FC6
+SSPCON2                           00000FC5
+SSPEN                             00000005
+SSPIE                             00000003
+SSPIF                             00000003
+SSPIP                             00000003
+SSPM0                             00000000
+SSPM1                             00000001
+SSPM2                             00000002
+SSPM3                             00000003
+SSPOV                             00000006
+SSPSTAT                           00000FC7
+STATUS                            00000FD8
+STKFUL                            00000007
+STKOVF                            00000007
+STKPTR                            00000FFC
+STKPTR0                           00000000
+STKPTR1                           00000001
+STKPTR2                           00000002
+STKPTR3                           00000003
+STKPTR4                           00000004
+STKUNF                            00000006
+SWDTE                             00000000
+SWDTEN                            00000000
+SYNC                              00000004
+T016BIT                           00000006
+T08BIT                            00000006
+T0CKI                             00000004
+T0CON                             00000FD5
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0PS0                             00000000
+T0PS1                             00000001
+T0PS2                             00000002
+T0SE                              00000004
+T13CKI                            00000000
+T1CKI                             00000000
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000FCD
+T1OSCEN                           00000003
+T1OSI                             00000001
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 51
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+T1OSO                             00000000
+T1RUN                             00000006
+T1SYNC                            00000002
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000FCA
+T2OUTPS0                          00000003
+T2OUTPS1                          00000004
+T2OUTPS2                          00000005
+T2OUTPS3                          00000006
+T3CCP1                            00000003
+T3CCP2                            00000006
+T3CKPS0                           00000004
+T3CKPS1                           00000005
+T3CON                             00000FB1
+T3SYNC                            00000002
+TABLAT                            00000FF5
+TBLPTR                            00000FF6
+TBLPTRH                           00000FF7
+TBLPTRL                           00000FF6
+TBLPTRU                           00000FF8
+TMR0                              00000FD6
+TMR0H                             00000FD7
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR0IP                            00000002
+TMR0L                             00000FD6
+TMR0ON                            00000007
+TMR1                              00000FCE
+TMR1CS                            00000001
+TMR1H                             00000FCF
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1IP                            00000000
+TMR1L                             00000FCE
+TMR1ON                            00000000
+TMR2                              00000FCC
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2IP                            00000001
+TMR2ON                            00000002
+TMR3                              00000FB2
+TMR3CS                            00000001
+TMR3H                             00000FB3
+TMR3IE                            00000001
+TMR3IF                            00000001
+TMR3IP                            00000001
+TMR3L                             00000FB2
+TMR3ON                            00000000
+TO                                00000003
+TOS                               00000FFD
+TOSH                              00000FFE
+TOSL                              00000FFD
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 52
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TOSU                              00000FFF
+TRISA                             00000F92
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISA5                            00000005
+TRISA6                            00000006
+TRISA7                            00000007
+TRISB                             00000F93
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+TRISC                             00000F94
+TRISC0                            00000000
+TRISC1                            00000001
+TRISC2                            00000002
+TRISC3                            00000003
+TRISC4                            00000004
+TRISC5                            00000005
+TRISC6                            00000006
+TRISC7                            00000007
+TRMT                              00000001
+TUN0                              00000000
+TUN1                              00000001
+TUN2                              00000002
+TUN3                              00000003
+TUN4                              00000004
+TX                                00000006
+TX9                               00000006
+TX9D                              00000000
+TXCKP                             00000004
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXIP                              00000004
+TXREG                             00000FAD
+TXSTA                             00000FAC
+Timecounter                       0000002C
+Timeout                           0000002B
+UA                                00000001
+VCFG0                             00000004
+VCFG1                             00000005
+VDIRMAG                           00000007
+VPP                               00000003
+W                                 00000000
+WCOL                              00000007
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 53
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+WDTCON                            00000FD1
+WR                                00000001
+WREG                              00000FE8
+WREN                              00000002
+WRERR                             00000003
+WUE                               00000001
+YES                               1
+Z                                 00000002
+ZC                                ZC_REG,(ZC_BIT)
+ZC_BIT                            3
+ZC_LED                            ZC_LED_REG,ZC_LED_BIT
+ZC_LED_BIT                        5
+ZC_LED_REG                        LED_map
+ZC_MASK                           (1<<(ZC_BIT))
+ZC_REG                            PORTE
+_BOREN_NOSLP_2L                   000000FD
+_BOREN_OFF_2L                     000000F9
+_BOREN_ON_2L                      000000FB
+_BOREN_SBORDIS_2L                 000000FF
+_BORV_0_2L                        000000E7
+_BORV_1_2L                        000000EF
+_BORV_2_2L                        000000F7
+_BORV_3_2L                        000000FF
+_CCP2MX_PORTBE_3H                 000000FE
+_CCP2MX_PORTC_3H                  000000FF
+_CONFIG1H                         00300001
+_CONFIG2H                         00300003
+_CONFIG2L                         00300002
+_CONFIG3H                         00300005
+_CONFIG4L                         00300006
+_CONFIG5H                         00300009
+_CONFIG5L                         00300008
+_CONFIG6H                         0030000B
+_CONFIG6L                         0030000A
+_CONFIG7H                         0030000D
+_CONFIG7L                         0030000C
+_CP0_OFF_5L                       000000FF
+_CP0_ON_5L                        000000FE
+_CP1_OFF_5L                       000000FF
+_CP1_ON_5L                        000000FD
+_CP2_OFF_5L                       000000FF
+_CP2_ON_5L                        000000FB
+_CP3_OFF_5L                       000000FF
+_CP3_ON_5L                        000000F7
+_CPB_OFF_5H                       000000FF
+_CPB_ON_5H                        000000BF
+_CPD_OFF_5H                       000000FF
+_CPD_ON_5H                        0000007F
+_DEBUG_OFF_4L                     000000FF
+_DEBUG_ON_4L                      0000007F
+_DEVID1                           003FFFFE
+_DEVID2                           003FFFFF
+_EBTR0_OFF_7L                     000000FF
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 54
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_EBTR0_ON_7L                      000000FE
+_EBTR1_OFF_7L                     000000FF
+_EBTR1_ON_7L                      000000FD
+_EBTR2_OFF_7L                     000000FF
+_EBTR2_ON_7L                      000000FB
+_EBTR3_OFF_7L                     000000FF
+_EBTR3_ON_7L                      000000F7
+_EBTRB_OFF_7H                     000000FF
+_EBTRB_ON_7H                      000000BF
+_FCMEN_OFF_1H                     000000BF
+_FCMEN_ON_1H                      000000FF
+_IDLOC0                           00200000
+_IDLOC1                           00200001
+_IDLOC2                           00200002
+_IDLOC3                           00200003
+_IDLOC4                           00200004
+_IDLOC5                           00200005
+_IDLOC6                           00200006
+_IDLOC7                           00200007
+_IESO_OFF_1H                      0000007F
+_IESO_ON_1H                       000000FF
+_LPT1OSC_OFF_3H                   000000FB
+_LPT1OSC_ON_3H                    000000FF
+_LVP_OFF_4L                       000000FB
+_LVP_ON_4L                        000000FF
+_MCLRE_OFF_3H                     0000007F
+_MCLRE_ON_3H                      000000FF
+_OSC_ECIO6_1H                     000000F5
+_OSC_EC_1H                        000000F4
+_OSC_HSPLL_1H                     000000F6
+_OSC_HS_1H                        000000F2
+_OSC_INTIO67_1H                   000000F8
+_OSC_INTIO7_1H                    000000F9
+_OSC_LP_1H                        000000F0
+_OSC_RCIO6_1H                     000000F7
+_OSC_RC_1H                        000000F3
+_OSC_XT_1H                        000000F1
+_PBADEN_OFF_3H                    000000FD
+_PBADEN_ON_3H                     000000FF
+_PWRT_OFF_2L                      000000FF
+_PWRT_ON_2L                       000000FE
+_STVREN_OFF_4L                    000000FE
+_STVREN_ON_4L                     000000FF
+_WDTPS_1024_2H                    000000F5
+_WDTPS_128_2H                     000000EF
+_WDTPS_16384_2H                   000000FD
+_WDTPS_16_2H                      000000E9
+_WDTPS_1_2H                       000000E1
+_WDTPS_2048_2H                    000000F7
+_WDTPS_256_2H                     000000F1
+_WDTPS_2_2H                       000000E3
+_WDTPS_32768_2H                   000000FF
+_WDTPS_32_2H                      000000EB
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 55
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_WDTPS_4096_2H                    000000F9
+_WDTPS_4_2H                       000000E5
+_WDTPS_512_2H                     000000F3
+_WDTPS_64_2H                      000000ED
+_WDTPS_8192_2H                    000000FB
+_WDTPS_8_2H                       000000E7
+_WDT_OFF_2H                       000000FE
+_WDT_ON_2H                        000000FF
+_WRT0_OFF_6L                      000000FF
+_WRT0_ON_6L                       000000FE
+_WRT1_OFF_6L                      000000FF
+_WRT1_ON_6L                       000000FD
+_WRT2_OFF_6L                      000000FF
+_WRT2_ON_6L                       000000FB
+_WRT3_OFF_6L                      000000FF
+_WRT3_ON_6L                       000000F7
+_WRTB_OFF_6H                      000000FF
+_WRTB_ON_6H                       000000BF
+_WRTC_OFF_6H                      000000FF
+_WRTC_ON_6H                       000000DF
+_WRTD_OFF_6H                      000000FF
+_WRTD_ON_6H                       0000007F
+_XINST_OFF_4L                     000000BF
+_XINST_ON_4L                      000000FF
+__18F2620                         00000001
+__DEBUG                           1
+_status                           00000024
+_w                                00000023
+after_ESC_decoding                000002B8
+ctr_ckt1                          00000007
+ctr_ckt10                         00000010
+ctr_ckt11                         00000011
+ctr_ckt12                         00000012
+ctr_ckt13                         00000013
+ctr_ckt14                         00000014
+ctr_ckt15                         00000015
+ctr_ckt16                         00000016
+ctr_ckt2                          00000008
+ctr_ckt3                          00000009
+ctr_ckt4                          0000000A
+ctr_ckt5                          0000000B
+ctr_ckt6                          0000000C
+ctr_ckt7                          0000000D
+ctr_ckt8                          0000000E
+ctr_ckt9                          0000000F
+ctr_timeslot                      0000001C
+decode_cmd_byte                   00000280
+decode_packet_body                0000029E
+dmxPayloadCount                   00000031
+dmxStatusCtr                      00000034
+dmxhighbyte                       0000002D
+dmxlowbyte                        0000002E
+end_timer_events                  000002FA
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 56
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+event_flag                        00000017
+event_processor                   000002CA
+frame_err_countdown               00000028
+heartbeat_countdown               00000027
+initialize                        0000016E
+isr_counter                       00000026
+isr_exit                          0000016C
+isr_extra_work                    0000010A
+isr_extra_work1                   0000012C
+isr_extra_work2                   00000140
+isr_extra_work3                   0000015A
+isr_load_counters                 0000009C
+isr_not_zc_lead_edge              00000026
+isr_regular                       0000002E
+isr_status_LEDs                   00000102
+mainloop                          00000224
+our_addr                          0000002D
+porta_image                       00000019
+portb_image                       0000001A
+portc_image                       0000001B
+previous_not_ESC                  000002AC
+rx_char                           00000005
+rx_copycount                      0000002F
+rx_discard_count                  0000002E
+rx_echo                           0000024A
+rx_error                          00000252
+rx_flag_extra                     00000030
+rx_not_sync                       00000264
+rxd_countdown                     00000029
+skiphigh                          0000002F
+skiplow                           00000030
+slot_id_ckt1                      00000040
+slot_id_ckt10                     00000049
+slot_id_ckt11                     0000004A
+slot_id_ckt12                     0000004B
+slot_id_ckt13                     0000004C
+slot_id_ckt14                     0000004D
+slot_id_ckt15                     0000004E
+slot_id_ckt16                     0000004F
+slot_id_ckt2                      00000041
+slot_id_ckt3                      00000042
+slot_id_ckt4                      00000043
+slot_id_ckt5                      00000044
+slot_id_ckt6                      00000045
+slot_id_ckt7                      00000046
+slot_id_ckt8                      00000047
+slot_id_ckt9                      00000048
+smDmxH                            00000033
+smDmxL                            00000032
+state_flag                        00000018
+zc_countdown                      0000002A
+zc_delayline                      00000006
+zc_filter_restart_timer           00000326
+MPASM  5.51               RPTR16DMXRENARD.ASM   9-2-2016  13:01:56         PAGE 57
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+zc_noedge_counter                 00000004
+zc_tmr_save                       0000001D
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

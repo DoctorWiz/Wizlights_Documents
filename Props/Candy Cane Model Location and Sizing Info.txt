@@ -1,0 +1,49 @@
+Candy Cane size and position Notes
+
+X1, Y1, and Z1 set the location of the long part of the cane (left-right, elevation, and front-back)
+The height of the cane will be approx 2.5X the width
+X2-X1 sets the width for left-right, Z2 should = Z1
+Z2-Z1 sets the width for front-back canes, X2 = X1
+For 45° diagonal canes set X2-X1 and Z2-Z1 to .707 of cane width,
+In the dimensions display, the 'Length' will = the width of the cane.
+... the 'Height' will = 1.5X the width aka 'Length' but will actually be about 2.5X
+The height of the short end of the cane will be 1/2 the width.
+There does not appear to be any way to set the width/height ratio of the cane!
+
+For 28" high canes, which are about 12" or so wide...
+Set Height to 1.0
+Set Y1 and Y2 to 0 or elevation of ground
+For Left or Right facing canes:
+Set Z1 and Z2 to location front to back
+Set X1 to the to location left-right 
+Set X2 to X1 - 12 to get a 12 X 28 cane with hook to left
+Set X2 t0 X1 + 12 to get a 12 X 28 cane with hook to right
+For Front or Back facing Canes:
+Set X1 and X2 to location left-right
+Set Z1 to location front to back
+Set Z2 to Z1 - 12 to get a 12 X 28 cane with hook to back
+Set Z2 to Z1 + 12 to get a 12 X 28 cane with hook to front
+
+For 8" wide canes, which are about 18.5" or so high...
+Set Height to 1.0
+Set Y1 and Y2 to 0 or elevation of ground
+For Left or Right facing canes:
+Set Z1 and Z2 to location front to back
+Set X1 to the to location left-right 
+Set X2 to X1 - 8 to get an 8 X 18.5 cane with hook to left
+Set X2 t0 X1 + 8 to get an 8 X 18.5 cane with hook to right
+For Front or Back facing Canes:
+Set X1 and X2 to location left-right
+Set Z1 to location front to back
+Set Z2 to Z1 - 8 to get an 8 X 18.5 cane with hook to back
+Set Z2 to Z1 + 8 to get an 8 X 18.5 cane with hook to front
+
+To compensate for reduced height of cane:
+Set Y1 and Y2 to 7.5 (or height of ground + 7.5)
+NOTE: 28" - 18.5" = 9.5", but: short end of my canes has an overhang
+and is 6", (not 4", half the width) so subtract another 2 from the 9.5
+to get the short end in the correct position for the swags.
+
+For diagonal canes set X2 and Z2 to .707 of cane width,
+About 5.66 for a 8" wide cane 
+

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="11.5in"
+   height="23.5in"
+   viewBox="0 0 1104 2256"
+   version="1.1"
+   id="svg2815"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="12x24 Sheet White (Bulbs) - V2 3x on 12x24 with Weed Lines White Cuts.svg">
+  <defs
+     id="defs2809" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffceb6"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.73"
+     inkscape:cx="650.21575"
+     inkscape:cy="1749.5665"
+     inkscape:document-units="in"
+     inkscape:current-layer="layer3"
+     showgrid="true"
+     inkscape:snap-global="false"
+     showguides="true"
+     units="in"
+     gridtolerance="10"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3368"
+       units="in"
+       spacingx="24"
+       spacingy="24"
+       empspacing="4" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2812">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="White Cut"
+     style="display:inline">
+    <path
+       id="path4428"
+       style="fill:none;stroke:#ff0000;stroke-width:0.47999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 204.62173,922.41325 7.74193,-130.38542 126.45162,-32.25807 -4.52032,118.12317 m -1.92711,620.65357 5.76456,-138.6971 -123.17554,38.0227 -5.17385,141.9647 m 0,580.6117 5.80645,-103.8416 129.02807,-44.5246 -7.73775,103.8543 m 704.21191,-469.257 60.7955,-0.5682 v 0 l 0.5681,-0.5681 m -7.5505,-946.56624 -128.29211,39.74029 -4.75156,233.26671 134.33107,72.14864 v 0 M 15.754889,1604.7612 1087.8462,1232.3657 m 10.6771,-585.60236 -82.983,-11.7378 -993.105386,346.22118 m 1080.154186,305.02678 -132.58894,28.6273 -6.13837,38.6007 c 12.16176,47.3177 8.65525,73.0958 11.04907,119.9925 l -14.66107,67.1924 42.55301,32.273 29.8151,2.3267 9.4507,31.7151 M 8.5267569,361.2204 1013.0123,16.896 M 8.7863713,2187.2136 935.99558,1871.4635 l 145.00962,-44.17 21.8183,-39.7961" />
+  </g>
+</svg>

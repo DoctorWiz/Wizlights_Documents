@@ -1,0 +1,89 @@
+MPLINK 4.49, Linker
+Linker Map File - Created Fri Sep 02 12:01:31 2016
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000006
+                   .cinit    romdata   0x000006    program   0x000002
+                   .org_1       code   0x000008    program   0x0002d0
+.config_300001_RPTR8FLEXDMXRENARD.O    romdata   0x300001    program   0x000001
+.config_300002_RPTR8FLEXDMXRENARD.O    romdata   0x300002    program   0x000001
+.config_300003_RPTR8FLEXDMXRENARD.O    romdata   0x300003    program   0x000001
+.config_300005_RPTR8FLEXDMXRENARD.O    romdata   0x300005    program   0x000001
+.config_300006_RPTR8FLEXDMXRENARD.O    romdata   0x300006    program   0x000001
+.config_300008_RPTR8FLEXDMXRENARD.O    romdata   0x300008    program   0x000001
+.config_300009_RPTR8FLEXDMXRENARD.O    romdata   0x300009    program   0x000001
+.config_30000A_RPTR8FLEXDMXRENARD.O    romdata   0x30000a    program   0x000001
+.config_30000B_RPTR8FLEXDMXRENARD.O    romdata   0x30000b    program   0x000001
+.config_30000C_RPTR8FLEXDMXRENARD.O    romdata   0x30000c    program   0x000001
+.config_30000D_RPTR8FLEXDMXRENARD.O    romdata   0x30000d    program   0x000001
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x0002d7      
+                            0x300001    0x300003      
+                            0x300005    0x300006      
+                            0x300008    0x30000d      
+            739 out of 50200 program addresses used, program memory utilization is 1%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                      Int   0x000008    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+       after_ESC_decoding   0x000268    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          decode_cmd_byte   0x000230    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+       decode_packet_body   0x00024e    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+         end_timer_events   0x0002aa    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          event_processor   0x00027a    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+               initialize   0x00012e    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+                 isr_exit   0x00012c    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+           isr_extra_work   0x0000ca    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          isr_extra_work1   0x0000ec    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          isr_extra_work2   0x000100    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          isr_extra_work3   0x00011a    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+        isr_load_counters   0x00007c    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+     isr_not_zc_lead_edge   0x000026    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+              isr_regular   0x00002e    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          isr_status_LEDs   0x0000c2    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+                 mainloop   0x0001d4    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+         previous_not_ESC   0x00025c    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+                  rx_echo   0x0001fa    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+                 rx_error   0x000202    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+              rx_not_sync   0x000214    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+  zc_filter_restart_timer   0x0002d6    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                      Int   0x000008    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+     isr_not_zc_lead_edge   0x000026    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+              isr_regular   0x00002e    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+        isr_load_counters   0x00007c    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          isr_status_LEDs   0x0000c2    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+           isr_extra_work   0x0000ca    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          isr_extra_work1   0x0000ec    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          isr_extra_work2   0x000100    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          isr_extra_work3   0x00011a    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+                 isr_exit   0x00012c    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+               initialize   0x00012e    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+                 mainloop   0x0001d4    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+                  rx_echo   0x0001fa    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+                 rx_error   0x000202    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+              rx_not_sync   0x000214    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          decode_cmd_byte   0x000230    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+       decode_packet_body   0x00024e    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+         previous_not_ESC   0x00025c    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+       after_ESC_decoding   0x000268    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+          event_processor   0x00027a    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+         end_timer_events   0x0002aa    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+  zc_filter_restart_timer   0x0002d6    program     static C:\Users\Mac\Desktop\RPTR8FlexDMXRenard09022016\RPTR8FlexDMXRenard.asm
+
+

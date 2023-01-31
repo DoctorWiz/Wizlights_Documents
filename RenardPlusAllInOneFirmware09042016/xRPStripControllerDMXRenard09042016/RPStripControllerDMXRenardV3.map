@@ -1,0 +1,89 @@
+MPLINK 4.49, Linker
+Linker Map File - Created Sun Sep 04 09:28:48 2016
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000006
+                   .cinit    romdata   0x000006    program   0x000002
+                   .org_1       code   0x000008    program   0x0003b4
+.config_300001_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x300001    program   0x000001
+.config_300002_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x300002    program   0x000001
+.config_300003_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x300003    program   0x000001
+.config_300005_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x300005    program   0x000001
+.config_300006_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x300006    program   0x000001
+.config_300008_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x300008    program   0x000001
+.config_300009_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x300009    program   0x000001
+.config_30000A_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x30000a    program   0x000001
+.config_30000B_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x30000b    program   0x000001
+.config_30000C_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x30000c    program   0x000001
+.config_30000D_RPSTRIPCONTROLLERDMXRENARDV3.O    romdata   0x30000d    program   0x000001
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x0003bb      
+                            0x300001    0x300003      
+                            0x300005    0x300006      
+                            0x300008    0x30000d      
+            967 out of 33048 program addresses used, program memory utilization is 2%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                      Int   0x000008    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+       after_ESC_decoding   0x000352    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          decode_cmd_byte   0x00031a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+       decode_packet_body   0x000338    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+         end_timer_events   0x00038e    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          event_processor   0x000364    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+               initialize   0x0001de    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+                 isr_exit   0x0001dc    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+           isr_extra_work   0x00017a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          isr_extra_work1   0x00019c    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          isr_extra_work2   0x0001b0    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          isr_extra_work3   0x0001ca    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+        isr_load_counters   0x0000d8    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+     isr_not_zc_lead_edge   0x000026    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+              isr_regular   0x00002e    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          isr_status_LEDs   0x000172    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+                 mainloop   0x0002be    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+         previous_not_ESC   0x000346    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+                  rx_echo   0x0002e4    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+                 rx_error   0x0002ec    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+              rx_not_sync   0x0002fe    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+  zc_filter_restart_timer   0x0003ba    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                      Int   0x000008    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+     isr_not_zc_lead_edge   0x000026    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+              isr_regular   0x00002e    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+        isr_load_counters   0x0000d8    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          isr_status_LEDs   0x000172    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+           isr_extra_work   0x00017a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          isr_extra_work1   0x00019c    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          isr_extra_work2   0x0001b0    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          isr_extra_work3   0x0001ca    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+                 isr_exit   0x0001dc    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+               initialize   0x0001de    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+                 mainloop   0x0002be    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+                  rx_echo   0x0002e4    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+                 rx_error   0x0002ec    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+              rx_not_sync   0x0002fe    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          decode_cmd_byte   0x00031a    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+       decode_packet_body   0x000338    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+         previous_not_ESC   0x000346    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+       after_ESC_decoding   0x000352    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+          event_processor   0x000364    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+         end_timer_events   0x00038e    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+  zc_filter_restart_timer   0x0003ba    program     static C:\Users\Mac\Desktop\RenardPlusAllInOneFirmware08102016\RPStripControllerDMXRenard09022016\RPStripControllerDMXRenardV3.asm
+
+

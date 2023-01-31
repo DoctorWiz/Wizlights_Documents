@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="11.5in"
+   height="23.5in"
+   viewBox="0 0 828 1692"
+   version="1.1"
+   id="svg2815"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="Test Green Cut.svg">
+  <defs
+     id="defs2809" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#7f7f7f"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.05"
+     inkscape:cx="393.70585"
+     inkscape:cy="2143.7051"
+     inkscape:document-units="in"
+     inkscape:current-layer="layer2"
+     showgrid="true"
+     inkscape:snap-global="false"
+     showguides="true"
+     units="in"
+     gridtolerance="10"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="false"
+     inkscape:guide-bbox="true"
+     inkscape:lockguides="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3368"
+       units="in"
+       spacingx="24"
+       spacingy="24"
+       empspacing="4"
+       originy="0"
+       dotted="false" />
+    <sodipodi:guide
+       position="-199.57161,1149.3846"
+       orientation="0,1"
+       id="guide11399"
+       inkscape:locked="true" />
+    <sodipodi:guide
+       position="-588.06518,2452.3869"
+       orientation="1,0"
+       id="guide11485"
+       inkscape:locked="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2812">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Green Letters"
+     style="display:inline"
+     transform="translate(0,4.4995699e-5)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Green Cut"
+     style="display:inline"
+     transform="translate(0,4.4995699e-5)">
+    <g
+       id="g11412"
+       transform="matrix(0.75001225,0,0,0.7499155,-0.23256867,-1.0101542)"
+       style="stroke-width:1.33339751">
+      <path
+         id="path8375"
+         style="fill:none;stroke:#ff0000;stroke-width:0.38401848;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 0.384,359.25203 1036.5854,1.5284553 M 0.384,982.01626 218.69919,890.95935 222.76423,798.27642 326.01626,774.69919 321.95122,838.92683 364.22764,856 620.3252,748.68293 l 58.53659,-108.13008 46.34146,-3.25204 24.39025,61.78862 270.7317,-69.9187 80.4878,-9.7561"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccccccccc" />
+    </g>
+  </g>
+  <g
+     inkscape:label="White Bulbs"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,1111.8)"
+     style="display:inline" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="White Cut"
+     style="display:inline"
+     transform="translate(0,4.4995699e-5)" />
+</svg>
